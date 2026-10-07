@@ -1,0 +1,2697 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>星旅追缉令 · 七上第一二章</title>
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;height:100%;background:#080c18;color:#e8eefc;
+ font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+ overscroll-behavior:none}
+#app{display:flex;flex-direction:column;height:100%;max-width:520px;margin:0 auto;
+ background:radial-gradient(120% 60% at 50% 0%,#1b2748 0%,#0a1020 100%);position:relative}
+
+#bar{padding:10px 14px 8px;z-index:2;position:relative}
+#bar .row{display:flex;align-items:center;justify-content:space-between;font-size:11px;color:#8fa0c6}
+#track{height:22px;margin-top:6px;position:relative;background:#131c33;border-radius:11px;
+ border:1px solid #223155;overflow:hidden}
+#track .fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#1e4d8f,#2f7fd6);
+ border-radius:11px;transition:width .5s}
+#track .me{position:absolute;top:2px;font-size:13px;transition:left .5s;width:18px;height:18px;margin-left:-9px}
+#track .rv{position:absolute;top:2px;font-size:13px;transition:left .5s;width:18px;height:18px;margin-left:-9px}
+#track .me svg,#track .rv svg{width:100%;height:100%;display:block;filter:drop-shadow(0 1px 3px rgba(0,0,0,.7))}
+#track .lbl{position:absolute;right:8px;top:4px;font-size:10px;color:#a9bde4}
+
+#stage{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 14px 12px;z-index:2;position:relative;
+ -webkit-overflow-scrolling:touch}
+#stage::-webkit-scrollbar{width:0}
+
+.chip{display:inline-block;font-size:11px;color:#7fb2ff;background:#152444;border:1px solid #25406e;
+ padding:3px 9px;border-radius:20px;margin-bottom:8px}
+h2{margin:4px 0 10px;font-size:18px;letter-spacing:.5px}
+
+.panel{background:#111a30;border:1px solid #223155;border-radius:14px;padding:12px;margin-bottom:10px}
+.panel .t{font-size:13px;color:#9fc0ff;font-weight:600;margin-bottom:6px}
+.panel p{margin:0 0 6px;font-size:13px;line-height:1.65;color:#cfdbf5}
+.panel .em{color:#ffd479}
+
+#dlg{position:relative;z-index:3;background:linear-gradient(180deg,#131e38,#0d1428);
+ border-top:1px solid #24365c;padding:10px 14px 14px;min-height:92px;cursor:pointer;
+ box-shadow:0 -6px 20px rgba(0,0,0,.45)}
+#dlg .who{font-size:11px;color:#ffd479;font-weight:700;letter-spacing:1px;margin-bottom:4px}
+#dlg .who.raven{color:#ff8fa3}
+#dlg .who.ai{color:#8be3c8}
+#dlg .who.me{color:#9fc0ff}
+#dlg .txt{font-size:14px;line-height:1.72;color:#e8eefc;min-height:44px}
+#dlg .txt.fade{animation:fi .28s ease}
+@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+#dlg .tap{font-size:11px;color:#6b7fa8;text-align:right;margin-top:6px}
+#dlg.hide{display:none}
+
+#opts{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.opt{background:#141f38;border:1px solid #26385f;border-radius:11px;padding:10px 12px;font-size:13px;
+ color:#d7e3fa;cursor:pointer;text-align:left}
+.opt:active{background:#1b2b4c}
+.opt .sub{font-size:11px;color:#8fa0c6;margin-top:3px}
+.opt.more{border-color:#4b6b3a;background:#152218;color:#b6e8a8}
+
+.kc{background:#0f1a2e;border:1px solid #2b4a7a;border-left:3px solid #ffd479;border-radius:10px;
+ padding:10px 12px;margin:8px 0;font-size:12.5px;line-height:1.7;color:#d5e2fa}
+.kc b{color:#ffd479}
+.kc .mini{font-size:11.5px;color:#93a8cf;margin-top:5px;border-top:1px dashed #2b4a7a;padding-top:5px}
+.kc.why{border-left-color:#8be3c8}
+.kc.why b{color:#8be3c8}
+.kc.how{border-left-color:#ff9f6b}
+.kc.how b{color:#ff9f6b}
+
+.btn{display:block;width:100%;padding:11px;border-radius:11px;border:1px solid #2f5aa0;
+ background:linear-gradient(180deg,#1e4a8c,#163a70);color:#eaf2ff;font-size:14px;font-weight:600;
+ cursor:pointer;margin-top:10px}
+.btn:active{transform:translateY(1px)}
+.btn.ghost{background:transparent;border-color:#2a3d63;color:#9fb4da;font-weight:500}
+
+.cvw{background:#0a1224;border:1px solid #223155;border-radius:12px;overflow:hidden;margin:8px 0}
+canvas{display:block;width:100%;touch-action:none}
+
+.srow{display:flex;align-items:center;gap:10px;margin:9px 0;font-size:12.5px;color:#c3d2ee}
+.srow input[type=range]{flex:1;accent-color:#4b8ff0;height:28px}
+.srow .val{min-width:88px;text-align:right;color:#ffd479;font-variant-numeric:tabular-nums;font-size:12px}
+
+.tip{background:#131c33;border:1px solid #2a3d63;border-radius:10px;padding:9px 11px;font-size:12px;
+ color:#a8bbdd;line-height:1.65;margin-top:8px}
+.tip.good{border-color:#2c6b4f;color:#a8e8cd}
+.tip.bad{border-color:#7a3340;color:#ffc3cc}
+.tip b{color:#e8eefc}
+
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.sw{background:#141f38;border:1px solid #26385f;border-radius:20px;padding:6px 11px;font-size:12px;
+ color:#a8bbdd;cursor:pointer}
+.sw.on{border-color:#4b8ff0;background:#152a4c;color:#fff}
+
+.pl{background:#141f38;border:1px solid #26385f;border-radius:11px;padding:9px 11px;margin:6px 0;font-size:12.5px;color:#cdd9f2}
+.pl.out{opacity:.42;text-decoration:line-through}
+.pl .h{display:flex;justify-content:space-between;align-items:center}
+.pl .h b{font-size:13px;color:#fff}
+.pl .d{font-size:11.5px;color:#8fa0c6;margin-top:4px;line-height:1.55}
+
+.center{text-align:center}
+.mut{color:#7f92b8;font-size:11.5px;line-height:1.6}
+hr{border:0;border-top:1px solid #223155;margin:12px 0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:126px;background:#0f1a2ecc;
+ border:1px solid #3a5a8c;z-index:99;padding:8px 14px;border-radius:20px;font-size:12.5px;
+ color:#e8eefc;opacity:0;transition:.3s;pointer-events:none;max-width:90%;text-align:center}
+#toast.on{opacity:1}
+.modal{position:fixed;inset:0;background:#05091299;z-index:50;display:flex;align-items:center;
+ justify-content:center;padding:18px}
+.modal .box{background:#101a30;border:1px solid #2b4a7a;border-radius:16px;padding:16px;max-width:440px;
+ width:100%;max-height:84vh;overflow-y:auto}
+.x{float:right;cursor:pointer;color:#7f92b8;font-size:18px}
+.fold{background:#0d1628;border:1px dashed #3a5580;border-radius:10px;padding:9px 11px;margin:8px 0;
+ font-size:12px;color:#b9c9e6;line-height:1.7}
+.fold .ft{color:#8be3c8;font-weight:600;font-size:12px;margin-bottom:4px}
+
+/* ---- 角色形象 ---- */
+#dlgRow{display:flex;gap:10px;align-items:flex-start}
+#dAv{width:46px;height:46px;flex:0 0 46px;border-radius:50%;overflow:hidden;position:relative;
+ background:#0d1628;border:1px solid #2b4a7a;box-shadow:0 2px 8px rgba(0,0,0,.4)}
+#dAv svg{width:100%;height:100%;display:block}
+#dAv.talk{animation:avpop .34s cubic-bezier(.34,1.56,.64,1)}
+@keyframes avpop{0%{transform:scale(.8) rotate(-8deg)}55%{transform:scale(1.12) rotate(3deg)}100%{transform:scale(1)}}
+#dAv.rv{border-color:#7a3340;box-shadow:0 0 10px rgba(255,95,122,.35)}
+#dAv.ai{border-color:#2c6b5c}
+#dMain{flex:1;min-width:0}
+#dlg.rv{border-top-color:#7a3340}
+#stage>.panel,#stage>h2,#stage>.chip{animation:fi .3s ease}
+
+/* ---- 过场动画 ---- */
+#tr{position:fixed;inset:0;z-index:60;background:#050912;overflow:hidden;
+ opacity:0;transition:opacity .32s;pointer-events:none;display:flex;align-items:center;justify-content:center}
+#tr.on{opacity:1;pointer-events:auto}
+#trC{position:absolute;left:0;top:0;width:100%;height:100%}
+#trBody{position:relative;z-index:2;width:100%;max-width:520px;padding:0 26px;text-align:center}
+#trFig{width:104px;height:104px;margin:0 auto 4px;opacity:0;transform:translateX(70px)}
+#tr.on #trFig{animation:trIn .66s .12s ease forwards,trBob 1.7s .8s ease-in-out infinite}
+@keyframes trIn{from{opacity:0;transform:translateX(70px) rotate(9deg)}to{opacity:1;transform:none}}
+@keyframes trBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+#trFig svg{width:100%;height:100%;display:block;filter:drop-shadow(0 0 14px rgba(255,95,122,.45))}
+.trUp{opacity:0}
+#tr.on .trUp{animation:trUp .5s ease forwards}
+@keyframes trUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#trNo{font-size:11px;letter-spacing:4px;color:#ff8fa3;font-weight:800}
+#trCode{font-size:21px;font-weight:800;margin:7px 0 3px;color:#fff;letter-spacing:.5px}
+#trSub{font-size:12.5px;color:#9fb4da;line-height:1.6;max-width:330px;margin:0 auto}
+#trCrew{display:flex;gap:12px;justify-content:center;margin-top:16px}
+#trCrew .fig{width:40px;height:40px;border-radius:50%;overflow:hidden;background:#0d1628;
+ border:1px solid #2b4a7a;opacity:0;transform:translateX(-40px)}
+#trCrew .fig svg{width:100%;height:100%;display:block}
+#tr.on #trCrew .fig{animation:crIn .55s ease forwards}
+@keyframes crIn{from{opacity:0;transform:translateX(-40px)}to{opacity:1;transform:none}}
+#trSkip{margin-top:16px;font-size:11px;color:#5d7099}
+/* ---- 角色声音设置面板 ---- */
+.vrow{border:1px solid #24314f;border-radius:12px;padding:10px 11px;margin:9px 0;background:rgba(255,255,255,.03)}
+.vtop{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.vname{font-size:14px;font-weight:700;color:#e8eeff}
+.vplay{flex:none;border:1px solid #3c5a8f;background:#17233d;color:#9fd0ff;
+  border-radius:999px;padding:4px 11px;font-size:12px;font-family:inherit;cursor:pointer}
+.vplay:active{transform:translateY(1px)}
+.vline{display:flex;align-items:center;gap:8px;margin-top:7px}
+.vlab{font-size:11.5px;color:#8fa0c6;flex:none;width:30px}
+.vval{font-size:11.5px;color:#9fd0ff;flex:none;width:34px;text-align:right;font-variant-numeric:tabular-nums}
+.vline input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:3px;border-radius:3px;
+  background:#2b3a5c;outline:none;margin:0}
+.vline input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:#6aa8ff;border:2px solid #0d1425;cursor:pointer}
+.vline input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;
+  background:#6aa8ff;border:2px solid #0d1425;cursor:pointer}
+/* ---------- 声音开关 ---------- */
+.snds{display:flex;gap:6px;align-items:center}
+.snd{width:27px;height:27px;flex:0 0 auto;padding:0;border-radius:9px;border:1px solid #2b3c5e;
+  background:#131c2e;color:#5d7099;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:.16s;-webkit-tap-highlight-color:transparent}
+.snd.on{color:#8fc7ff;border-color:#3f6ea8;background:#17253c}
+.snd svg{width:15px;height:15px;display:block}
+</style>
+</head>
+<body>
+<div id="app">
+  <div id="bar">
+    <div class="row"><span id="chap">星旅追缉令</span><span class="snds" id="snds"></span><span id="cards">手册 0</span></div>
+    <div id="track"><div class="fill" id="fill"></div><span class="me" id="me">🛸</span><span class="rv" id="rv">🐦‍⬛</span><span class="lbl" id="gap"></span></div>
+  </div>
+  <div id="stage"></div>
+  <div id="dlg" class="hide">
+    <div id="dlgRow">
+      <div id="dAv"></div>
+      <div id="dMain">
+        <div class="who" id="dWho"></div>
+        <div class="txt" id="dTxt"></div>
+        <div id="opts"></div>
+        <div class="tap" id="dTap">点一下继续 ▸</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+<div id="tr">
+  <canvas id="trC"></canvas>
+  <div id="trBody">
+    <div id="trFig"></div>
+    <div id="trNo" class="trUp" style="animation-delay:.45s"></div>
+    <div id="trCode" class="trUp" style="animation-delay:.6s"></div>
+    <div id="trSub" class="trUp" style="animation-delay:.72s"></div>
+    <div id="trCrew">
+      <div class="fig" style="animation-delay:.95s"></div>
+      <div class="fig" style="animation-delay:1.1s"></div>
+    </div>
+    <div id="trSkip" class="trUp" style="animation-delay:1.3s">点一下跳过 ▸</div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   星旅追缉令 · 对话引导版
+   人教版地理七上（2024新版）第一、二章 · 6 节
+   设计原则：
+   1) 知识不"灌"，由外星人的困惑引出，学生先猜，角色再讲
+   2) 凡是"人类定的规矩"，必须讲清：为什么这么定 / 有什么用 / 怎么定的
+   3) 追捕骨架沿用 Carmen Sandiego：知识是钥匙，查阅是玩法，追错是折返
+   ============================================================ */
+const $=id=>document.getElementById(id);
+const stage=$('stage'), dlg=$('dlg'), dWho=$('dWho'), dTxt=$('dTxt'), dTap=$('dTap'), opts=$('opts');
+function el(t,c,h){const e=document.createElement(t);
+  if(h==null&&c&&/[<\u4e00-\u9fa5《》（）]/.test(c)){h=c;c='';}  /* 兜底：两参调用时第二参其实是内容，不是 class */
+  if(c)e.className=c; if(h!=null)e.innerHTML=h; return e;}
+/* ============================================================
+   声音系统 SFX：全部用 Web Audio 实时合成，不引入任何音频文件
+   —— 保住"单文件、零外部依赖、微信点开即响"的前提
+   —— 移动端浏览器禁止自动播放：必须等第一次真实点击才能解锁
+   ============================================================ */
+const SFX=(function(){
+  let ac=null, master=null, amb=null, on=true, blocked=false;
+  function ctx(){
+    if(ac||blocked) return ac;
+    try{
+      const AC=window.AudioContext||window.webkitAudioContext;
+      if(!AC){blocked=true;return null;}
+      ac=new AC();
+      master=ac.createGain(); master.gain.value=on?0.5:0; master.connect(ac.destination);
+    }catch(e){ blocked=true; ac=null; }
+    return ac;
+  }
+  function env(g,t,a,d,peak){
+    try{
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(Math.max(0.0002,peak),t+a);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+a+d);
+    }catch(e){}
+  }
+  function tone(o){
+    const c=ctx(); if(!c||!on) return;
+    try{
+      const t=c.currentTime+(o.at||0), dur=o.dur||.2, a=o.a||.008;
+      const osc=c.createOscillator(), g=c.createGain();
+      osc.type=o.type||'sine';
+      osc.frequency.setValueAtTime(o.f,t);
+      if(o.f2) osc.frequency.exponentialRampToValueAtTime(o.f2,t+dur);
+      env(g,t,a,dur,o.v||.12);
+      osc.connect(g); g.connect(master);
+      osc.start(t); osc.stop(t+a+dur+.06);
+    }catch(e){}
+  }
+  function noise(o){
+    const c=ctx(); if(!c||!on) return;
+    try{
+      const t=c.currentTime+(o.at||0), dur=o.dur||.25;
+      const n=Math.max(1,Math.floor(c.sampleRate*dur));
+      const buf=c.createBuffer(1,n,c.sampleRate), d=buf.getChannelData(0);
+      for(let i=0;i<n;i++) d[i]=(Math.random()*2-1)*(1-i/n);
+      const src=c.createBufferSource(); src.buffer=buf;
+      const f=c.createBiquadFilter(); f.type=o.type||'bandpass'; f.Q.value=o.q||1.1;
+      f.frequency.setValueAtTime(o.f||600,t);
+      if(o.f2) f.frequency.exponentialRampToValueAtTime(o.f2,t+dur);
+      const g=c.createGain(); env(g,t,.012,dur,o.v||.09);
+      src.connect(f); f.connect(g); g.connect(master);
+      src.start(t); src.stop(t+dur+.06);
+    }catch(e){}
+  }
+  function seq(fs,opt){
+    opt=opt||{};
+    fs.forEach(function(f,i){
+      tone({f:f,type:opt.type||'sine',dur:opt.dur||.16,v:opt.v||.11,at:i*(opt.gap||.075)});
+    });
+  }
+  function ambient(){                       /* 极轻的宇宙底噪，别盖过对话 */
+    const c=ctx(); if(!c||amb||!on) return;
+    try{
+      const g=c.createGain(); g.gain.value=.032; g.connect(master);
+      const f=c.createBiquadFilter(); f.type='lowpass'; f.frequency.value=420; f.connect(g);
+      const o1=c.createOscillator(), o2=c.createOscillator(), lfo=c.createOscillator(), lg=c.createGain();
+      o1.type='sine'; o1.frequency.value=55;
+      o2.type='sine'; o2.frequency.value=82.5;
+      lfo.type='sine'; lfo.frequency.value=.08; lg.gain.value=.018;
+      lfo.connect(lg); lg.connect(g.gain);
+      o1.connect(f); o2.connect(f);
+      o1.start(); o2.start(); lfo.start();
+      amb={o1:o1,o2:o2,lfo:lfo,g:g};
+    }catch(e){ amb=null; }
+  }
+  function stopAmbient(){
+    if(!amb) return;
+    try{ amb.o1.stop(); amb.o2.stop(); amb.lfo.stop(); }catch(e){}
+    amb=null;
+  }
+
+  /* ==========================================================
+     外星语 VOX：角色说话时"嘟囔"一串短音节
+     做法：按字数切成若干音节，音高在五声音阶里跳，每个音节带
+     上/下滑音 + 纯五度泛音 + 共振峰滤波 —— 听着像外星话，不像提示音
+     ========================================================== */
+  var voxNodes=[];
+  function stopVox(){
+    for(var i=0;i<voxNodes.length;i++){ try{ voxNodes[i].stop(); }catch(e){} }
+    voxNodes=[];
+  }
+  var VOX={
+    /* 小塔 T-07：外星实习生 —— 童声音区、颗粒短促、句尾爱往上挑，主打一个萌 */
+    '小塔 T-07':{base:648,scale:[0,2,4,7,9,12],type:'triangle',v:.085,dur:.052,gap:.060,wob:.07,tilt:1.12,q:5},
+    /* 蒲公英号：飞船 AI —— 更亮更稳，带金属感 */
+    '蒲公英号' :{base:792,scale:[0,4,7,11,12],type:'sine',v:.070,dur:.048,gap:.055,wob:.03,tilt:1.02,q:2},
+    /* 渡鸦：反派 —— 低八度、不谐和、往下沉 */
+    '渡鸦'    :{base:166,scale:[0,1,3,6,8],type:'sawtooth',v:.052,dur:.072,gap:.078,wob:.05,tilt:.93,q:-7},
+    /* 地球的声音：温暖中性 */
+    '地球的声音':{base:432,scale:[0,2,5,7,9],type:'sine',v:.075,dur:.060,gap:.066,wob:.04,tilt:1.00,q:3},
+    '地球代表' :{base:528,scale:[0,2,4,7,9],type:'triangle',v:.070,dur:.055,gap:.062,wob:.05,tilt:1.05,q:4},
+    '你'      :{base:560,scale:[0,3,5,7,10],type:'triangle',v:.065,dur:.054,gap:.060,wob:.05,tilt:1.06,q:4}
+  };
+  /* 一个"音节"：主音 + 纯五度泛音 + 带通共振峰 + 尾部小滑音 */
+  function syl(o){
+    const c=ctx(); if(!c) return;
+    try{
+      const t=c.currentTime+(o.at||0), dur=o.dur||.055, a=.006;
+      const g=c.createGain(); env(g,t,a,dur,o.v||.08);
+      const bp=c.createBiquadFilter(); bp.type='bandpass'; bp.Q.value=1.35;
+      bp.frequency.setValueAtTime(Math.max(220,o.f*1.55),t);
+      bp.frequency.linearRampToValueAtTime(Math.max(220,o.f*(1.55+(o.q||0)*.13)),t+dur);
+      bp.connect(g); g.connect(master);
+      const o1=c.createOscillator(); o1.type=o.type||'triangle';
+      o1.frequency.setValueAtTime(o.f,t);
+      o1.frequency.linearRampToValueAtTime(o.f*(1+(o.wob||0)),t+dur*.45);
+      o1.frequency.linearRampToValueAtTime(o.f*(1-(o.wob||0)*1.35),t+dur);
+      const o2=c.createOscillator(); o2.type='sine';
+      o2.frequency.setValueAtTime(o.f*1.4983,t);          /* 纯五度：非母语感的来源 */
+      const g2=c.createGain(); g2.gain.value=.40;
+      o1.connect(bp); o2.connect(g2); g2.connect(bp);
+      o1.start(t); o2.start(t);
+      o1.stop(t+a+dur+.03); o2.stop(t+a+dur+.03);
+      voxNodes.push(o1,o2);
+    }catch(e){}
+  }
+  function voice(who,txt){
+    const c=ctx(); if(!c||!on) return;
+    stopVox();
+    const V=VOX[who]||VOX['小塔 T-07'];
+    const t=String(txt||'').replace(/<[^>]+>/g,'').replace(/&[a-z]+;/g,'').replace(/\s+/g,'');
+    if(!t) return;
+    const n=Math.min(14,Math.max(3,Math.round(t.length/1.8)));   /* 长句也别嘟囔太久 */
+    const up=/[?？吗呢吧啊呀嘿]$/.test(t), bang=/[!！]$/.test(t);
+    try{
+      for(let i=0;i<n;i++){
+        const cd=t.charCodeAt(Math.min(i,t.length-1))||0;
+        const semi=V.scale[(i*3+cd)%V.scale.length];
+        let f=V.base*Math.pow(2,semi/12)*Math.pow(V.tilt,i/Math.max(1,n-1));
+        if(i===n-1) f*= up?1.24:(bang?1.08:.86);   /* 疑问上挑、感叹上扬、陈述收尾 */
+        syl({f:f,at:i*V.gap,dur:V.dur,v:V.v,type:V.type,wob:V.wob,q:V.q});
+      }
+    }catch(e){}
+  }
+  /* ==========================================================
+     角色"报幕音"：人声朗读前先响一小段固定动机
+     为什么需要它——手机上中文音色通常只有 1 个，而且不少安卓引擎
+     根本不理睬 pitch 参数。所以角色辨识不能只靠音色，得有一段
+     "一听就知道是谁"的动机垫在前面（渡鸦还多一层低频轰鸣）。
+     返回这段动机的时长（秒），好让人声延后，两种声音不打架。
+     ========================================================== */
+  var CUE={
+    /* 上行大三度+纯五度：元气、好奇 —— 外星实习生 */
+    '小塔 T-07':{semi:[0,4,7],   dur:.075,gap:.088,type:'triangle',v:.095,wob:.07,q:5},
+    /* 纯五度+八度：明亮、稳定 —— 飞船 AI */
+    '蒲公英号' :{semi:[0,7,12],  dur:.060,gap:.076,type:'sine',    v:.075,wob:.03,q:2},
+    /* 下行 + 低频轰鸣：阴沉 —— 反派 */
+    '渡鸦'    :{semi:[0,-4,-11], dur:.110,gap:.130,type:'sawtooth',v:.060,wob:.05,q:-7,rumble:.055},
+    /* 柔和上行：温暖中性 */
+    '地球的声音':{semi:[0,3],     dur:.095,gap:.120,type:'sine',    v:.085,wob:.04,q:3},
+    '地球代表' :{semi:[0,5],     dur:.070,gap:.092,type:'triangle',v:.075,wob:.05,q:4},
+    '你'      :{semi:[0,7],     dur:.066,gap:.088,type:'triangle',v:.070,wob:.05,q:4}
+  };
+  function voxCue(who){
+    const c=ctx(); if(!c||!on) return 0;
+    try{ stopVox(); }catch(e){}
+    const V=VOX[who]||VOX['小塔 T-07'], M=CUE[who]||CUE['小塔 T-07'];
+    let at=0;
+    try{
+      for(let i=0;i<M.semi.length;i++){
+        syl({f:V.base*Math.pow(2,M.semi[i]/12),at:at,dur:M.dur,v:M.v,
+             type:M.type,wob:M.wob,q:M.q});
+        at+=M.gap;
+      }
+      if(M.rumble){                       /* 渡鸦：底下垫一层低频轰鸣 */
+        const t0=c.currentTime, g=c.createGain(), o1=c.createOscillator();
+        o1.type='sine';
+        o1.frequency.setValueAtTime(78,t0);
+        o1.frequency.exponentialRampToValueAtTime(58,t0+.42);
+        env(g,t0,.02,.42,M.rumble);
+        o1.connect(g); g.connect(master);
+        o1.start(t0); o1.stop(t0+.56);
+        voxNodes.push(o1);
+      }
+    }catch(e){}
+    return at+.10;
+  }
+  return {
+    voice:voice,
+    voxCue:voxCue,
+    stopVox:stopVox,
+    /* 解锁：必须在用户手势里调用（开始按钮 / 首次触屏） */
+    unlock:function(){ const c=ctx(); if(!c) return;
+      try{ if(c.state==='suspended') c.resume(); }catch(e){}
+      ambient(); },
+    isOn:function(){ return on; },
+    setOn:function(v){ on=!!v;
+      if(master){ try{ master.gain.value=on?0.5:0; }catch(e){} }
+      if(on) this.unlock(); else stopAmbient(); },
+    /* ---- 音色 ---- */
+    tap:function(){ tone({f:720,f2:960,dur:.07,type:'triangle',v:.09}); },                 /* 点击 / 推进 */
+    blip:function(){ tone({f:1180,dur:.04,type:'sine',v:.05}); },                          /* 普通角色说话 */
+    ai:function(){ tone({f:880,f2:1320,dur:.09,type:'sine',v:.06}); },                     /* 蒲公英号 */
+    raven:function(){ tone({f:118,dur:.5,type:'sawtooth',v:.06});                          /* 渡鸦：低沉不谐和 */
+      tone({f:157,dur:.5,type:'sawtooth',v:.04,at:.02}); },
+    page:function(){ noise({dur:.13,f:1800,f2:700,v:.06,q:.8}); },                         /* 翻页 */
+    good:function(){ seq([523,659,784,1046],{type:'triangle',dur:.16,v:.12,gap:.085}); },  /* 追上了 */
+    bad:function(){ tone({f:330,f2:190,dur:.34,type:'sawtooth',v:.06});                    /* 追错：只折返，别惩罚感太重 */
+      noise({dur:.2,f:400,f2:160,v:.05}); },
+    card:function(){ seq([659,784,988,1175],{type:'sine',dur:.22,v:.10,gap:.07}); },      /* 手册 +1（五声音阶，听着更乖） */
+    star:function(){ seq([1568,2093],{type:'sine',dur:.2,v:.07,gap:.06}); },               /* 主动深挖 */
+    whoosh:function(){ noise({dur:.62,f:220,f2:3200,v:.10,q:.7});                          /* 过场 */
+      tone({f:110,f2:330,dur:.6,type:'sine',v:.05}); },
+    ding:function(){ tone({f:1046,dur:.5,type:'sine',v:.07});                              /* 站牌亮起 */
+      tone({f:1568,dur:.4,type:'sine',v:.035,at:.02}); },
+    win:function(){ seq([523,659,784,1046,1318],{type:'triangle',dur:.3,v:.12,gap:.13}); },
+    lose:function(){ seq([392,349,294],{type:'triangle',dur:.3,v:.08,gap:.16}); }
+  };
+})();
+
+/* ============================================================
+   朗读 TTS：系统语音合成念出对话（不占体积），默认开启
+   三个真实存在的坑，都在这里处理掉：
+   1) 安卓微信 X5：speechSynthesis 对象存在，但 speak() 静默失败
+      → 发声探测：2.5 秒内没触发 onstart 就判定失败，自动回退外星语 + 提示
+   2) iOS：首次 speak 必须在用户手势的同步调用栈里，且 voice 列表异步到达
+      → warm() 挂在"开始故事"的真实点击里；voiceschanged 时重挑音色
+   3) Chrome 桌面版：单条 utterance 超过约 15 秒会被掐断
+      → 按标点分句排队，一句一句念
+   ============================================================ */
+const TTS=(function(){
+  const SS=window.speechSynthesis||null, UU=window.SpeechSynthesisUtterance||null;
+  const ok=!!(SS&&UU);
+  let on=null, v=null, warmed=false, tok=0, q=[], probe='unknown', pt=null, last='', sd=null;
+  const KEY='xlzjl_tts', VKEY='xlzjl_tvox';
+  function cur(){
+    if(on===null){
+      let s=null; try{ s=localStorage.getItem(KEY); }catch(e){}
+      on=(s===null)?true:(s==='1');        /* 首次进入：默认开 */
+    }
+    return on;
+  }
+  function all(){ let vs=[]; try{ vs=(SS&&SS.getVoices())||[]; }catch(e){} return vs||[]; }
+  function zh(){ return all().filter(function(x){return /^zh|Chinese|普通话|中文/i.test((x.lang||'')+' '+(x.name||''));}); }
+  function pick(){
+    if(v) return v;
+    /* 没有中文音色就返回 null：不指定 voice，让系统按 lang='zh-CN' 自己匹配，
+       千万别拿英文嗓子去念中文（那样会念成一锅粥） */
+    v=zh()[0]||null;
+    return v;
+  }
+  try{ if(SS){ if(SS.addEventListener) SS.addEventListener('voiceschanged',function(){ v=null; pick(); });
+              else SS.onvoiceschanged=function(){ v=null; pick(); }; } }catch(e){}
+  /* ---- 每个角色的"嗓子" ----
+     中文音色手机上通常只有 1~2 个，所以三层一起调：
+     ① 尽量分到不同的 voice（名字匹配优先，其次按 slot 错开）
+     ② pitch 拉开音高（0~2，1 为常态）——这是最可靠的差异化手段
+     ③ rate 微调语速，配合角色的性格                                   */
+  const TVOX={
+    '小塔 T-07'  :{pitch:1.60,rate:1.10,vol:1.00,slot:0, pref:['Tingting','Ting-Ting','婷婷','Meijia','女','Xiaoxiao','晓晓','Yaoyao']},
+    '蒲公英号'   :{pitch:1.18,rate:1.05,vol:0.92,slot:1, pref:['Xiaoxiao','晓晓','Tingting','Ting-Ting','Yaoyao','女']},
+    '渡鸦'       :{pitch:0.45,rate:0.90,vol:1.00,slot:-1,pref:['Yunxi','云希','Kangkang','Daniel','Alex','男','Liang','Yunjian']},
+    '地球的声音' :{pitch:0.90,rate:0.95,vol:1.00,slot:0, pref:['Xiaoyi','晓伊','Tingting','Ting-Ting','女','Xiaoxiao']},
+    '地球代表'   :{pitch:1.12,rate:1.02,vol:1.00,slot:0, pref:['Tingting','Ting-Ting','女','Xiaoxiao']},
+    '你'         :{pitch:1.14,rate:1.02,vol:1.00,slot:0, pref:['Tingting','Ting-Ting','女','Xiaoxiao']},
+    '旁白'       :{pitch:1.00,rate:1.00,vol:0.95,slot:0, pref:[]}
+  };
+  const DEF=JSON.parse(JSON.stringify(TVOX));   /* 出厂值，供"恢复默认"用 */
+  function cfgOf(who){ return TVOX[who]||TVOX['旁白']; }
+  /* 用户在"声音设置"里调过的音高/语速，存本地，下次进来还是他的设定 */
+  (function load(){
+    let o=null; try{ o=JSON.parse(localStorage.getItem(VKEY)||'null'); }catch(e){}
+    if(!o) return;
+    for(const k in o){ if(!TVOX[k]) continue;
+      const p=+o[k].pitch, r=+o[k].rate;
+      if(p>=.3&&p<=2) TVOX[k].pitch=p;
+      if(r>=.6&&r<=1.6) TVOX[k].rate=r;
+    }
+  })();
+  function save(){
+    const o={};
+    for(const k in TVOX) o[k]={pitch:TVOX[k].pitch,rate:TVOX[k].rate};
+    try{ localStorage.setItem(VKEY,JSON.stringify(o)); }catch(e){}
+  }
+  function voiceFor(who){
+    const c=cfgOf(who), vs=zh();
+    if(!vs.length) return pick();
+    for(let i=0;i<(c.pref||[]).length;i++){
+      for(let j=0;j<vs.length;j++){ if(new RegExp(c.pref[i],'i').test(vs[j].name||'')) return vs[j]; }
+    }
+    let s=c.slot||0; if(s<0) s=vs.length+s;                  /* -1 = 拿最后一个（通常更低沉） */
+    return vs[Math.max(0,Math.min(vs.length-1,s))]||vs[0];
+  }
+  function plain(h){
+    return String(h||'').replace(/<br\s*\/?>/gi,'。').replace(/<[^>]+>/g,'')
+      .replace(/&nbsp;/g,' ').replace(/&[a-z]+;/gi,'').replace(/\s+/g,' ')
+      .replace(/[。]{2,}/g,'。').trim();          /* <br> 换成的句号别和原句尾句号叠一起 */
+  }
+  function split(t){
+    const out=[]; let buf='';
+    for(let i=0;i<t.length;i++){
+      buf+=t[i];
+      if(/[。！？；\n]/.test(t[i])||buf.length>=52){ out.push(buf); buf=''; }
+    }
+    if(buf.trim()) out.push(buf);
+    /* 丢掉纯标点的碎句（比如孤立的一个「。」），免得念出莫名其妙的停顿 */
+    return out.filter(function(s){ return /[0-9A-Za-z一-龥]/.test(s); }).slice(0,14);
+  }
+  function markFail(why){
+    if(probe==='fail') return;
+    probe='fail'; last=why||'silent'; on=false;
+    clearTimeout(sd);
+    /* 刻意不写 localStorage：万一只是这次加载慢被误判，下次进来还能重新试一次 */
+    try{ SS&&SS.cancel(); }catch(e){}
+    toast('这个浏览器发不出人声（安卓微信常见）→ 已自动切回外星语。<br>想听真人朗读：右上角「···」→「在浏览器打开」',4600);
+    if(typeof TTS!=='undefined'&&typeof TTS.onFail==='function'){ try{ TTS.onFail(); }catch(e){} }
+  }
+  function arm(ms){
+    clearTimeout(pt);
+    pt=setTimeout(function(){ if(probe!=='ok') markFail('silent'); },ms||2500);
+  }
+  function play(tk){
+    if(tk!==tok||!q.length) return;
+    const it=q.shift(), seg=it.s, who=it.who;
+    try{
+      const c=cfgOf(who);
+      const u=new UU(seg);
+      u.lang='zh-CN'; u.rate=c.rate; u.pitch=c.pitch; u.volume=c.vol;
+      const vv=voiceFor(who); if(vv) u.voice=vv;
+      u.onstart=function(){ probe='ok'; clearTimeout(pt); };
+      u.onend=function(){ if(tk!==tok) return;
+        setTimeout(function(){
+          try{ if(SS.paused) SS.resume(); }catch(e){}   /* Chrome 长句卡死的经典解法 */
+          play(tk);
+        },110);
+      };
+      u.onerror=function(){ if(tk!==tok) return; markFail('error'); };
+      try{ if(SS.paused) SS.resume(); }catch(e){}
+      SS.speak(u);
+    }catch(e){ markFail('throw'); }
+  }
+  return {
+    ok:ok,
+    onFail:null,
+    isOn:function(){ return ok&&cur(); },
+    setOn:function(x){ on=!!x;
+      try{ localStorage.setItem(KEY,on?'1':'0'); }catch(e){}
+      if(!on){ tok++; q=[]; clearTimeout(sd); try{ SS&&SS.cancel(); }catch(e){} }
+      else { probe='unknown'; }                 /* 手动打开时重新探测一次 */
+    },
+    /* 必须在用户手势的同步栈里调用一次：唤醒 iOS 合成器，顺便探测能不能出声 */
+    warm:function(){
+      if(!ok||warmed) return; warmed=true;
+      try{
+        const u=new UU('一'); u.volume=0; u.lang='zh-CN';   /* 音量 0，听不见，只为触发 onstart */
+        const vv=pick(); if(vv) u.voice=vv;
+        u.onstart=function(){ probe='ok'; clearTimeout(pt); };
+        SS.speak(u);
+      }catch(e){}
+      arm(3500);            /* 首次加载语音引擎可能要一两秒，给足耐心再判失败 */
+    },
+    /* 返回 true 表示人声已接管（此时外星语让位）；who 决定用谁的嗓子
+       delay = 延后多少毫秒再念（给角色报幕音留出时间） */
+    speak:function(h,who,delay){
+      if(!ok||!cur()) return false;
+      const t=plain(h); if(!t) return false;
+      tok++; const tk=tok;
+      q=split(t).map(function(s){ return {s:s,who:who||'旁白'}; });
+      /* 只在真的还在念的时候 cancel：iOS Safari 上"没在念也 cancel"会把合成器卡死 */
+      try{ if(SS&&SS.speaking) SS.cancel(); }catch(e){}
+      clearTimeout(sd);
+      const d=delay||60;
+      sd=setTimeout(function(){ play(tk); },d);
+      if(probe!=='ok') arm(3000+d);
+      return true;
+    },
+    /* 供"声音设置"面板读写 */
+    cfg:function(who){ const c=cfgOf(who); return {pitch:c.pitch,rate:c.rate,vol:c.vol}; },
+    tune:function(who,p,r){
+      const c=cfgOf(who);
+      if(p!=null) c.pitch=Math.max(.3,Math.min(2,+p));
+      if(r!=null) c.rate =Math.max(.6,Math.min(1.6,+r));
+      save();
+    },
+    reset:function(){ for(const k in DEF){ TVOX[k].pitch=DEF[k].pitch; TVOX[k].rate=DEF[k].rate; } save(); },
+    stop:function(){ tok++; q=[]; clearTimeout(sd); try{ SS&&SS.cancel(); }catch(e){} },
+    diag:function(){
+      let vs=[]; try{ vs=(SS&&SS.getVoices())||[]; }catch(e){}
+      const zh=vs.filter(function(x){return /^zh/i.test(x.lang||'');});
+      const ua=navigator.userAgent||'';
+      const roles={};
+      ['小塔 T-07','蒲公英号','渡鸦','地球的声音'].forEach(function(r){
+        const c=cfgOf(r), vv=voiceFor(r);
+        roles[r]=c.pitch+'倍音高 / '+c.rate+'倍语速 / '+(vv?vv.name:'系统默认');
+      });
+      return {api:ok,on:cur(),probe:probe,last:last,voices:vs.length,zh:zh.length,
+        sample:zh.slice(0,4).map(function(x){return x.name+'（'+x.lang+'）';}),roles:roles,
+        env:/MicroMessenger/i.test(ua)?'微信内置浏览器':(/Android/i.test(ua)?'安卓浏览器':'iOS / 其他')};
+    },
+    test:function(){ this.setOn(true); probe='unknown'; this.speak('你好，我是小塔，这是朗读自检。','小塔 T-07'); return this.diag(); }
+  };
+})();
+/* 说话的统一入口：能出人声就念出来（并加一声角色开口音），否则用外星语嘟囔 */
+function speakLine(who,txt){
+  const t=String(txt||''); if(!t.replace(/<[^>]+>/g,'').trim()) return;
+  const w=who||'蒲公英号';
+  if(TTS.isOn()){
+    /* 先响角色报幕动机，再念台词 —— 就算这台手机只有一个中文音色，
+       也能靠这段动机听出"现在是谁在说话" */
+    const lead=SFX.voxCue(w)||0;
+    TTS.speak(t,w,Math.round(lead*1000)+120);
+    return;
+  }
+  SFX.voice(w,t);
+}
+/* 切到后台 / 关页面时把人声掐掉，免得在后台接着念 */
+try{ document.addEventListener('visibilitychange',function(){ if(document.hidden) TTS.stop(); }); }catch(e){}
+/* 首次任意触屏/点击兜底解锁（防止有人绕过开始按钮） */
+(function(){
+  var f=function(){ SFX.unlock(); window.removeEventListener('touchend',f); window.removeEventListener('click',f); };
+  window.addEventListener('touchend',f,{once:true}); window.addEventListener('click',f,{once:true});
+})();
+
+let TT=null;
+function toast(m,ms){const t=$('toast');t.innerHTML=m;t.classList.add('on');
+  clearTimeout(TT);TT=setTimeout(()=>t.classList.remove('on'),ms||2200);}
+
+/* ---------- 状态 ---------- */
+const S={ci:0,gap:3,cards:[],log:[],wrong:0,start:Date.now()};
+function track(k,d){S.log.push({t:Date.now(),k,d});}
+function cardAdd(id,name,body,mini){
+  if(S.cards.find(c=>c.id===id))return;
+  S.cards.push({id,name,body,mini}); $('cards').textContent='手册 '+S.cards.length; track('card',id);
+  SFX.card();
+}
+function bar(){
+  const me=S.ci, rv=Math.min(6,me+S.gap);
+  $('me').style.left=(me/6*88)+'%'; $('rv').style.left=(rv/6*88)+'%';
+  $('fill').style.width=(me/6*100)+'%';
+  $('gap').textContent='落后 '+S.gap+' 站';
+}
+
+/* ---------- canvas 工具 ---------- */
+function mkCv(host,h){
+  const w=Math.max(240,Math.min(340,(host.clientWidth||300)-26));
+  const c=document.createElement('canvas');
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  c.width=w*dpr; c.height=h*dpr;
+  c.style.width=w+'px'; c.style.height=h+'px';   // CSS 尺寸 = 逻辑尺寸，点击坐标无需换算
+  const x=c.getContext('2d'); x.setTransform(dpr,0,0,dpr,0,0);
+  const wrap=el('div','cvw'); wrap.style.width=w+'px'; wrap.style.margin='8px auto';
+  wrap.appendChild(c); host.appendChild(wrap);
+  c._w=w; c._h=h;   // 逻辑尺寸，供点击换算（CSS 尺寸已等于逻辑尺寸）
+  return {c:c,x:x,w:w,h:h};
+}
+function onTap(cv,fn){
+  cv.addEventListener('pointerdown',function(e){e.preventDefault();
+    const r=cv.getBoundingClientRect();
+    const sx=(cv._w||cv.width)/r.width, sy=(cv._h||cv.height)/r.height;
+    fn((e.clientX-r.left)*sx, (e.clientY-r.top)*sy, e);});
+}
+
+/* ============================================================
+   地形数据：1 层 = 100 米，7×7
+   ============================================================ */
+const TW=7,TH=7;
+const T=[[4,6,6,6,6,5,3],
+         [3,8,6,5,6,4,2],
+         [2,4,5,4,5,3,1],
+         [1,3,4,3,4,2,0],
+         [1,1,2,1,3,1,0],
+         [0,1,3,1,2,0,0],
+         [0,0,1,0,1,0,0]];
+const tg=(x,y)=>(x<0||y<0||x>=TW||y>=TH)?null:T[y][x];
+function cls(x,y){
+  const v=tg(x,y),N=tg(x,y-1),S2=tg(x,y+1),Wc=tg(x-1,y),E=tg(x+1,y);
+  const nb=[N,S2,Wc,E].filter(a=>a!==null);
+  const peak=nb.every(a=>a<v);
+  const saddle=(N>v&&S2>v&&Wc<v&&E<v)||(Wc>v&&E>v&&N<v&&S2<v);
+  const valley=(Wc>v&&E>v)||(N>v&&S2>v);
+  const ridge=(Wc<v&&E<v)||(N<v&&S2<v);
+  let t='山坡';
+  if(peak)t='山峰'; else if(saddle)t='鞍部'; else if(valley)t='山谷'; else if(ridge)t='山脊';
+  // 陡/崖：与邻格落差>=3层（300米）。山峰本身四周必然骤降，不算陡崖
+  const cliff=(!peak)&&Math.max.apply(null,nb.map(a=>Math.abs(v-a)))>=3;
+  return {v:v,t:t,cliff:cliff};
+}
+function flowPath(x,y){const p=[];let cx=x,cy=y;
+  for(let i=0;i<14;i++){p.push([cx,cy]);let best=null,bv=tg(cx,cy);
+    [[0,-1],[0,1],[-1,0],[1,0],[-1,-1],[1,-1],[-1,1],[1,1]].forEach(function(d){
+      const nv=tg(cx+d[0],cy+d[1]); if(nv!==null&&nv<bv){bv=nv;best=[cx+d[0],cy+d[1]];}});
+    if(!best)break; cx=best[0];cy=best[1];}
+  return p;}
+function valleyTop(){let best=null;
+  for(let y=0;y<TH;y++)for(let x=0;x<TW;x++){const c=cls(x,y);
+    if(c.t==='山谷'&&(!best||c.v>best.v))best={x:x,y:y,v:c.v};}
+  return best;}
+
+/* ============================================================
+   演示库 DEMO：每个 = function(host, next)
+   演示负责"看得见"，对话负责"讲得清"
+   ============================================================ */
+const DEMO={};
+
+/* ---------- 1.1 行星筛选（演示 / 行动共用） ---------- */
+const PLANETS=[
+ {n:'水星',d:1,x:.30,c:'#9b8f80',w:'几乎没有大气',a:'几乎没有大气（稀薄到可忽略）',t:'白天约 430℃，夜晚约 −180℃'},
+ {n:'金星',d:2,x:.38,c:'#dfae6f',w:'有大气，但主要是二氧化碳',a:'浓密的二氧化碳大气',t:'温室效应失控，地表约 460℃；大气压约为地球的 90 倍'},
+ {n:'地球',d:3,x:.47,c:'#4a90d9',w:'有大量液态水',a:'氮氧为主，可供呼吸',t:'日地距离适中，地表平均气温约 15℃'},
+ {n:'火星',d:4,x:.56,c:'#c1512f',w:'有冰，也有少量液态水痕迹',a:'稀薄，主要是二氧化碳',t:'大气很稀薄，平均气温约 −60℃'},
+ {n:'木星',d:5,x:.68,c:'#d8a86a',w:'没有液态水海洋',a:'氢和氦为主，无法呼吸',t:'气态巨行星，没有可以站立的固体表面'},
+ {n:'土星',d:6,x:.78,c:'#e0cb92',w:'没有液态水海洋',a:'氢和氦为主，无法呼吸',t:'气态巨行星，平均密度比水还小'},
+ {n:'天王星',d:7,x:.86,c:'#8fd3e0',w:'水以冰的形式存在',a:'氢氦和甲烷，无法呼吸',t:'距太阳远，约 −200℃'},
+ {n:'海王星',d:8,x:.93,c:'#5b7fd4',w:'水以冰的形式存在',a:'氢氦和甲烷，无法呼吸',t:'距太阳远，约 −200℃'}
+];
+function planetUI(host,mode,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t',mode==='demo'?'🪐 太阳系八颗行星 · 点开看看它缺什么':'🎯 用三条线索把行星筛出去'));
+  if(mode==='act') p.appendChild(el('p','<span class="em">「有水喝、能喘气、不会把我烤熟。」</span>'));
+  const chips=el('div','chips');
+  const conds=[{k:false,n:'要有液态水',f:function(pl){return pl.w.indexOf('有')===0&&pl.w.indexOf('水以冰')<0&&pl.w.indexOf('没有')<0;}},
+               {k:false,n:'要有能呼吸的大气',f:function(pl){return pl.a.indexOf('可供呼吸')>=0;}},
+               {k:false,n:'温度要适宜',f:function(pl){return pl.n==='地球';}}];
+  conds.forEach(function(cd){
+    const b=el('div','sw',cd.n);
+    b.onclick=function(){cd.k=!cd.k;b.classList.toggle('on',cd.k);render();track('cond',cd.n+':'+cd.k);};
+    chips.appendChild(b);
+  });
+  p.appendChild(chips);
+  const list=el('div',''); p.appendChild(list);
+  const foot=el('div',''); p.appendChild(foot);
+  function ok(pl){let r=true;conds.forEach(function(cd){if(cd.k&&!cd.f(pl))r=false;});return r;}
+  function render(){
+    list.innerHTML=''; let left=0;
+    PLANETS.forEach(function(pl){
+      const good=ok(pl); if(good)left++;
+      const d=el('div','pl'+(good?'':' out'));
+      d.appendChild(el('div','h','<span>'+pl.n+'</span><b>'+(good?'✓':'✕')+'</b>'));
+      d.appendChild(el('div','d','<b>水：</b>'+pl.w+'<br><b>大气：</b>'+pl.a+'<br><b>温度：</b>'+pl.t));
+      d.onclick=function(){
+        track('look',pl.n);
+        toast(good?'<b>'+pl.n+'</b>：三条都满足':'<b>'+pl.n+'</b>：'+pl.t,2600);
+      };
+      list.appendChild(d);
+    });
+    foot.innerHTML='';
+    if(mode==='act'){
+      const on=conds.filter(function(c){return c.k;}).length;
+      foot.appendChild(el('div','tip',on===0?'☝️ 先把三条线索都打开，再看看剩下谁。'
+        :(left===1?'只剩一颗了 —— 就是它。':(left===0?'一条都不剩：说明你把条件开得太严了。':'还剩 '+left+' 颗，条件还不够严。'))));
+      if(left===1&&conds.every(function(c){return c.k;})){
+        const b=el('button','btn','🛰️ 追向地球');
+        b.onclick=function(){next(true,'三条全中，只剩地球。');};
+        foot.appendChild(b);
+      }
+    }
+  }
+  render();
+  host.appendChild(p);
+}
+DEMO.planetDemo=function(host,next){planetUI(host,'demo',next);};
+DEMO.planetAct=function(host,next){planetUI(host,'act',next);};
+
+/* ---------- 序章：星图核心失窃 ---------- */
+DEMO.intro=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','📡 最后一段定位信号'));
+  p.appendChild(el('p','星图核心离线前，最后传回的坐标是——<b>太阳系，第三颗行星</b>。'));
+  const cv=mkCv(p,198);
+  const w=cv.w,h=cv.h,x=cv.x;
+  const stars=[];
+  for(let i=0;i<72;i++)stars.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.1+0.25,p:Math.random()*6.28});
+  const ex=w*0.74,ey=h*0.40,er=Math.min(w,h)*0.19;
+  const p0={x:w*0.06,y:h*0.82},p1={x:w*0.34,y:h*0.66},p2={x:w*0.58,y:h*0.28};
+  const bez=function(t){const u=1-t;return {x:u*u*p0.x+2*u*t*p1.x+t*t*p2.x,y:u*u*p0.y+2*u*t*p1.y+t*t*p2.y};};
+  let k=0;
+  function draw(){
+    x.clearRect(0,0,w,h);
+    x.fillStyle='#060a16'; x.fillRect(0,0,w,h);
+    stars.forEach(function(s){const a=0.3+0.7*Math.abs(Math.sin(s.p+k*0.02));
+      x.fillStyle='rgba(200,220,255,'+a.toFixed(2)+')';x.beginPath();x.arc(s.x,s.y,s.r,0,7);x.fill();});
+    x.save();x.setLineDash([4,5]);x.strokeStyle='rgba(255,143,163,.45)';x.lineWidth=1.2;
+    x.beginPath();x.moveTo(p0.x,p0.y);x.quadraticCurveTo(p1.x,p1.y,p2.x,p2.y);x.stroke();x.restore();
+    const g=x.createRadialGradient(ex-er*0.4,ey-er*0.45,er*0.2,ex,ey,er);
+    g.addColorStop(0,'#63b6f2');g.addColorStop(1,'#1a4c83');
+    x.beginPath();x.arc(ex,ey,er,0,7);x.fillStyle=g;x.fill();
+    x.fillStyle='#3f8f5a';
+    x.beginPath();x.ellipse(ex-er*0.28,ey-er*0.30,er*0.34,er*0.22,0.4,0,7);x.fill();
+    x.beginPath();x.ellipse(ex+er*0.30,ey+er*0.28,er*0.26,er*0.17,-0.3,0,7);x.fill();
+    x.beginPath();x.arc(ex,ey,er,0,7);x.strokeStyle='rgba(130,195,255,.35)';x.lineWidth=3;x.stroke();
+    const cp=bez(k);
+    x.beginPath();x.arc(cp.x,cp.y,3.2,0,7);x.fillStyle='#ffd479';x.fill();
+    x.beginPath();x.arc(cp.x,cp.y,7.5,0,7);x.fillStyle='rgba(255,212,121,.20)';x.fill();
+    x.save();x.translate(cp.x,cp.y);x.rotate(Math.atan2(cp.y-bez(Math.max(0,k-0.02)).y,cp.x-bez(Math.max(0,k-0.02)).x));
+    x.fillStyle='#ff8fa3';x.beginPath();x.moveTo(9,0);x.lineTo(-5,4.5);x.lineTo(-5,-4.5);x.closePath();x.fill();x.restore();
+    x.fillStyle='#cfe0ff';x.font='11px sans-serif';x.fillText('地球',ex-er*0.16,ey+er+15);
+    x.fillStyle='#ff8fa3';x.font='10px sans-serif';x.fillText('渡鸦',cp.x-6,cp.y-11);
+    x.fillStyle='#6b7fa8';x.font='10px sans-serif';x.fillText('👆 点一下那颗蓝色的星球',6,h-6);
+  }
+  draw();
+  (function loop(){ if(!cv.c.isConnected)return; k+=0.0055; if(k>1)k=0; draw(); requestAnimationFrame(loop); })();
+  onTap(cv.c,function(px,py){
+    const d=Math.sqrt((px-ex)*(px-ex)+(py-ey)*(py-ey));
+    if(d<=er+10)toast('🌍 地球。渡鸦带着星图核心，就藏在这颗星球上。',2400);
+    else toast('这里是深空。目标只有一颗——地球。',1800);
+  });
+  host.appendChild(p);
+};
+
+/* ---------- 1.2 球面网格：经纬线是怎么画出来的 ---------- */
+DEMO.globe=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🌐 经纬线是怎么画出来的'));
+  p.appendChild(el('p','地球是个球。人类要在球面上"画格子"，于是有了这套线。<b>拖动下面的滑块转动地球</b>，看看两种线有什么不一样。'));
+  const cv=mkCv(p,190);
+  const rot=el('div','srow','<span>转动地球</span>'); 
+  const inp=document.createElement('input'); inp.type='range'; inp.min=0; inp.max=360; inp.step=5; inp.value=30;
+  rot.appendChild(inp); p.appendChild(rot);
+  const info=el('div','tip',''); p.appendChild(info);
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h,cx=w/2,cy=h/2,R=Math.min(w,h)/2-16;
+    x.clearRect(0,0,w,h);
+    const g=x.createRadialGradient(cx-R*.3,cy-R*.3,4,cx,cy,R);
+    g.addColorStop(0,'#2b5f9e'); g.addColorStop(1,'#12305c');
+    x.beginPath(); x.arc(cx,cy,R,0,7); x.fillStyle=g; x.fill();
+    const rotv=+inp.value*Math.PI/180;
+    // 纬线：与地轴垂直的圆，越往两极越小
+    for(let i=-6;i<=6;i++){
+      const lat=i*15*Math.PI/180;
+      const ry=R*Math.sin(lat);          // 投影后的半短轴
+      const yy=cy-R*Math.sin(lat)*Math.sin(Math.PI/2)*Math.cos(0); // 屏幕 y
+      const ypos=cy-R*Math.sin(lat)*Math.cos(0);
+      const rr=R*Math.cos(lat);          // 该纬线圈半径（投影为椭圆长半轴）
+      x.beginPath(); x.ellipse(cx,cy-R*Math.sin(lat),rr,Math.max(1.2,rr*0.28),0,0,7);
+      x.strokeStyle=(i===0)?'#ffd479':'#7fb2ff'; x.lineWidth=(i===0)?2:1; x.stroke();
+      if(i===0){x.fillStyle='#ffd479';x.font='10px sans-serif';x.fillText('赤道 0°',cx+rr+3,cy+3);}
+    }
+    // 经线：连接南北两极的半圆
+    for(let j=0;j<6;j++){
+      const lon=j*30*Math.PI/180+rotv;
+      const rx=Math.abs(R*Math.cos(lon));
+      x.beginPath(); x.ellipse(cx,cy,rx,R,0,0,7);
+      x.strokeStyle='rgba(143,227,200,.75)'; x.lineWidth=1; x.stroke();
+    }
+    // 地轴
+    x.beginPath(); x.moveTo(cx,cy-R-8); x.lineTo(cx,cy+R+8);
+    x.strokeStyle='#ffd479'; x.setLineDash([4,3]); x.lineWidth=1.4; x.stroke(); x.setLineDash([]);
+    x.fillStyle='#ffd479'; x.font='10px sans-serif'; x.fillText('地轴',cx+4,cy-R-10);
+    x.fillStyle='#8be3c8'; x.fillText('经线（半圆，交于两极）',6,h-18);
+    x.fillStyle='#7fb2ff'; x.fillText('纬线（圆圈，越往两极越小）',6,h-5);
+  }
+  inp.oninput=function(){draw();};
+  p.appendChild(el('div','mut','注意两件事：① 所有经线都一样长，都是连接南北两极的<b>半圆</b>；② 纬线是一圈圈<b>圆</b>，从赤道往两极越来越小，到两极缩成一个点。'));
+  host.appendChild(p); draw();
+};
+
+/* ---------- 1.2 东西半球为什么不用 0° 和 180° ---------- */
+DEMO.hemi=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🌍 东西半球的分界，为什么不是 0° 和 180°？'));
+  const cv=mkCv(p,170);
+  let mode=0; // 0: 0/180  1: 20W/160E
+  const chips=el('div','chips');
+  const mk=function(t,v){const b=el('div','sw'+(v===mode?' on':''),t);b.onclick=function(){mode=v;draw();
+    Array.prototype.forEach.call(chips.children,function(c,i){c.classList.toggle('on',i===v);});
+    info.innerHTML=v===0?'<b>0° 经线</b>从北往南穿过：英国、法国、西班牙、阿尔及利亚、马里、布基纳法索、多哥、加纳。用它分东西半球，<b>英国和非洲会被切成两半</b>——伦敦一半在东半球、一半在西半球。'
+      :'<b>20°W 与 160°E</b> 组成的经线圈，几乎全程走海洋。于是欧洲、非洲、亚洲完整地落在东半球，美洲完整地落在西半球。';};
+    chips.appendChild(b);};
+  mk('用 0° 和 180° 分',0); mk('用 20°W 和 160°E 分',1);
+  p.appendChild(chips);
+  const info=el('div','tip','点上面两个方案，看分界线穿过了什么。');
+  p.appendChild(info);
+  // 极简世界轮廓（示意）：经度 -180..180 映射到 x
+  const LAND=[[-170,-140,'北美洲'],[-120,-35,'北美洲'],[-85,-35,'南美洲'],[-15,45,'欧洲/非洲'],[45,150,'亚洲'],[110,155,'大洋洲']];
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h;
+    x.clearRect(0,0,w,h);
+    x.fillStyle='#0d1c38'; x.fillRect(0,0,w,h);
+    const px=function(lon){return (lon+180)/360*w;};
+    // 陆地
+    LAND.forEach(function(l){
+      x.fillStyle='#2f5f3f'; x.fillRect(px(l[0]),h*0.28,px(l[1])-px(l[0]),h*0.44);
+      x.fillStyle='#8fd6a4'; x.font='9px sans-serif'; x.fillText(l[2],px(l[0])+4,h*0.28+13);
+    });
+    // 分界
+    const lines=mode===0?[0,180]:[-20,160];
+    lines.forEach(function(l){
+      x.beginPath(); x.moveTo(px(l),0); x.lineTo(px(l),h);
+      x.strokeStyle=mode===0?'#ff8fa3':'#8be3c8'; x.lineWidth=2.4; x.stroke();
+      x.fillStyle=mode===0?'#ff8fa3':'#8be3c8'; x.font='10px sans-serif';
+      const lb=mode===0?(l===0?'0° 经线':'180°'):(l===-20?'20°W':'160°E');
+      x.fillText(lb,px(l)+3,14);
+    });
+    x.fillStyle='#6b7fa8'; x.font='9px sans-serif'; x.fillText('（陆地轮廓为示意）',4,h-4);
+  }
+  p.appendChild(el('div','mut','这就是"人为规定"的典型：<b>不是为了更准确，而是为了更好用</b>。分界线走海洋，谁都不用被切开。'));
+  host.appendChild(p); draw();
+};
+
+/* ---------- 1.2 行动：经纬网定位 ---------- */
+DEMO.gridAct=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🎯 定出渡鸦的落点'));
+  p.appendChild(el('p','<span class="em">「我站在北回归线上；从 0° 经线往东数到 113°。」</span>'));
+  const cv=mkCv(p,210);
+  let lat=0, lon=60; // 0~60N, 60~150E
+  const r1=el('div','srow','<span>纬度</span>');
+  const i1=document.createElement('input'); i1.type='range'; i1.min=0;i1.max=60;i1.step=0.5;i1.value=0;
+  const v1=el('span','val','0°N'); r1.appendChild(i1); r1.appendChild(v1); p.appendChild(r1);
+  const r2=el('div','srow','<span>经度</span>');
+  const i2=document.createElement('input'); i2.type='range'; i2.min=60;i2.max=150;i2.step=1;i2.value=60;
+  const v2=el('span','val','60°E'); r2.appendChild(i2); r2.appendChild(v2); p.appendChild(r2);
+  const info=el('div','tip','拖动两个滑块。粗调可以先点图上大致位置。'); p.appendChild(info);
+  const b=el('button','btn','🛰️ 就追这儿'); p.appendChild(b);
+  const sp=el('div',''); p.appendChild(sp);
+  const SPEC=[[0,'赤道'],[23.5,'北回归线'],[30,'低纬/中纬分界'],[40,''],[66.5,'北极圈'],[60,'']];
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h,L=6,Rp=w-6,Tp=6,B=h-22;
+    x.clearRect(0,0,w,h);
+    const px=function(lo){return L+(lo-60)/90*(Rp-L);};
+    const py=function(la){return B-(la-0)/60*(B-Tp);};
+    x.strokeStyle='#223155'; x.fillStyle='#8fa0c6'; x.font='9px sans-serif'; x.lineWidth=1;
+    for(let lo=60;lo<=150;lo+=10){x.beginPath();x.moveTo(px(lo),Tp);x.lineTo(px(lo),B);x.stroke();
+      x.fillText(lo+'°E',px(lo)-11,h-8);}
+    for(let la=0;la<=60;la+=10){x.beginPath();x.moveTo(L,py(la));x.lineTo(Rp,py(la));x.stroke();
+      x.fillText(la+'°N',2,py(la)+3);}
+    SPEC.forEach(function(s){
+      if(s[0]>60)return;
+      x.beginPath(); x.setLineDash([4,3]); x.moveTo(L,py(s[0])); x.lineTo(Rp,py(s[0]));
+      x.strokeStyle='#ffd479'; x.lineWidth=1.2; x.stroke(); x.setLineDash([]);
+      if(s[1]){x.fillStyle='#ffd479';x.fillText(s[1]+' '+s[0]+'°',Rp-84,py(s[0])-3);}
+    });
+    // 落点
+    const X=px(lon),Y=py(lat);
+    x.beginPath(); x.arc(X,Y,6,0,7); x.fillStyle='#ff8fa3'; x.fill();
+    x.strokeStyle='#fff'; x.lineWidth=1.6; x.beginPath(); x.moveTo(X,Y-11); x.lineTo(X,Y+11);
+    x.moveTo(X-11,Y); x.lineTo(X+11,Y); x.stroke();
+    x.fillStyle='#fff'; x.font='10px sans-serif';
+    x.fillText(lat.toFixed(1)+'°N, '+lon.toFixed(0)+'°E',Math.min(X+10,Rp-84),Y-12);
+  }
+  function upd(){
+    lat=+i1.value; lon=+i2.value;
+    v1.textContent=lat.toFixed(1)+'°N'; v2.textContent=lon.toFixed(0)+'°E';
+    draw();
+    const zone=lat<30?'低纬度':(lat<60?'中纬度':'高纬度');
+    info.innerHTML='当前落点：<b>'+lat.toFixed(1)+'°N，'+lon.toFixed(0)+'°E</b>　属于<b>'+zone+'</b>'+
+      (lon<160?'　在<b>东半球</b>（20°W 以东到 160°E）':'');
+  }
+  i1.oninput=upd; i2.oninput=upd;
+  onTap(cv.c,function(cxp,cyp){
+    const w=cv.w,h=cv.h,L=6,Rp=w-6,Tp=6,B=h-22;
+    const lo=60+(cxp-L)/(Rp-L)*90, la=(B-cyp)/(B-Tp)*60;
+    i1.value=Math.max(0,Math.min(60,Math.round(la*2)/2));
+    i2.value=Math.max(60,Math.min(150,Math.round(lo)));
+    upd();
+  });
+  b.onclick=function(){
+    const okLat=Math.abs(lat-23.5)<1.2, okLon=Math.abs(lon-113)<2.5;
+    if(okLat&&okLon){next(true,'<b>23.5°N，113°E</b>');}
+    else{next(false, okLat?('经度不对：113°E 是从 0° 经线<b>往东</b>数出来的，不是 113°W。')
+                          :(okLon?('纬度不对：北回归线是 <b>23.5°N</b>，不是 30°N，也不是赤道。')
+                                 :('两条都要对上：纬度看"北回归线"，经度看"往东数到 113°"。')));}
+  };
+  host.appendChild(p); draw(); upd();
+};
+
+/* ---------- 1.3 演示：昼夜与自转 ---------- */
+DEMO.spin=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🌗 天为什么会黑'));
+  const cv=mkCv(p,180);
+  let a=0; let playing=true;
+  const row=el('div','srow','<span>地球自转</span>');
+  const inp=document.createElement('input'); inp.type='range'; inp.min=0;inp.max=360;inp.step=5;inp.value=0;
+  const val=el('span','val','0°'); row.appendChild(inp); row.appendChild(val); p.appendChild(row);
+  const info=el('div','tip',''); p.appendChild(info);
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h,cx=w*0.44,cy=h/2,R=Math.min(w,h)/2-16;
+    x.clearRect(0,0,w,h);
+    // 阳光（从右边来）
+    x.fillStyle='#ffe9a8'; x.beginPath(); x.arc(w-14,cy-R*0.55,9,0,7); x.fill();
+    for(let i=0;i<6;i++){x.beginPath();x.moveTo(w-24,cy-R*0.7+i*18);x.lineTo(cx+R+8,cy-R*0.7+i*18);
+      x.strokeStyle='rgba(255,233,168,.30)';x.lineWidth=2;x.stroke();}
+    x.fillStyle='#ffe9a8'; x.font='10px sans-serif'; x.fillText('阳光',w-30,cy-R*0.55-14);
+    // 地球本体
+    x.beginPath(); x.arc(cx,cy,R,0,7); x.fillStyle='#1b4a7d'; x.fill();
+    // 夜半球：背光的一侧（左半）
+    x.save(); x.beginPath(); x.arc(cx,cy,R,0,7); x.clip();
+    x.fillStyle='rgba(4,8,20,.80)'; x.fillRect(cx-R,cy-R,R,R*2); x.restore();
+    // 随自转转动的经线（体现"地球在转"）
+    const av=a*Math.PI/180;
+    for(let j=0;j<5;j++){
+      const lon=j*36*Math.PI/180+av;
+      const rx=Math.abs(R*Math.cos(lon));
+      x.beginPath(); x.ellipse(cx,cy,Math.max(1.5,rx),R,0,0,7);
+      x.strokeStyle='rgba(143,227,200,.45)'; x.lineWidth=1; x.stroke();
+    }
+    // 一个"观测者"，随自转绕圈
+    const ox2=cx+R*0.62*Math.cos(av-Math.PI/2), oy2=cy+R*0.62*Math.sin(av-Math.PI/2);
+    const isDay=ox2>cx;
+    x.beginPath(); x.arc(ox2,oy2,5,0,7); x.fillStyle=isDay?'#ffe9a8':'#6b7fa8'; x.fill();
+    x.fillStyle=isDay?'#ffe9a8':'#8fa0c6'; x.font='10px sans-serif';
+    x.fillText(isDay?'这里：白天':'这里：黑夜',ox2+7,oy2-6);
+    // 晨昏线
+    x.beginPath(); x.moveTo(cx,cy-R); x.lineTo(cx,cy+R);
+    x.strokeStyle='#ffd479'; x.setLineDash([3,3]); x.lineWidth=1.4; x.stroke(); x.setLineDash([]);
+    x.fillStyle='#ffd479'; x.font='9px sans-serif'; x.fillText('晨昏线',cx+3,cy-R+10);
+    // 自转方向箭头
+    x.strokeStyle='#fff'; x.lineWidth=1.6;
+    x.beginPath(); x.arc(cx,cy,R+7,-0.7,0.8); x.stroke();
+    x.fillStyle='#fff'; x.font='10px sans-serif'; x.fillText('自西向东',cx+R-34,cy+R+18);
+    // 地轴
+    x.beginPath(); x.moveTo(cx,cy-R-6); x.lineTo(cx,cy+R+6);
+    x.strokeStyle='#ffd479'; x.lineWidth=1.2; x.stroke();
+    x.fillStyle='#8fa0c6'; x.font='10px sans-serif';
+    x.fillText('地球不发光、不透明 → 太阳只能照亮一半',4,h-4);
+  }
+  inp.oninput=function(){a=+inp.value;playing=false;val.textContent=a+'°';draw();upd();};
+  function upd(){
+    info.innerHTML='地球自己<b>不发光、不透明</b>，所以太阳永远只能照亮它的一半 —— 朝向太阳的是<b>昼</b>，背向的是<b>夜</b>，中间那条界线叫<b>晨昏线</b>。<br>地球不停地<b>自西向东</b>自转，一个地方就会一会儿转到白天、一会儿转到夜里。';
+  }
+  function loop(){
+    if(!cv.c.isConnected)return;              // 离开本节后自动停
+    if(playing){a=(a+2)%360;inp.value=a;val.textContent=a+'°';draw();}
+    requestAnimationFrame(loop);
+  }
+  p.appendChild(el('div','mut','小塔的星球被恒星<b>潮汐锁定</b>——永远一面朝太阳，所以那里没有昼夜。'));
+  host.appendChild(p); draw(); upd(); loop();
+};
+
+/* ---------- 1.3 演示：地轴倾斜的反事实实验 ---------- */
+function sunH(lat,dec){return 90-Math.abs(lat-dec);}
+function dayLen(lat,dec){
+  const la=lat*Math.PI/180,de=dec*Math.PI/180;
+  const c=-Math.tan(la)*Math.tan(de);
+  if(c<=-1)return 24; if(c>=1)return 0;
+  return 2*Math.acos(c)*180/Math.PI/15;
+}
+DEMO.axis=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🧊 如果地轴不歪，会怎样？'));
+  p.appendChild(el('p','拖动<b>黄赤交角</b>（地轴倾斜的程度）。看看四季、昼夜长短会怎么变。'));
+  const cv=mkCv(p,150);
+  let tilt=23.5;
+  const row=el('div','srow','<span>倾角</span>');
+  const inp=document.createElement('input'); inp.type='range'; inp.min=0;inp.max=45;inp.step=0.5;inp.value=23.5;
+  const val=el('span','val','23.5°'); row.appendChild(inp); row.appendChild(val); p.appendChild(row);
+  const info=el('div','tip',''); p.appendChild(info);
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h,cx=w/2,cy=h/2+8,R=Math.min(w,h)/2-22;
+    x.clearRect(0,0,w,h);
+    // 地球公转轨道（俯视）：画地球与地轴
+    x.beginPath(); x.arc(cx,cy,R*0.62,0,7); x.fillStyle='#1b3a63'; x.fill();
+    x.strokeStyle='#7fb2ff'; x.lineWidth=1; x.stroke();
+    const tv=tilt*Math.PI/180;
+    // 地轴
+    const ax=Math.sin(tv)*R*0.62, ay=Math.cos(tv)*R*0.62;
+    x.beginPath(); x.moveTo(cx-ax,cy-ay*1.45); x.lineTo(cx+ax,cy+ay*1.45);
+    x.strokeStyle='#ffd479'; x.lineWidth=2; x.stroke();
+    // 赤道面
+    x.beginPath(); x.moveTo(cx-R*0.62*Math.cos(tv),cy+R*0.62*Math.sin(tv));
+    x.lineTo(cx+R*0.62*Math.cos(tv),cy-R*0.62*Math.sin(tv));
+    x.strokeStyle='#8be3c8'; x.setLineDash([4,3]); x.lineWidth=1.2; x.stroke(); x.setLineDash([]);
+    // 阳光
+    for(let i=0;i<6;i++){x.beginPath();x.moveTo(6,cy-40+i*16);x.lineTo(cx-R*0.62-6,cy-40+i*16);
+      x.strokeStyle='rgba(255,233,168,.5)';x.lineWidth=2;x.stroke();}
+    x.fillStyle='#8fa0c6'; x.font='10px sans-serif';
+    x.fillText('阳光',6,cy-48);
+    x.fillStyle='#ffd479'; x.fillText('地轴（倾斜 '+tilt.toFixed(1)+'°）',cx+12,cy-ay*1.45+4);
+    x.fillStyle='#8be3c8'; x.fillText('赤道面',cx+12,cy+R*0.62*Math.sin(tv)+2);
+  }
+  function upd(){
+    tilt=+inp.value; val.textContent=tilt.toFixed(1)+'°'; draw();
+    const dl40s=dayLen(40,tilt), dl40w=dayLen(40,-tilt), dl0=dayLen(0,0);
+    info.innerHTML='40°N 的昼长：夏至 <b>'+dl40s.toFixed(1)+' 小时</b>　冬至 <b>'+dl40w.toFixed(1)+' 小时</b>（现在这一档）'+
+      '<br>太阳直射点能到达的最北纬度：<b>'+tilt.toFixed(1)+'°N</b>，最南 <b>'+tilt.toFixed(1)+'°S</b>'+
+      '<br>'+(tilt<1?'<b>倾角变成 0°：太阳永远直射赤道，全球每天昼夜等长，四季消失。</b>——所以四季不是"离太阳远近"造成的，是<b>地轴倾斜 + 公转</b>造成的。'
+        :(tilt>40?'倾角大到 '+tilt.toFixed(1)+'°：热带和寒带的范围会被拉得很夸张，温带几乎不存在。'
+                 :'这就是地球真实的样子：直射点在南北回归线之间来回走，于是有了<b>正午太阳高度的变化</b>和<b>昼夜长短的变化</b>，也就有了四季。'));
+  }
+  inp.oninput=upd;
+  p.appendChild(el('div','mut','🔎 顺手戳破一个常见误会：北半球冬天时，地球其实<b>离太阳更近</b>（1 月初过近日点）。四季跟远近没关系，跟"太阳照得多斜、照多久"有关系。'));
+  host.appendChild(p); draw(); upd();
+};
+
+/* ---------- 1.3 行动：追影子 ---------- */
+DEMO.lightAct=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🎯 还原这张照片'));
+  p.appendChild(el('p','<span class="em">「影子朝北、很短，当地白昼接近 15 小时。」</span>　左边是渡鸦拍的照片，右边是你摆出来的还原台。<b>让三样同时对上。</b>'));
+  const cv=mkCv(p,190);
+  const LATS=[0,23.5,40,66.5], SEAS=[{n:'春分',v:0},{n:'夏至',v:23.5},{n:'秋分',v:0},{n:'冬至',v:-23.5}];
+  let li=2, si=1;
+  const r1=el('div','srow','<span>纬度</span>');
+  const i1=document.createElement('input'); i1.type='range'; i1.min=0;i1.max=3;i1.step=1;i1.value=2;
+  const v1=el('span','val','40.0°N'); r1.appendChild(i1); r1.appendChild(v1); p.appendChild(r1);
+  const r2=el('div','srow','<span>节气</span>');
+  const i2=document.createElement('input'); i2.type='range'; i2.min=0;i2.max=3;i1.step=1;i2.step=1;i2.value=1;
+  const v2=el('span','val','夏至'); r2.appendChild(i2); r2.appendChild(v2); p.appendChild(r2);
+  const info=el('div','tip',''); p.appendChild(info);
+  const b=el('button','btn','📸 就是这里'); p.appendChild(b);
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h;
+    x.clearRect(0,0,w,h);
+    const half=w/2;
+    // 左：照片
+    x.strokeStyle='#2a3d63'; x.beginPath(); x.moveTo(half,0); x.lineTo(half,h); x.stroke();
+    x.fillStyle='#8fa0c6'; x.font='10px sans-serif'; x.fillText('📷 渡鸦的照片',8,14);
+    drawScene(x,8,half-8,0,h,LATS[2],23.5,false);
+    // 右：还原台
+    x.fillStyle='#8fa0c6'; x.fillText('🎛️ 你的还原台',half+8,14);
+    drawScene(x,half+8,w-8,0,h,LATS[li],SEAS[si].v,true);
+  }
+  function drawScene(x,x0,x1,y0,y1,lat,dec,show){
+    const cx=(x0+x1)/2, base=y1-16, H=(y1-y0)*0.5;
+    const h=sunH(lat,dec);
+    // 地面
+    x.beginPath(); x.moveTo(x0+6,base); x.lineTo(x1-6,base); x.strokeStyle='#3a5580'; x.lineWidth=1.4; x.stroke();
+    // 旗杆
+    x.beginPath(); x.moveTo(cx,base); x.lineTo(cx,base-H); x.strokeStyle='#e8eefc'; x.lineWidth=2; x.stroke();
+    // 太阳
+    const north=lat>dec;
+    const sx=north?cx+38:cx-38, sy=base-H-6-Math.max(0,h-45)*0.5;
+    x.beginPath(); x.arc(sx,sy,7,0,7); x.fillStyle='#ffe9a8'; x.fill();
+    // 影子
+    const L=1/Math.tan(h*Math.PI/180); // 影长/杆长
+    const sl=Math.min(L,4)*H*0.55;
+    x.beginPath(); x.moveTo(cx,base); x.lineTo(north?cx-sl:cx+sl,base+2);
+    x.strokeStyle='#ff8fa3'; x.lineWidth=3.4; x.stroke();
+    if(show){
+      x.fillStyle='#ffd479'; x.font='10px sans-serif';
+      x.fillText('太阳高度 '+h.toFixed(1)+'°',x0+6,y0+30);
+      x.fillText('影子 '+(north?'朝北':'朝南')+'，长度约为杆高的 '+L.toFixed(2)+' 倍',x0+6,y0+44);
+      x.fillText('昼长 '+dayLen(lat,dec).toFixed(2)+' 小时',x0+6,y0+58);
+    }
+  }
+  function upd(){
+    li=+i1.value; si=+i2.value;
+    v1.textContent=LATS[li].toFixed(1)+'°N'; v2.textContent=SEAS[si].n;
+    draw();
+    const lat=LATS[li], dec=SEAS[si].v;
+    const h=sunH(lat,dec), dl=dayLen(lat,dec);
+    const north=lat>dec, L=1/Math.tan(h*Math.PI/180);
+    const c1=north, c2=L<0.5, c3=Math.abs(dl-14.85)<0.6;
+    info.innerHTML='影子<b>'+(north?'朝北':'朝南')+'</b>'+(c1?' ✓':' ✗（照片里朝北）')+'　'+
+      '<b>'+(c2?'很短':'不够短')+'</b>'+(c2?' ✓':' ✗')+'　昼长 <b>'+dl.toFixed(2)+'h</b>'+(c3?' ✓':' ✗（照片接近 15h）');
+    info.className='tip'+(c1&&c2&&c3?' good':'');
+  }
+  i1.oninput=upd; i2.oninput=upd;
+  b.onclick=function(){
+    const lat=LATS[li],dec=SEAS[si].v,h=sunH(lat,dec),dl=dayLen(lat,dec);
+    const north=lat>dec,L=1/Math.tan(h*Math.PI/180);
+    if(north&&L<0.5&&Math.abs(dl-14.85)<0.6){next(true,'<b>'+lat+'°N，'+SEAS[si].n+'</b>');}
+    else{
+      let m='';
+      if(!north)m='影子方向不对：你在直射点以南，太阳在北边，影子就朝南了。';
+      else if(L>=0.5)m='影子不够短：说明太阳不够高，离直射点还远。';
+      else if(Math.abs(dl-14.85)>=0.6)m='昼长对不上'+(dl>15.5?'（这里太长，纬度再低一点或换成春分）':'（这里太短）')+'：'+dl.toFixed(1)+'h ≠ 约 15h。';
+      next(false,m);
+    }
+  };
+  host.appendChild(p); draw(); upd();
+};
+
+/* ---------- 2.1 演示：比例尺到底是"大"还是"小" ---------- */
+DEMO.scaleDemo=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','📏 同一块地，三种比例尺'));
+  const cv=mkCv(p,150);
+  let si=1;
+  const SC=[{n:'1:5万',d:50000,km:0.5,label:'大比例尺'},{n:'1:50万',d:500000,km:5,label:'中'},
+            {n:'1:500万',d:5000000,km:50,label:'小比例尺'}];
+  const row=el('div','srow','<span>比例尺</span>');
+  const inp=document.createElement('input'); inp.type='range'; inp.min=0;inp.max=2;inp.step=1;inp.value=1;
+  const val=el('span','val','1:50万'); row.appendChild(inp); row.appendChild(val); p.appendChild(row);
+  const info=el('div','tip',''); p.appendChild(info);
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h;
+    x.clearRect(0,0,w,h);
+    x.fillStyle='#0d1c38'; x.fillRect(0,0,w,h);
+    const s=SC[si];
+    // 河流
+    x.beginPath(); x.moveTo(0,h*0.65); x.bezierCurveTo(w*0.3,h*0.5,w*0.6,h*0.78,w,h*0.6);
+    x.strokeStyle='#4a90d9'; x.lineWidth=Math.max(2,6-si*2); x.stroke();
+    // 主干道
+    x.beginPath(); x.moveTo(w*0.1,0); x.lineTo(w*0.55,h);
+    x.strokeStyle='#e8eefc'; x.lineWidth=Math.max(1.6,3-si); x.stroke();
+    // 小路（只有大比例尺才画）
+    if(si===0){
+      x.strokeStyle='#c3d2ee'; x.lineWidth=1; x.setLineDash([3,3]);
+      for(let i=0;i<5;i++){x.beginPath();x.moveTo(w*0.2+i*w*0.15,h*0.1);x.lineTo(w*0.28+i*w*0.15,h*0.9);x.stroke();}
+      x.setLineDash([]);
+      // 房屋
+      x.fillStyle='#ffd479';
+      for(let i=0;i<7;i++){const px=w*(0.15+i*0.11),py=h*(0.2+((i*37)%50)/100);x.fillRect(px,py,7,5);}
+    }
+    if(si<=1){ // 省界
+      x.beginPath(); x.setLineDash([7,4]); x.moveTo(0,h*0.3); x.lineTo(w,h*0.42);
+      x.strokeStyle='#ff8fa3'; x.lineWidth=1.6; x.stroke(); x.setLineDash([]);
+    }
+    x.fillStyle='#8fa0c6'; x.font='9px sans-serif';
+    x.fillText('图上 1 厘米 = 实际 '+s.km+' 千米',6,h-6);
+  }
+  function upd(){
+    si=+inp.value; val.textContent=SC[si].n; draw();
+    info.innerHTML='<b>'+SC[si].n+'</b>：图上 1 厘米 = 实际 '+SC[si].km+' 千米。<br>'+
+      (si===0?'内容最详细：小路、每一栋房子都画得出来，但能画的范围很小。'
+        :(si===2?'内容最简略：只剩大河和大城市，但一张纸能装下整个省甚至全国。'
+                :'介于两者之间。'))+
+      '<br><span style="color:#ffd479">注意：' + SC[si].n + ' 是分数 1/'+SC[si].d+'，分母越大，分数值越小 —— 所以"分母大的比例尺反而小"。</span>';
+  }
+  inp.oninput=upd;
+  p.appendChild(el('div','mut','为什么非要缩小？因为<b>纸有限、屏幕也有限</b>。真实的一座城市不可能按 1:1 装进书包，所以必须先定一个"缩多少倍"——这个倍数就是比例尺。'));
+  host.appendChild(p); draw(); upd();
+};
+
+/* ---------- 2.1 演示：为什么默认"上北下南" ---------- */
+DEMO.north=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🧭 "上北下南"是谁定的？'));
+  const cv=mkCv(p,140);
+  let m=0;
+  const MS=[{n:'以北为上',d:'今天全世界的惯例'},
+            {n:'以东为上',d:'中世纪欧洲 T-O 地图'},
+            {n:'以南为上',d:'早期伊斯兰世界地图'}];
+  const chips=el('div','chips');
+  MS.forEach(function(o,i){
+    const b=el('div','sw'+(i===0?' on':''),o.n);
+    b.onclick=function(){m=i;Array.prototype.forEach.call(chips.children,function(c,j){c.classList.toggle('on',j===i);});draw();upd();};
+    chips.appendChild(b);
+  });
+  p.appendChild(chips);
+  const info=el('div','tip',''); p.appendChild(info);
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h,cx=w/2,cy=h/2,R=Math.min(w,h)/2-14;
+    x.clearRect(0,0,w,h);
+    x.beginPath(); x.arc(cx,cy,R,0,7); x.fillStyle='#12305c'; x.fill();
+    x.strokeStyle='#7fb2ff'; x.lineWidth=1.4; x.stroke();
+    const labs=['北','东','南','西'];
+    const off=m; // 旋转：0 北在上
+    for(let i=0;i<4;i++){
+      const ang=(-Math.PI/2)+(i-off)*Math.PI/2;
+      const tx=cx+Math.cos(ang)*(R+0), ty=cy+Math.sin(ang)*R;
+      x.fillStyle=i===0?'#ffd479':'#8fa0c6'; x.font='11px sans-serif';
+      x.fillText(labs[i],tx-5,ty+(i===0?-4:(i===2?12:4)));
+    }
+    // 简易大陆块随图旋转
+    x.save(); x.translate(cx,cy); x.rotate(-off*Math.PI/2); x.translate(-cx,-cy);
+    x.fillStyle='#2f5f3f'; x.fillRect(cx-R*0.35,cy-R*0.5,R*0.55,R*0.8);
+    x.fillStyle='#8fd6a4'; x.font='9px sans-serif'; x.fillText('（大陆示意）',cx-R*0.3,cy);
+    x.restore();
+    x.fillStyle='#ffd479'; x.font='11px sans-serif'; x.fillText('▲ 上方',cx-14,10);
+  }
+  function upd(){
+    info.innerHTML=m===0?'<b>以北为上</b>：罗盘普及后，北极星和磁针都指向北，航海图上"北"成了天然参照；1569 年墨卡托投影用于航海，把这个惯例印进了无数张印刷地图，于是成了今天的规矩。'
+      :(m===1?'<b>以东为上</b>：中世纪欧洲的 T-O 地图把伊甸园所在的东方画在上方、耶路撒冷画在中心。英语 <b>orientation</b>（朝向）这个词，本义就是"朝向东方（orient）"。'
+             :'<b>以南为上</b>：早期伊斯兰世界的地图常把南方画在上方，因为多数穆斯林居住在麦加以北，抬眼就能"仰望"圣城。');
+  }
+  p.appendChild(el('div','mut','所以：<b>上北下南只是约定，不是自然规律</b>。真正的规矩是三条 —— ① 有<b>指向标</b>就按指向标；② 有<b>经纬网</b>就按经纬网（经线指南北、纬线指东西）；③ 都没有，才用"上北下南"。'));
+  host.appendChild(p); draw(); upd();
+};
+
+/* ---------- 2.1 行动：撕掉的比例尺 ---------- */
+DEMO.scaleAct=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🎯 算出比例尺，再量他走了多远'));
+  p.appendChild(el('p','<span class="em">「从营地到那条河，图上 2 厘米，实际 10 千米。我累了，最多只走 10 千米。」</span>'));
+  const cv=mkCv(p,170);
+  const SC=[{n:'1:5万',km:0.5},{n:'1:50万',km:5},{n:'1:500万',km:50}];
+  let si=-1, picked=-1;
+  const chips=el('div','chips');
+  SC.forEach(function(s,i){
+    const b=el('div','sw',s.n+'（1cm='+s.km+'km）');
+    b.onclick=function(){si=i;Array.prototype.forEach.call(chips.children,function(c,j){c.classList.toggle('on',j===i);});draw();upd();};
+    chips.appendChild(b);
+  });
+  p.appendChild(chips);
+  const info=el('div','tip','先选比例尺：营地到河"图上 2 厘米 = 实际 10 千米"，据此判断图上 1 厘米代表几千米。');
+  p.appendChild(info);
+  const b=el('button','btn','🚁 出发找他'); p.appendChild(b);
+  const PTS=[{n:'A',cx:0.30,cy:0.42,cm:1},{n:'B',cx:0.62,cy:0.28,cm:4},{n:'C',cx:0.72,cy:0.70,cm:8}];
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h;
+    x.clearRect(0,0,w,h);
+    x.fillStyle='#0d1c38'; x.fillRect(0,0,w,h);
+    // 河
+    x.beginPath(); x.moveTo(0,h*0.86); x.bezierCurveTo(w*0.3,h*0.72,w*0.6,h*0.92,w,h*0.8);
+    x.strokeStyle='#4a90d9'; x.lineWidth=3; x.stroke();
+    x.fillStyle='#4a90d9'; x.font='9px sans-serif'; x.fillText('河',6,h*0.98);
+    // 营地
+    const cx0=w*0.5, cy0=h*0.55;
+    x.fillStyle='#ffd479'; x.beginPath(); x.arc(cx0,cy0,5,0,7); x.fill();
+    x.fillStyle='#ffd479'; x.font='10px sans-serif'; x.fillText('营地',cx0+7,cy0+3);
+    // 营地到河的标注
+    x.strokeStyle='#8fa0c6'; x.setLineDash([3,3]); x.beginPath(); x.moveTo(cx0,cy0); x.lineTo(w*0.34,h*0.86); x.stroke(); x.setLineDash([]);
+    x.fillStyle='#8fa0c6'; x.font='9px sans-serif'; x.fillText('图上 2cm = 实际 10km',w*0.34-6,h*0.7);
+    // 候选点
+    PTS.forEach(function(pt,i){
+      const px=w*pt.cx, py=h*pt.cy;
+      x.beginPath(); x.arc(px,py,6,0,7);
+      x.fillStyle=i===picked?'#8be3c8':'#c3d2ee'; x.fill();
+      x.fillStyle='#0a1224'; x.font='bold 10px sans-serif'; x.fillText(pt.n,px-3,py+3);
+      if(si>=0){x.fillStyle='#ffd479';x.font='9px sans-serif';
+        x.fillText((pt.cm*SC[si].km)+'km',px+8,py-6);}
+    });
+  }
+  function upd(){
+    draw();
+    if(si<0){info.innerHTML='先选一个比例尺。';return;}
+    const d=SC[si].km;
+    const fit=Math.abs(2*d-10)<0.01;
+    info.innerHTML='你选的是 <b>'+SC[si].n+'</b>：图上 1cm = '+d+'km。营地到河图上 2cm → 实际 <b>'+(2*d)+'km</b>。'+
+      (fit?'<br><span style="color:#8be3c8">与线索"10km"吻合，比例尺对了。</span>':'<br><span style="color:#ff8fa3">和线索对不上，再选一次。</span>');
+    info.className='tip'+(fit?' good':'');
+  }
+  onTap(cv.c,function(px,py){
+    const w=cv.w,h=cv.h;
+    let best=-1,bd=1e9;
+    PTS.forEach(function(pt,i){const dx=px-w*pt.cx,dy=py-h*pt.cy;const dd=dx*dx+dy*dy;if(dd<bd){bd=dd;best=i;}});
+    if(bd<900){picked=best;draw();}
+  });
+  b.onclick=function(){
+    if(si!==1){next(false,'比例尺还没校准对：图上 2cm 要等于实际 10km，那图上 1cm 应该是 <b>5km</b>，也就是 <b>1:500000</b>。');return;}
+    if(picked<0){next(false,'先在图上点一个候选点（A、B、C）。');return;}
+    const d=SC[si].km*PTS[picked].cm;
+    if(picked===0){next(true,'点 A：图上 1cm × 5km/cm = <b>5 千米</b>，是三个里唯一不超过 10 千米的。');}
+    else{next(false,'点 '+PTS[picked].n+' 是 <b>'+d+' 千米</b>，超过了他说"最多只走 10 千米"。');}
+  };
+  host.appendChild(p); draw();
+};
+
+/* ---------- 2.2 演示：等高线是怎么来的（水位法）★ ---------- */
+function isoSegs(level){
+  const segs=[];
+  const ip=function(x1,y1,v1,x2,y2,v2){const t=(level-v1)/(v2-v1);return [x1+(x2-x1)*t,y1+(y2-y1)*t];};
+  for(let y=0;y<TH-1;y++)for(let x=0;x<TW-1;x++){
+    const a=tg(x,y),b=tg(x+1,y),c=tg(x+1,y+1),d=tg(x,y+1);
+    let k=0; if(a>=level)k|=8; if(b>=level)k|=4; if(c>=level)k|=2; if(d>=level)k|=1;
+    const TP=function(){return ip(x,y,a,x+1,y,b);}, R=function(){return ip(x+1,y,b,x+1,y+1,c);},
+          B=function(){return ip(x,y+1,d,x+1,y+1,c);}, L=function(){return ip(x,y,a,x,y+1,d);};
+    const add=function(p,q){segs.push([p,q]);};
+    switch(k){
+      case 1: case 14: add(L(),B()); break;
+      case 2: case 13: add(B(),R()); break;
+      case 3: case 12: add(L(),R()); break;
+      case 4: case 11: add(TP(),R()); break;
+      case 6: case 9:  add(TP(),B()); break;
+      case 7: case 8:  add(L(),TP()); break;
+      case 5: add(L(),TP()); add(B(),R()); break;
+      case 10: add(L(),B()); add(TP(),R()); break;
+      default: break;
+    }
+  }
+  return segs;
+}
+DEMO.flood=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🌊 等高线是怎么来的'));
+  p.appendChild(el('p','小塔的星球地表是平的，它没法理解"高低"。人类也没法把一座<b>立体</b>的山塞进一张<b>平</b>纸——于是想了个办法：<b>假装海水一直涨</b>。'));
+  const cv=mkCv(p,210);
+  let lv=4; // 水位（层）
+  const row=el('div','srow','<span>水位</span>');
+  const inp=document.createElement('input'); inp.type='range'; inp.min=0;inp.max=8;inp.step=1;inp.value=4;
+  const val=el('span','val','400 m'); row.appendChild(inp); row.appendChild(val); p.appendChild(row);
+  const info=el('div','tip',''); p.appendChild(info);
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h;
+    x.clearRect(0,0,w,h);
+    const pad=4, halfW=w/2;
+    /* ---- 左：立体山（等距投影）+ 水面 ---- */
+    const ox=halfW*0.52, oy=h*0.30, cw=halfW*0.30, chh=cw*0.52, zh=chh*0.62;
+    const iso=function(px,py,pz){return [ox+(px-py)*cw/2, oy+(px+py)*chh/2-pz*zh];};
+    const colTop=function(v){
+      const r=['#3f7a4a','#4b8c55','#5da063','#6fb071','#84c083','#9ad096','#b0e0ab','#c6ecc3','#dcf7db'];
+      return r[Math.min(8,Math.max(0,v))];};
+    // 先画方块（柱高截断到水位）
+    for(let s=0;s<TW+TH;s++){
+      for(let px=0;px<TW;px++){const py=s-px; if(py<0||py>=TH)continue;
+        const v=Math.min(tg(px,py),lv);
+        const z0=0,z1=v;
+        const A=iso(px,py,z1),B=iso(px+1,py,z1),C=iso(px+1,py+1,z1),D=iso(px,py+1,z1);
+        // 左侧面
+        const D0=iso(px,py+1,0),C0=iso(px+1,py+1,0);
+        x.beginPath(); x.moveTo(D[0],D[1]); x.lineTo(C[0],C[1]); x.lineTo(C0[0],C0[1]); x.lineTo(D0[0],D0[1]); x.closePath();
+        x.fillStyle='#2c4a33'; x.fill(); x.strokeStyle='rgba(0,0,0,.25)'; x.lineWidth=.5; x.stroke();
+        // 右侧面
+        const B0=iso(px+1,py,0);
+        x.beginPath(); x.moveTo(C[0],C[1]); x.lineTo(B[0],B[1]); x.lineTo(B0[0],B0[1]); x.lineTo(C0[0],C0[1]); x.closePath();
+        x.fillStyle='#22402a'; x.fill(); x.stroke();
+        // 顶面
+        x.beginPath(); x.moveTo(A[0],A[1]); x.lineTo(B[0],B[1]); x.lineTo(C[0],C[1]); x.lineTo(D[0],D[1]); x.closePath();
+        x.fillStyle=colTop(tg(px,py)); x.fill(); x.strokeStyle='rgba(0,0,0,.18)'; x.stroke();
+      }
+    }
+    // 水面
+    const W1=iso(0,0,lv),W2=iso(TW-1,0,lv),W3=iso(TW-1,TH-1,lv),W4=iso(0,TH-1,lv);
+    x.beginPath(); x.moveTo(W1[0],W1[1]); x.lineTo(W2[0],W2[1]); x.lineTo(W3[0],W3[1]); x.lineTo(W4[0],W4[1]); x.closePath();
+    x.fillStyle='rgba(74,144,217,.42)'; x.fill();
+    x.strokeStyle='#8fd0ff'; x.lineWidth=1.2; x.stroke();
+    x.fillStyle='#8fd0ff'; x.font='10px sans-serif'; x.fillText('水位 '+(lv*100)+' m',W1[0]-6,W1[1]-4);
+    /* ---- 右：平面图，等高线一条条长出来 ---- */
+    const gx0=halfW+pad, gy0=14, gs=Math.min(halfW-pad*2, h-40)/TH;
+    x.strokeStyle='#223155'; x.lineWidth=.6;
+    for(let i=0;i<TW;i++){x.beginPath();x.moveTo(gx0+i*gs,gy0);x.lineTo(gx0+i*gs,gy0+gs*(TH-1));x.stroke();}
+    for(let i=0;i<TH;i++){x.beginPath();x.moveTo(gx0,gy0+i*gs);x.lineTo(gx0+gs*(TW-1),gy0+i*gs);x.stroke();}
+    const map=function(pt){return [gx0+pt[0]*gs, gy0+pt[1]*gs];};
+    for(let L2=1;L2<=8;L2++){
+      const segs=isoSegs(L2);
+      const cur=(L2===lv);
+      x.strokeStyle=cur?'#ffd479':'rgba(255,212,121,.30)'; x.lineWidth=cur?2.2:1;
+      segs.forEach(function(s){const a=map(s[0]),b=map(s[1]);
+        x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b[0],b[1]);x.stroke();});
+      if(cur&&segs.length){
+        const a=map(segs[0][0]);
+        x.fillStyle='#ffd479'; x.font='9px sans-serif'; x.fillText((L2*100)+'m',a[0]+2,a[1]-2);
+      }
+    }
+    x.fillStyle='#8fa0c6'; x.font='9px sans-serif';
+    x.fillText('左：立体的山',6,h-6); x.fillText('右：落到纸上',gx0,h-6);
+  }
+  function upd(){
+    lv=+inp.value; val.textContent=(lv*100)+' m'; draw();
+    const segs=isoSegs(lv);
+    info.innerHTML=(lv===0?'水位降到 0：什么都没淹，纸上一条线都没有。往上涨试试。'
+      :'水涨到 <b>'+(lv*100)+' 米</b>：水面贴着山坡切出一圈交线（左边蓝色边线）——把这一圈<b>垂直投影到纸上</b>，就是右边那条 <b>'+(lv*100)+' 米等高线</b>。');
+    if(lv>0)info.innerHTML+='<br>继续往上涨，就一条一条多出新的线。';
+  }
+  inp.oninput=upd;
+  p.appendChild(el('div','mut','看懂了"等高线 = 水位线"，下面三件事就不用背了：<br>'+
+    '① <b>同一条线上，海拔一定相等</b>——它们来自同一次水位。<br>'+
+    '② <b>等高线不会相交</b>——一个地方只有一个海拔（只有陡崖处几乎垂直，线才会重叠）。<br>'+
+    '③ <b>密的地方坡陡，疏的地方坡缓</b>——水位每涨 100 米，水平方向只挪了一点点，说明那里很陡。<br>'+
+    '相邻两条线的高度差叫<b>等高距</b>（本图 100 米），全图必须统一，否则"疏密"就没法比了。'));
+  host.appendChild(p); draw(); upd();
+};
+
+/* ---------- 2.2 演示：海拔 vs 相对高度 ---------- */
+DEMO.relief=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','📐 海拔：人类需要一把统一的尺'));
+  p.appendChild(el('p','山有多高？——这句话要先说清楚<b>从哪儿算起</b>。'));
+  const cv=mkCv(p,150);
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h;
+    x.clearRect(0,0,w,h);
+    const base=h-24, seaY=h-46;
+    // 海
+    x.fillStyle='rgba(74,144,217,.25)'; x.fillRect(0,seaY,w,h-seaY);
+    x.beginPath(); x.moveTo(0,seaY); x.lineTo(w,seaY); x.strokeStyle='#4a90d9'; x.lineWidth=1.4; x.stroke();
+    x.fillStyle='#4a90d9'; x.font='10px sans-serif'; x.fillText('平均海平面（0 米）',4,seaY-4);
+    // 山
+    x.beginPath(); x.moveTo(w*0.08,base); x.lineTo(w*0.36,base-(h-60)*0.72); x.lineTo(w*0.72,base);
+    x.closePath(); x.fillStyle='#4b8c55'; x.fill();
+    x.beginPath(); x.moveTo(w*0.5,base); x.lineTo(w*0.74,base-(h-60)*0.40); x.lineTo(w*0.96,base);
+    x.closePath(); x.fillStyle='#3f7a4a'; x.fill();
+    // 标注
+    x.strokeStyle='#ffd479'; x.setLineDash([3,3]); x.lineWidth=1;
+    x.beginPath(); x.moveTo(w*0.36,base-(h-60)*0.72); x.lineTo(w*0.36,seaY); x.stroke();
+    x.beginPath(); x.moveTo(w*0.74,base-(h-60)*0.40); x.lineTo(w*0.74,seaY); x.stroke(); x.setLineDash([]);
+    x.fillStyle='#ffd479'; x.font='bold 10px sans-serif';
+    x.fillText('海拔 800m',w*0.36+3,(base-(h-60)*0.72+seaY)/2);
+    x.fillText('海拔 400m',w*0.74+3,(base-(h-60)*0.40+seaY)/2);
+    x.fillStyle='#8be3c8'; x.font='10px sans-serif';
+    x.fillText('相对高度 400m',w*0.50,(base-(h-60)*0.60));
+    x.fillStyle='#8fa0c6'; x.fillText('地面',w*0.08,base+14);
+  }
+  p.appendChild(el('div','mut','<b>海拔</b>：以<b>平均海平面</b>为 0 米起算的高度。为什么选海平面？因为全世界的海洋是连在一起的、高度基本一致，是一个谁都能用的公共零点。<br>'+
+    '<b>相对高度</b>：两个地点海拔之差（800−400=400 米）。爬一座山"累不累"，看的是相对高度，不是海拔。'));
+  host.appendChild(p); draw();
+};
+
+/* ---------- 2.2 行动：找建电站的地方 ---------- */
+DEMO.contourAct=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🎯 山里那一处，水会汇过来'));
+  p.appendChild(el('p','<span class="em">「我的小电站建在山谷里——两侧的水都往我这儿汇。我挑了谷地里最靠上游、海拔最高的那一处。」</span><br>点图上的格子，看看每一处的水往哪流。'));
+  const cv=mkCv(p,300);
+  let sel=null;
+  const info=el('div','tip','点任意一个格子试试。'); p.appendChild(info);
+  const b=el('button','btn','⚡ 就是这里'); p.appendChild(b);
+  const ANS=valleyTop();
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h;
+    x.clearRect(0,0,w,h);
+    const pad=10, gs=Math.min((w-pad*2)/TW,(h-pad*2)/TH);
+    const ox=(w-gs*TW)/2, oy=(h-gs*TH)/2;
+    const map=function(px,py){return [ox+px*gs,oy+py*gs];};
+    // 等高线
+    for(let L2=1;L2<=8;L2++){
+      const segs=isoSegs(L2);
+      x.strokeStyle='rgba(255,212,121,.55)'; x.lineWidth=1;
+      segs.forEach(function(s){const a=map(s[0][0],s[0][1]),b2=map(s[1][0],s[1][1]);
+        x.beginPath();x.moveTo(a[0],a[1]);x.lineTo(b2[0],b2[1]);x.stroke();});
+    }
+    // 格子
+    for(let py=0;py<TH;py++)for(let px=0;px<TW;px++){
+      const c=map(px,py);
+      x.strokeStyle='rgba(58,85,128,.35)'; x.lineWidth=.6;
+      x.strokeRect(c[0],c[1],gs,gs);
+      x.fillStyle='#8fa0c6'; x.font='9px sans-serif';
+      x.fillText(String(tg(px,py)*100),c[0]+2,c[1]+10);
+    }
+    // 选中格 + 水流
+    if(sel){
+      const c=map(sel.x,sel.y);
+      x.strokeStyle='#ffd479'; x.lineWidth=2; x.strokeRect(c[0],c[1],gs,gs);
+      const path=flowPath(sel.x,sel.y);
+      x.strokeStyle='#4a90d9'; x.lineWidth=2; x.beginPath();
+      path.forEach(function(pt,i){const q=map(pt[0],pt[1]);
+        if(i===0)x.moveTo(q[0],q[1]); else x.lineTo(q[0],q[1]);});
+      x.stroke();
+      path.forEach(function(pt,i){if(i===0)return;const q=map(pt[0],pt[1]);
+        x.fillStyle='#8fd0ff'; x.beginPath(); x.arc(q[0],q[1],2,0,7); x.fill();});
+    }
+    x.fillStyle='#8fa0c6'; x.font='9px sans-serif'; x.fillText('数字 = 海拔（米）',4,10);
+  }
+  onTap(cv.c,function(px,py){
+    const w=cv.w,h=cv.h;
+    const gs=Math.min((w-20)/TW,(h-20)/TH), ox=(w-gs*TW)/2, oy=(h-gs*TH)/2;
+    const gx=Math.floor((px-ox)/gs), gy=Math.floor((py-oy)/gs);
+    if(gx<0||gy<0||gx>=TW||gy>=TH)return;
+    sel={x:gx,y:gy}; draw();
+    const c=cls(gx,gy);
+    const msg='<b>('+gx+','+gy+')</b>　海拔 <b>'+(c.v*100)+' 米</b>　判读：<b>'+c.t+'</b>'+(c.cliff?'（与邻格落差≥300m → 等高线密集，坡很陡／陡崖）':'')+'<br>'+
+      (c.t==='山谷'?'两侧比这里高 → 水从两边<b>汇进来</b>，能形成溪流。 ✔ 是谷。'
+        :(c.t==='山脊'?'这里比两侧高 → 水往<b>两边分开</b>流，汇不成溪流。 ✘ 是分水线。'
+          :(c.t==='山峰'?'四周都比它低，水全往四周散开。 ✘'
+            :(c.t==='鞍部'?'两组山头之间的低处，两侧是山、另两侧是谷，水不一定汇得进来。 ✘'
+                          :'普通山坡：水顺着坡往下走，两侧的水不会往这儿集中。 ✘'))));
+    info.innerHTML=msg; info.className='tip'+(c.t==='山谷'?' good':'');
+    track('tap',c.t+'@'+gx+','+gy);
+  });
+  b.onclick=function(){
+    if(!sel){next(false,'先在图上点一个格子。');return;}
+    const c=cls(sel.x,sel.y);
+    if(c.t!=='山谷'){next(false,'这里是<b>'+c.t+'</b>，不是山谷 —— 两侧的水汇不进来，发不了电。');return;}
+    if(c.v<ANS.v){next(false,'这里是山谷，但不是<b>谷地里海拔最高</b>的那一处。沿着谷线往<b>上游</b>（水流的反方向）再找找。');return;}
+    next(true,'<b>('+sel.x+','+sel.y+') 海拔 '+(c.v*100)+' 米</b>');
+  };
+  host.appendChild(p); draw();
+};
+
+/* ---------- 2.3 演示：同一个地方，四种画法 ---------- */
+DEMO.mapDemo=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🗺️ 同一个地方，四种画法'));
+  p.appendChild(el('p','同一片区域，人类按"要解决什么问题"画成不同的图。<b>点开四张小图</b>，看各自画的是什么。'));
+  const cv=mkCv(p,220);
+  const info=el('div','tip','点任意一张小图。'); p.appendChild(info);
+  const KINDS=[
+    {n:'政区图',c:'#6b8fd4',d:'画的是<b>省界、市界、城市位置</b>。用来回答"这是哪儿、归谁管"。'},
+    {n:'交通图',c:'#e8eefc',d:'画的是<b>铁路、公路、航线</b>。用来回答"怎么去、走哪条路"。'},
+    {n:'地形图',c:'#ffd479',d:'画的是<b>等高线、山峰、河流</b>。用来回答"哪儿高、哪儿陡、哪条沟能走"。'},
+    {n:'气候图',c:'#8be3c8',d:'画的是<b>等温线、等降水量线</b>。用来回答"冷不冷、下雨多不多"。'}
+  ];
+  let sel=-1;
+  function draw(){
+    const x=cv.x,w=cv.w,h=cv.h;
+    x.clearRect(0,0,w,h);
+    const cw=w/2, chh=h/2;
+    KINDS.forEach(function(k,i){
+      const ox=(i%2)*cw, oy=Math.floor(i/2)*chh;
+      x.fillStyle='#0d1c38'; x.fillRect(ox+3,oy+3,cw-6,chh-6);
+      x.strokeStyle=(i===sel)?k.c:'#26385f'; x.lineWidth=(i===sel)?2:1;
+      x.strokeRect(ox+3,oy+3,cw-6,chh-6);
+      x.save(); x.beginPath(); x.rect(ox+3,oy+3,cw-6,chh-6); x.clip();
+      const cx=ox+cw/2, cy=oy+chh/2, R=Math.min(cw,chh)/2-16;
+      if(i===0){
+        x.fillStyle='#2f5f3f'; x.fillRect(cx-R+2,cy-R*0.6,R*0.9,R*1.2);
+        x.fillStyle='#3f6f8f'; x.fillRect(cx+2,cy-R*0.6,R*0.9,R*1.2);
+        x.strokeStyle='#e8eefc'; x.setLineDash([4,3]); x.lineWidth=1.2;
+        x.beginPath(); x.moveTo(cx+1,cy-R*0.7); x.lineTo(cx+1,cy+R*0.7); x.stroke(); x.setLineDash([]);
+        x.fillStyle='#ffd479'; x.beginPath(); x.arc(cx-R*0.4,cy-R*0.2,3,0,7); x.fill();
+        x.beginPath(); x.arc(cx+R*0.5,cy+R*0.3,3,0,7); x.fill();
+      } else if(i===1){
+        x.strokeStyle='#e8eefc'; x.lineWidth=2;
+        x.beginPath(); x.moveTo(cx-R,cy+R*0.5); x.lineTo(cx+R,cy-R*0.5); x.stroke();
+        x.strokeStyle='#8fa0c6'; x.lineWidth=1.4;
+        x.beginPath(); x.moveTo(cx-R*0.6,cy-R*0.7); x.lineTo(cx+R*0.7,cy+R*0.6); x.stroke();
+        x.fillStyle='#ffd479'; x.beginPath(); x.arc(cx,cy,3.5,0,7); x.fill();
+      } else if(i===2){
+        for(let r=1;r<=4;r++){
+          x.beginPath(); x.ellipse(cx,cy,R*0.26*r,R*0.18*r,0.4,0,7);
+          x.strokeStyle='#ffd479'; x.lineWidth=1; x.stroke();
+        }
+        x.strokeStyle='#4a90d9'; x.lineWidth=2;
+        x.beginPath(); x.moveTo(cx-R,cy+R*0.7); x.quadraticCurveTo(cx,cy+R*0.1,cx+R,cy+R*0.8); x.stroke();
+      } else {
+        const g=x.createLinearGradient(cx-R,0,cx+R,0);
+        g.addColorStop(0,'#3f6f8f'); g.addColorStop(0.5,'#6f9f6f'); g.addColorStop(1,'#c98f5f');
+        x.fillStyle=g; x.fillRect(cx-R,cy-R*0.7,R*2,R*1.4);
+        x.strokeStyle='#0a1224'; x.lineWidth=1;
+        for(let kk=1;kk<4;kk++){x.beginPath();x.moveTo(cx-R+kk*R*0.5,cy-R*0.7);x.lineTo(cx-R+kk*R*0.5,cy+R*0.7);x.stroke();}
+      }
+      x.restore();
+      x.fillStyle=(i===sel)?k.c:'#a8bbdd'; x.font='11px sans-serif';
+      x.fillText(k.n,ox+8,oy+chh-8);
+    });
+  }
+  onTap(cv.c,function(px,py){
+    const cw=cv.w/2, chh=cv.h/2;
+    const i=Math.floor(px/cw)+Math.floor(py/chh)*2;
+    if(i<0||i>3)return;
+    sel=i; draw();
+    info.innerHTML='<b>'+KINDS[i].n+'</b>：'+KINDS[i].d;
+    track('map',KINDS[i].n);
+  });
+  p.appendChild(el('div','mut','为什么不做成"一张全包图"？因为<b>信息密度有上限</b>——全画上去就是一团黑，什么都看不清。'));
+  host.appendChild(p); draw();
+};
+
+/* ---------- 2.3 行动：四步围捕 ---------- */
+DEMO.mapAct=function(host,next){
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🎯 围捕四步，每步拿对图'));
+  const STEPS=[
+    {q:'第一步：他现在<b>在哪个省</b>？',ans:'政区图',
+     o:['政区图','地形图','交通图','气候图'],
+     why:'看"在哪个行政区"，用政区图——它画的是省界、市界和城市位置。'},
+    {q:'第二步：从省城开车过去，<b>走哪条路</b>？',ans:'交通图',
+     o:['交通图','政区图','人口图','地形图'],
+     why:'规划路线看铁路、公路，用交通图。'},
+    {q:'第三步：进山之后，<b>哪条沟能走、哪面坡太陡</b>？',ans:'地形图',
+     o:['地形图','政区图','交通图','气候图'],
+     why:'看高低起伏和坡度，用地形图（等高线）。'},
+    {q:'第四步：明天进山<b>会不会下雨</b>？',ans:'气候图',
+     o:['气候图','地形图','政区图','交通图'],
+     why:'看气温和降水，用气候图或天气预报。'}
+  ];
+  let i=0, bad=0;
+  const box=el('div',''); p.appendChild(box);
+  function render(){
+    box.innerHTML='';
+    if(i>=STEPS.length){
+      const t=el('div','tip good','四步全对 ✅');
+      box.appendChild(t);
+      const b=el('button','btn','🚨 收网');
+      b.onclick=function(){next(true,'四步全对');};
+      box.appendChild(b); return;
+    }
+    const s=STEPS[i];
+    box.appendChild(el('div','t','（'+(i+1)+'/4）'+s.q));
+    s.o.forEach(function(o){
+      const b=el('div','sw',o);
+      b.onclick=function(){
+        if(o===s.ans){
+          const t=el('div','tip good','✅ '+s.why); box.appendChild(t);
+          i++; setTimeout(render,900);
+        }else{
+          bad++; const t=el('div','tip bad','❌ '+o+' 解决不了这一步。想想：这一步要解决的问题到底是什么？');
+          box.appendChild(t); t.scrollIntoView({behavior:'smooth',block:'center'});
+        }
+      };
+      box.appendChild(b);
+    });
+  }
+  p.appendChild(el('div','mut','为什么不能只带一张图？因为<b>一张纸装不下所有信息</b>——全画上去就糊成一团。所以人类按"要解决什么问题"把图分成好几种。'));
+  host.appendChild(p); render();
+};
+
+/* ============================================================
+   章节剧本：beats 对话链
+   b.w/t   = 角色说话
+   b.q/o   = 提问 + 选项（每个选项都给回应，选错也继续）
+   b.d     = 演示（d.tip 为演示时角色的话）
+   b.c     = 收进手册（不阻塞）
+   b.x     = 深一层（可选展开）
+   ============================================================ */
+const CH=[
+/* ============ 1.1 ============ */
+{id:'1.1',sec:'第一章 地球 · 1.1 地球的宇宙环境',title:'第一站：八颗里挑一颗',
+ beats:[
+  {w:'塔拉星总部',t:'先遣舱在柯伊伯带失联。最后一段录音里，有一声鸟叫。'},
+  {w:'小塔 T-07',t:'……是渡鸦。他把星图核心叼走了。'},
+  {w:'渡鸦',t:'（残骸里的一条讯息）别急着找我。我要去一个能长期住下的地方——<b>有水喝、能喘气、不会把我烤熟</b>。太阳系这么大，你们慢慢猜。',r:1},
+  {w:'小塔 T-07',t:'等等，我们塔拉星也有石头、也有水汽，为什么你说那儿不能住？'},
+  {w:'蒲公英号',t:'因为"能住"这件事，人类手里其实<b>只有一份样本</b>。'},
+  {q:'你觉得人类凭什么判断一个地方"能住"？',
+   o:[{t:'照着地球的样子找',s:'对。宇宙这么大，人类目前只确认过一种生命——地球上的。所以只能拿地球当尺子：<b>液态水、能呼吸的大气、不冷不热</b>。这三条不是随便列的，是从"地球为什么能住"倒推出来的。'},
+      {t:'派飞船去实地看',s:'人类只登陆过月球，火星上去的是机器人。没去过的地方，只能先照地球的样子圈出候选，再派机器去确认。'},
+      {t:'看它够不够大',s:'小塔抢答：那木星最大！<br>蒲公英号：木星是个大气球，没有能站立的地面。大小不是标准，"有没有水、能不能喘气、会不会被烤熟"才是。'}],
+   tip:'选一个你的直觉 —— 三种回答都会讲出一点东西。'},
+  {d:'planetDemo',w:'蒲公英号',t:'这是太阳系的八颗行星。点开任意一颗，看看它<b>缺什么</b>。'},
+  {c:{id:'k11',kn:'生命存在的三个条件',
+      b:'① <b>液态水</b>（温度要在 0℃～100℃ 之间，结冰或变成水蒸气都不算）；② <b>可供呼吸的大气</b>（太稀薄等于真空，太浓且有毒也不行）；③ <b>适宜的温度</b>（主要由<b>离太阳的远近</b>决定）。',
+      m:'这三条是拿地球倒推出来的——目前只确认过地球一种生命。'}},
+  {w:'小塔 T-07',t:'所以地球三条都占？'},
+  {w:'蒲公英号',t:'是的，而且三条互相帮忙：<b>日地距离适中</b>（约 1.5 亿千米）→ 平均气温约 15℃ → 水能保持液态；<b>地球质量适中</b> → 引力留得住一层氮氧大气 → 能喘气。'},
+  {x:'再深一层：凭什么行星算"行星"？',
+   t:'2006 年，国际天文学联合会给了三条定义：① 绕太阳公转；② 自身引力把自己压成<b>近球形</b>；③ 把轨道附近的其它天体<b>清空</b>。冥王星第三条没过，于是被划为<b>矮行星</b>。<br>注意这里的思想：<b>定义不是"真理"，是工具</b>——它的作用是让全世界科学家说话时不吵架。所以定义的取舍标准往往是"好不好用"，不是"完不完善"。'}
+ ],
+ clue:'我要一个能补充水、能呼吸、温度又不太过分的地方。这三条都满足的，太阳系里可不多。',
+ act:'planetAct',
+ win:'太阳系里只有<b>地球</b>三条全中：日地距离适中，地表平均气温约 15℃；有氮氧为主的大气；有大量液态水。',
+ lose:'把三条线索都打开，再点开被划掉的行星看看它到底缺什么——<b>排除也是一种推理</b>。'},
+
+/* ============ 1.2 ============ */
+{id:'1.2',sec:'第一章 地球 · 1.2 地球与地球仪',title:'第二站：他在北回归线上',
+ beats:[
+  {w:'蒲公英号',t:'先遣舱的信号出现在地球。但地球直径约 12742 千米，我们只收到一个模糊的落点。'},
+  {w:'小塔 T-07',t:'我们星球全球同一个时间，谁都不用报坐标。"位置"到底是个什么东西？'},
+  {w:'渡鸦',t:'（一张寄给塔拉星的明信片，邮戳被故意抹了一半）猜猜我在哪：① 我站在<b>北回归线</b>上；② 从 0° 经线<b>往东</b>数，我把它数到了 <b>113°</b>。',r:1},
+  {w:'蒲公英号',t:'两条线索，都得靠经纬网读懂。先弄明白这套线是怎么来的。'},
+  {w:'小塔 T-07',t:'可是我落地这么久，一根线都没看见。它们在哪？'},
+  {w:'蒲公英号',t:'（笑）地球上<b>根本没有这些线</b>。它们只画在地球仪和地图上——是人类为了"说清位置"发明的网格。'},
+  {q:'为什么非得发明这套网格？直接说"在中国的南边"不行吗？',
+   o:[{t:'不行，说不准',s:'对。"中国的南边"可以是广州、也可以是海南、也可以是越南。<b>没有统一标准，就没法精确交流。</b>人类寄快递、找人、导航，都需要一个所有人都能懂的地址。'},
+      {t:'可以啊，大家都知道',s:'蒲公英号：那我换个说法——"学校操场旁边"。你们班同学脑子里想的，大概有好几个不同的地方吧？<br>所以需要一个<b>精确到数字</b>的共同标准。'},
+      {t:'为了地图好看',s:'小塔：那也太不划算了……<br>蒲公英号：人类没那么闲。这套网格是为了解决"说不清在哪"这个真实问题。'}],
+   tip:'按你的直觉选。'},
+  {d:'globe',w:'蒲公英号',t:'看这两种线的形状：<b>纬线</b>是一圈圈圆，越往两极越小；<b>经线</b>是连接南北两极的半圆，每条一样长。转动地球看看。'},
+  {w:'小塔 T-07',t:'那 0° 定在哪儿？总得有个起点吧。'},
+  {w:'蒲公英号',t:'这里有个关键区别：<b>纬线的起点是天然的，经线的起点是人为的。</b>'},
+  {q:'猜猜看：0° 纬线（赤道）和 0° 经线，哪个是"大自然定的"？',
+   o:[{t:'赤道是天然的',s:'对。赤道是地球上唯一一个<b>被太阳一年直射两次</b>的大圆，它把地球分成完全对称的两半。不管谁画，都会选它当 0°。'},
+      {t:'两个都是天然的',s:'不对。地球有天然的 0° 纬线，却<b>没有天然的 0° 经线</b>——地球是个球，随便哪条经线都能当起点。所以 0° 经线必须"商量"出来。'},
+      {t:'两个都是人定的',s:'只说对一半。赤道是天然的：它垂直于地轴，是最大的那个圆，谁画都一样。经线的起点才需要开会决定。'}],
+   tip:'想一想：什么东西是"大自然给的"，什么东西是"人商量出来的"。'},
+  {w:'小塔 T-07',t:'那人类怎么商量的？'},
+  {w:'蒲公英号',t:'很乱。十九世纪时欧洲有二十多条"本初子午线"，法国用巴黎、俄国用圣彼得堡、西班牙用马德里——同一艘船，换一张海图，经度就变了。'},
+  {w:'小塔 T-07',t:'那会怎么样？'},
+  {w:'蒲公英号',t:'会撞船。于是 1884 年，25 个国家的 41 名代表在华盛顿开会表决，最终以 <b>22 票赞成、1 票反对、2 票弃权</b>，把 0° 经线定在英国的<b>格林尼治天文台</b>。'},
+  {w:'小塔 T-07',t:'凭什么是英国？'},
+  {w:'蒲公英号',t:'理由很实在：当时世界上约 <b>72% 的商船</b>已经在用格林尼治的海图和航海历。改全世界的图太贵了，不如承认既成事实。<br>法国投了弃权票，之后还坚持用巴黎子午线用了二十多年。'},
+  {c:{id:'k12a',kn:'经纬网：一条天然、一条人为',
+      b:'<b>纬线</b>：与地轴垂直的圆，指示<b>东西</b>方向；赤道是 0°，向南北各到 90°。<br><b>经线</b>：连接南北两极的半圆，指示<b>南北</b>方向；0° 经线（本初子午线）向东向西各到 180°。<br>赤道由地球自转轴决定，是<b>天然的</b>；0° 经线是 1884 年国际会议<b>投票定出来</b>的。',
+      m:'南北半球按赤道分；东西半球按 20°W 和 160°E 分，不是 0° 和 180°。'}},
+  {x:'再深一层：东西半球为什么不用 0° 和 180° 分？',
+   t:'因为 0° 经线从北往南穿过<b>英国、法国、西班牙、阿尔及利亚、马里、布基纳法索、多哥、加纳</b>。用它分东西半球，伦敦就会被切成"一半东半球、一半西半球"。<br>所以改用 <b>20°W 和 160°E</b> 组成的经线圈——它几乎全程走海洋，欧洲非洲完整留在东半球，美洲完整留在西半球。<br><b>这是"定义服从实用"最典型的一个例子：不够精确没关系，好用就行。</b>'},
+  {d:'hemi',w:'蒲公英号',t:'点上面两个方案，看看分界线各穿过了什么。'},
+  {w:'小塔 T-07',t:'还有一件事：我听你们说过"北回归线 23.5°"，又说"低纬度 0～30°"。怎么冒出来两套数？'},
+  {w:'蒲公英号',t:'好问题，这是最容易记混的地方。地球上确实有<b>两套纬度的界线</b>，来源完全不同。'},
+  {q:'23.5°（回归线）和 30°（低中纬分界），哪一套是"取整出来的"？',
+   o:[{t:'30° 那一套',s:'对。0～30° 低纬、30～60° 中纬、60～90° 高纬，是人类为了<b>方便描述冷热</b>取整划的，图个好记。'},
+      {t:'23.5° 那一套',s:'反了。23.5° 和 66.5° 是<b>量出来</b>的：它们等于地轴的倾角，是太阳直射能到达的最北/最南纬度，和极昼极夜的界线。属于天文事实。'},
+      {t:'两套都是取整',s:'不是。23.5° 来自地轴倾角（90−66.5），是自然结果；30°、60° 才是为了好记而取整的人为划分。'}],
+   tip:'一套"量出来"，一套"取整出来"。'},
+  {c:{id:'k12b',kn:'两套纬度界线，别混',
+      b:'<b>天文线（量出来的）：</b>南北回归线 23.5°、南北极圈 66.5° —— 划分热带/温带/寒带。<br><b>人为线（取整的）：</b>0～30° 低纬、30～60° 中纬、60～90° 高纬 —— 只为描述方便。<br>23.5°N 属于<b>低纬度</b>（因为小于 30°），别因为叫"回归线"就以为它是分界。',
+      m:'考试最爱在这里挖坑：问"23.5°N 属于低纬还是中纬"——答案：低纬。'}}
+ ],
+ clue:'我在北回归线上，而且从 0° 经线往东数到 113°。把这两条叠在一起，就是我的落点。',
+ act:'gridAct',
+ win:'<b>23.5°N，113°E</b>——北回归线穿过中国南部（广州从化就有北回归线标志塔）。纬度定"横排"，经度定"竖列"，两条一相交，位置就<b>唯一</b>了。',
+ lose:'再看两条线索：北回归线是 <b>23.5°N</b>；113°E 是从 0° 经线<b>往东</b>数出来的。'},
+
+/* ============ 1.3 ============ */
+{id:'1.3',sec:'第一章 地球 · 1.3 地球的运动',title:'第三站：追着影子走',
+ beats:[
+  {w:'渡鸦',t:'（一张照片：一根旗杆，一道很短的影子，背面写着"拍摄于当地正午"）他又跑了。这次他不发定位——只发影子。',r:1},
+  {w:'小塔 T-07',t:'影子是什么？我们星球没有影子，太阳永远挂在天上同一个地方不动。'},
+  {w:'蒲公英号',t:'因为你们的星球被恒星<b>潮汐锁定</b>了。地球不一样，它自己在转。'},
+  {d:'spin',w:'蒲公英号',t:'拖动滑块，让地球转起来。注意那条<b>晨昏线</b>。'},
+  {w:'小塔 T-07',t:'所以白天和黑夜，是"转出来的"？'},
+  {w:'蒲公英号',t:'对。<b>地球不发光、也不透明</b>，太阳只能照亮它的一半。朝向太阳的一半是昼，背向的一半是夜。地球不停地<b>自西向东</b>转，一个地方就一会儿亮、一会儿暗。'},
+  {c:{id:'k13a',kn:'昼夜交替怎么来的',
+      b:'地球是<b>不发光、不透明</b>的球体 → 太阳只能照亮一半 → 出现<b>昼</b>和<b>夜</b>，分界线叫<b>晨昏线</b>。<br>地球<b>自西向东</b>自转（约 24 小时一圈）→ 昼夜不断交替；因为自西向东转，所以我们看到太阳<b>东升西落</b>，东边的地方<b>先</b>看到日出。',
+      m:'"太阳东升西落"是相对运动的结果——就像坐在行驶的车上看路边的树往后跑。'}},
+  {w:'小塔 T-07',t:'那"四季"呢？是不是夏天离太阳近、冬天离太阳远？'},
+  {q:'四季是怎么形成的？',
+   o:[{t:'因为离太阳远近',s:'这是个非常常见的误会，但不是。<br>地球 1 月初过<b>近日点</b>（离太阳最近），可那时北半球正是<b>冬天</b>。要是四季由远近决定，南北半球就该同时过夏天——可事实是南北半球季节<b>正好相反</b>。'},
+      {t:'因为地轴是歪的',s:'对，而且要说全：<b>地轴倾斜（约 23.5°）+ 绕太阳公转</b>，倾斜方向还始终不变。于是太阳直射点在南北回归线之间来回移动，一个地方被照的<b>角度</b>和<b>时长</b>都在变，得到的热量也就变了——这就是四季。'},
+      {t:'因为太阳有时不发光',s:'小塔：那也太随便了吧……<br>蒲公英号：太阳一直稳定地发光。变的不是太阳，是<b>地球被照的方式</b>。'}],
+   tip:'这一问是本节最大的坑，按你的第一反应选。'},
+  {d:'axis',w:'蒲公英号',t:'做个反事实实验：把<b>黄赤交角</b>拖到 0°，看看四季还在不在。'},
+  {w:'小塔 T-07',t:'拖到 0° 的时候，昼长全是 12 小时……四季真的消失了。'},
+  {w:'蒲公英号',t:'所以四季的<b>真正原因</b>是：地轴倾斜 + 公转 → 太阳直射点移动 → <b>正午太阳高度</b>和<b>昼夜长短</b>变化 → 地面得到的热量变化。'},
+  {c:{id:'k13b',kn:'四季的形成（四步因果链）',
+      b:'地轴倾斜约 <b>23.5°</b> 且倾斜方向不变 → 地球公转时，太阳直射点在<b>南北回归线之间来回移动</b> → 各地的<b>正午太阳高度</b>和<b>昼夜长短</b>随之变化 → 地面获得的太阳热量变化 → <b>四季</b>。<br>春分/秋分：直射赤道，全球昼夜等长。<br>夏至：直射 23.5°N，北半球昼最长、北极圈以北极昼。<br>冬至：直射 23.5°S，北半球昼最短、北极圈以北极夜。',
+      m:'四季与"离太阳远近"无关。近日点在 1 月初，那时北半球是冬季。'}},
+  {x:'再深一层：时区为什么是 24 个？180° 经线为什么是弯的？',
+   t:'地球 24 小时转 360°，<b>360÷24=15°</b>，于是每 15° 划一个时区，相邻时区相差 1 小时，<b>东加西减</b>。<br>为什么要划？十九世纪铁路修起来以后，每个城镇各用各的"本地太阳时"，火车时刻表根本没法排——于是 1884 年同一次会议顺手把时区也定了。<br><b>国际日期变更线</b>大致沿 180° 经线，但它<b>故意拐了几个弯</b>：180° 线会穿过俄罗斯东部、斐济等陆地，如果一刀切，同一个国家、同一片群岛会同时过两个日期。所以让它绕开陆地走。<br>又一次：<b>规定服从实用。</b>'},
+  {w:'蒲公英号',t:'好了，回到渡鸦的照片。影子藏着两件事：<b>他在哪个纬度</b>、<b>现在什么节气</b>。'},
+  {w:'小塔 T-07',t:'……听起来像看照片猜谜。'},
+  {w:'蒲公英号',t:'不是猜。三个条件都摆在那儿：<b>影子朝北、影子很短、白昼约 15 小时</b>。能让这三样同时对上的，只有一组答案。'}
+ ],
+ clue:'照片里的影子<b>朝北、而且很短</b>，当地白昼接近 15 小时。还原出这个画面，你就知道我在哪个纬度、现在什么节气。',
+ act:'lightAct',
+ win:'<b>40°N，夏至</b>：太阳高度 = 90 − |40 − 23.5| = <b>73.5°</b> → 太阳很高，影子朝北且很短；昼长约 <b>14 小时 51 分</b>。三样全对上。',
+ lose:'影子方向、影子长短、白昼长度——<b>三条要同时对上</b>才算还原。'},
+
+/* ============ 2.1 ============ */
+{id:'2.1',sec:'第二章 地图 · 2.1 地图的阅读',title:'第四站：撕掉的那只角',
+ beats:[
+  {w:'蒲公英号',t:'渡鸦的临时营地。他走得急，地图上<b>比例尺那一角被撕掉了</b>。'},
+  {w:'小塔 T-07',t:'比例尺是什么？我们星球不用图纸，全息投影永远是 1:1。'},
+  {w:'蒲公英号',t:'因为你们的投影不用装在书包里。人类的纸有限、屏幕也有限——真实一座城市不可能原样塞进一张纸，所以必须先定好"缩多少倍"。'},
+  {q:'为什么非得"定好缩多少倍"？随手画小一点不行吗？',
+   o:[{t:'不行，不然量不出距离',s:'正解。比例尺一旦不固定，图上 2 厘米到底是 100 米还是 10 千米就说不清了，<b>图就没法用来量距离</b>——而量距离恰恰是地图最重要的用途之一。'},
+      {t:'可以，看着差不多就行',s:'蒲公英号：那我考你——营地到河"图上 2 厘米"，到底是 200 米还是 20 千米？<br>没有统一的缩小倍数，这张图就只能看、不能用。'},
+      {t:'因为纸不够大',s:'这是原因之一，但不是全部。真正的关键是：缩小倍数必须<b>固定</b>，否则图上的距离就没有意义了。'}],
+   tip:'想一想地图最大的用途是什么。'},
+  {d:'scaleDemo',w:'蒲公英号',t:'拖动滑块，看同一块地在三种比例尺下分别画得出什么。'},
+  {w:'小塔 T-07',t:'等等——1:500000 的数字比 1:50000 大，为什么你说它<b>更小</b>？'},
+  {w:'蒲公英号',t:'（这正是每年都有人栽的地方）因为比例尺本质是一个<b>分数</b>：1:500000 就是 1/500000。分母越大，分数值越小。<br>所以：<b>分母大的比例尺反而小</b>——它缩得更狠，画的范围更大，内容更简略。'},
+  {c:{id:'k21a',kn:'比例尺',
+      b:'比例尺 = <b>图上距离 ÷ 实际距离</b>。<br>1:500000 表示图上 1 厘米 = 实际 500000 厘米 = <b>5 千米</b>。<br><b>分母越大 → 比例尺越小 → 范围越大、内容越简略</b>；反之比例尺越大，画得越详细。<br>换算：1 千米 = 100000 厘米（别丢零）。',
+      m:'"分母大的比例尺反而小"，因为它是个分数。'}},
+  {w:'小塔 T-07',t:'还有一件事：我看你们的地图，北方永远在上面。这是规定吗？'},
+  {w:'蒲公英号',t:'是习惯，不是自然规律。中世纪欧洲的地图常把<b>东方</b>画在上方——因为伊甸园在东方、耶路撒冷在中心。英语 <b>orientation</b>（朝向）这个词，本义就是"转向东方"。'},
+  {d:'north',w:'蒲公英号',t:'点三个按钮，看看不同文明的地图怎么"朝上"。'},
+  {w:'小塔 T-07',t:'那现在为什么统一成北上？'},
+  {w:'蒲公英号',t:'罗盘普及后，磁针和北极星都指向<b>北</b>，航海图上"北"成了天然参照；1569 年墨卡托投影为航海而设计，把这个惯例印进了无数张印刷地图，于是就定下来了。'},
+  {c:{id:'k21b',kn:'地图上的方向（三选一，有优先级）',
+      b:'① 有<b>指向标</b> → 按指向标，箭头指北；<br>② 有<b>经纬网</b> → 经线指示<b>南北</b>、纬线指示<b>东西</b>（这是几何性质，不是约定，最可靠）；<br>③ 都没有 → 才用"上北下南、左西右东"。<br>三要素：<b>比例尺、方向、图例</b>。',
+      m:'"上北下南"只是约定；有指向标或经纬网时，以它们为准。'}},
+  {x:'再深一层：图例为什么必须有？',
+   t:'因为地图上的地物是<b>用符号代替</b>的：首都一个小星、铁路一段黑白线、河流一条蓝线。不这样做，一张城市图上光"房子"就画不下。<br>但符号是人为约定的，不同图可能不一样——所以<b>图例就是这张图的解码表</b>。看图先看图例，否则你不知道那些点和线代表什么。'}
+ ],
+ clue:'从营地到那条河，图上 2 厘米，实际正好 <b>10 千米</b>。至于我下一站走了多远——你们自己算。顺便提醒：我累了，<b>最多只走 10 千米</b>。',
+ act:'scaleAct',
+ win:'比例尺 = 2cm ÷ 10km → 图上 1cm = 5km = <b>1:500000</b>。点 A 图上 1 厘米 → 实际 <b>5 千米</b>，是三个候选里唯一不超过 10 千米的。',
+ lose:'先校准比例尺：营地到河"图上 2cm = 实际 10km"，据此反推图上 1cm 代表几千米，再量三个候选点。'},
+
+/* ============ 2.2 ============ */
+{id:'2.2',sec:'第二章 地图 · 2.2 地形图的判读',title:'第五站：山里的水声',
+ beats:[
+  {w:'蒲公英号',t:'信号进了山区。渡鸦的发射器靠<b>水力发电</b>——他需要流水。'},
+  {w:'小塔 T-07',t:'水流？我们的地表是平的，水从来不流，只是慢慢渗下去。"山"我也只在照片里见过。'},
+  {w:'渡鸦',t:'（一段录音，背景有水声）我的小电站建在<b>山谷</b>里——两侧山坡的水都往我这儿汇。但我不想住在下游被水淹，所以我挑了谷地里<b>最靠上游、海拔最高</b>的那一处。慢慢找，我不急。',r:1},
+  {w:'小塔 T-07',t:'可山是<b>立体</b>的，纸是<b>平</b>的。怎么把一座山画到纸上？'},
+  {w:'蒲公英号',t:'这是人类想了几百年才想明白的事。办法特别朴素——<b>假装海水一直涨</b>。'},
+  {d:'flood',w:'蒲公英号',t:'拖动水位，看左边的山被淹的过程；右边就是落到纸上的结果。'},
+  {w:'小塔 T-07',t:'……原来等高线就是"水位线"留下的痕迹。'},
+  {w:'蒲公英号',t:'对。既然是同一次水位切出来的，那<b>同一条线上，海拔必然相等</b>。'},
+  {q:'顺着这个想法推一下：为什么两条等高线<b>不会相交</b>？',
+   o:[{t:'因为一个地方只有一个海拔',s:'正解。一个地点不可能同时是 300 米又是 400 米，所以两条不同高度的等高线不会交叉。<br>唯一的例外是<b>陡崖</b>：那里近乎垂直，不同高度的线挤到一起，看起来像"重叠"。'},
+      {t:'因为画不下',s:'不是画不下，是<b>不允许</b>。等高线是对真实地形的描述，真实地形里一个点只有一个高度，画相交就等于说"这里同时有两个高度"，那就错了。'},
+      {t:'因为线太多会乱',s:'小塔：那人类可以少画几条啊。<br>蒲公英号：真正的原因是物理上的——一个地方的海拔只有一个值。'}],
+   tip:'从"水位线"这个比喻往下推。'},
+  {c:{id:'k22a',kn:'等高线：它其实是水位线',
+      b:'把立体的山用一个个<b>水平面去切</b>，每次切出来的交线投影到纸上，就是一条<b>等高线</b>。<br>由此直接推出三条：<br>① 同一条线上<b>海拔相等</b>；② 等高线<b>不相交</b>（陡崖处重叠例外）；③ <b>密 → 坡陡，疏 → 坡缓</b>（水位每涨 100 米，水平方向只挪了一点，说明陡）。<br>相邻两条的高度差叫<b>等高距</b>，全图必须统一，否则疏密就没法比较。',
+      m:'别背"密陡疏缓"，先想水位——想明白就忘不掉。'}},
+  {w:'小塔 T-07',t:'那"山有多高"又该怎么说？从山脚算，还是从海平面算？'},
+  {w:'蒲公英号',t:'必须有个<b>公共零点</b>。人类选了<b>平均海平面</b>——因为全世界的海洋是连在一起的，高度基本一致，谁都能用。'},
+  {d:'relief',w:'蒲公英号',t:'海拔从海平面起算；相对高度是两地的海拔之差。'},
+  {c:{id:'k22b',kn:'海拔与相对高度',
+      b:'<b>海拔</b>：以<b>平均海平面</b>为 0 米起算的垂直高度。<br><b>相对高度</b>：两个地点海拔的<b>差</b>。<br>爬一座山累不累，看的是相对高度，不是海拔。',
+      m:'等高线上的数字是海拔，不是相对高度。'}},
+  {w:'小塔 T-07',t:'最后一个问题：山脊和山谷，我永远分不清。'},
+  {w:'蒲公英号',t:'别背口诀，先想<b>水往哪儿走</b>——水永远往低处流。<br><b>山谷</b>：两侧高、中间低 → 两边的水都<b>汇进来</b> → 能成溪流（集水线）。<br><b>山脊</b>：中间高、两侧低 → 水往<b>两边分开</b> → 汇不成溪流（分水线）。'},
+  {q:'那么：等高线<b>凸向高处</b>的地方，是山脊还是山谷？',
+   o:[{t:'山谷',s:'对。等高线要"绕过"更高的地方往外凸，说明中间这条线上海拔比两侧低——那就是<b>山谷</b>。<br>口诀可以记成：<b>凸低为脊，凸高为谷</b>（等高线凸向低处是山脊，凸向高处是山谷）。'},
+      {t:'山脊',s:'反了，这是最经典的错误。可以这样验证：等高线凸向高处，说明沿着凸出的方向海拔在<b>升高</b>，那中间这条就是相对更低的"凹槽"——是<b>山谷</b>，水会往这儿汇。<br>记忆钩子：<b>凸低为脊，凸高为谷</b>。'},
+      {t:'看不出来',s:'蒲公英号：那就别看图，想水流。水往低处流 → 能汇水的是<b>谷</b> → 谷的等高线一定凸向<b>高</b>处（因为两侧更高）。<br>钩住它：<b>凸低为脊，凸高为谷</b>。'}],
+   tip:'先想水流，再想口诀。'},
+  {c:{id:'k22c',kn:'山脊 vs 山谷',
+      b:'<b>山谷</b>（集水线）：两侧高、中间低，等高线<b>凸向高处</b>，常发育河流。<br><b>山脊</b>（分水线）：中间高、两侧低，等高线<b>凸向低处</b>。<br><b>山峰</b>：闭合小圈，越往里越高。<b>鞍部</b>：两组闭合等高线之间的低处。<b>陡崖</b>：等高线重叠。<br>口诀：<b>凸低为脊，凸高为谷</b>。',
+      m:'先理解水流，再用口诀做记忆钩子。'}}
+ ],
+ clue:'① 必须在<b>山谷</b>里（两侧的水要汇得进来）；② 是这条谷地里<b>海拔最高</b>的那一格。点图上的格子，看水流往哪走。',
+ act:'contourAct',
+ win:'<b>('+ '3,1' +') 海拔 500 米</b>：东西两侧都是 600 米 → 两侧高、中间低，是<b>山谷</b>；沿谷线往下是 400、300、100 米，它是这条谷地里海拔最高的一格——正是溪流的源头。',
+ lose:'点一下格子，读三件事：海拔多少、水往哪流、这里是脊还是谷。'},
+
+/* ============ 2.3 ============ */
+{id:'2.3',sec:'第二章 地图 · 2.3 地图的选择和应用',title:'第六站：围捕',
+ beats:[
+  {w:'蒲公英号',t:'最后一段信号。渡鸦被逼进了一片陌生的区域，他手里的地图是错的——这次轮到我们给他送对图。'},
+  {w:'渡鸦',t:'……你们居然追到这儿了。（短暂的沉默）好吧我承认，这张图我确实看不懂。',r:1},
+  {w:'小塔 T-07',t:'同一种地方，为什么要画出好几种图？'},
+  {q:'你觉得原因是什么？',
+   o:[{t:'一张图装不下所有信息',s:'正解。想在一张图上同时画出省界、公路、等高线、气温降水——结果就是糊成一团黑，什么都看不清。<br>所以人类按"<b>要解决什么问题</b>"把信息分开，做成不同的图。'},
+      {t:'因为不同的机构各画各的',s:'有点道理，但不是主因。真正的原因是<b>信息密度</b>：一张纸能承载的信息有限，全塞进去就失去了可读性。'},
+      {t:'因为技术不一样',s:'小塔：那现在都用电脑了，为什么还分？<br>蒲公英号：恰恰因为电脑能画得更多，才更要做<b>取舍</b>——不然屏幕上全是线。'}],
+   tip:'选一个。'},
+  {d:'mapDemo',w:'蒲公英号',t:'这就是四种画法。点开看看每张图各自"装了什么信息"。'},
+  {c:{id:'k23',kn:'按用途选图',
+      b:'<b>政区图</b>：看位置、行政区划、省市界线。<br><b>交通图</b>：看铁路公路航线，规划路线。<br><b>地形图</b>：看高低起伏、坡度。<br><b>气候/降水图</b>：看气温与降水分布。<br><b>电子地图</b>：可缩放、搜索、导航、实时路况；<b>放大 → 比例尺变大 → 看得更细</b>。<br>口诀：<b>先想"我要干什么"，再选图</b>。',
+      m:'多图配合，比盯着一张图硬看有效得多。'}},
+  {x:'再深一层：为什么"放大"会让比例尺变大？',
+   t:'屏幕上放大一块地，同样一块地在屏幕上的<b>图上距离变长了</b>，而实际距离没变。比例尺 = 图上距离 ÷ 实际距离，分子变大 → <b>比例尺变大</b> → 于是能画出更多细节（小路、门牌号）。<br>这正好印证了 2.1 学的那句话：<b>比例尺越大，内容越详细</b>。'}
+ ],
+ clue:'围捕要分四步，每一步都得拿对图。拿错了，我可就跑了。',
+ act:'mapAct',
+ win:'四步全对：<b>位置看政区图、路线看交通图、地形看地形图、天气看气候图</b>。围捕成功——星图核心追回来了。',
+ lose:'有一张图拿错了。想想这一步"要解决的问题"到底是什么，再决定用哪种图。'}
+];
+
+/* ============================================================
+   序章：故事开始前的引导
+   ============================================================ */
+const PRO=[
+ {d:'intro',w:'蒲公英号',t:'先看清发生了什么。点一下那颗蓝色星球。'},
+ {w:'蒲公英号',t:'三分钟前，一个自称<b>渡鸦</b>的家伙偷走了<b>星图核心</b>——那是这艘船的导航心脏。没有它，我们连"往哪儿飞"都算不出来。<br>监控里，他跳进的那颗星球，就是它。'},
+ {w:'小塔 T-07',t:'（一个怯生生的声音插进来）那个……我是小塔，塔拉星的实习生，第一次出任务。我现在应该很害怕吗？'},
+ {w:'蒲公英号',t:'他叫<b>小塔 T-07</b>，负责记录。顺带一句：他这辈子<b>没见过地球</b>，而且他老家的情况，和地球差得有点远。'},
+ {w:'小塔 T-07',t:'我们那儿永远一面朝着太阳——所以"天黑"这个词，我是在字典里认识的。<br>我们的地轴不倾斜，没有四季；大气早就跑光了，没见过云和雨；地表是平的，最高的地方也就到我膝盖；全球同一个时区，所以我从来没有"位置"这个概念。'},
+ {q:'一个没见过黑夜、没见过下雨、没见过山的人，要去地球追人——你觉得他最先会栽在哪儿？',
+  o:[{t:'他读不懂地球上的任何线索',s:'对，这是最要命的。线索里写"北回归线""等高线""1:50万"，对他来说全是乱码。<br>所以接下来的每一步，都还得靠<b>你</b>来读。'},
+     {t:'他会把地图用错',s:'是的，而且会错得很离谱：他要找一条小路，却拿了一张只画省界的图。<br>这类麻烦后面一定会遇上，到时你会替他挑。'},
+     {t:'他根本不知道该往哪儿找',s:'正中要害。没有"位置"概念的人，在一颗行星上找人，等于在黑屋子里找钥匙。<br>好消息是：人类的办法已经写在你们的课本里了。'}],
+  tip:'随便选，没有对错——他只是想知道地球人会怎么想。'},
+ {w:'蒲公英号',t:'所以任务是这样：<b>渡鸦正沿着你们课本的目录，一站一站地逃</b>。<br>我们追，追上一站，就把那一节的知识记进《地球观测手册》。<br>等手册写满，就追上他了。'},
+ {w:'蒲公英号',t:'每一站都是同一个节奏，记住这四步就够了：<br>① <b>小塔先说出他不明白的事</b>（他不明白的，恰好就是课本要教的）；<br>② <b>你先猜一下</b>——猜错完全没关系，他只是想知道地球人怎么想，没有人给你打分；<br>③ <b>动手做个小演示</b>，拖一拖、点一点，看完你自己就明白了；<br>④ <b>用刚才弄明白的东西，去读渡鸦留下的线索</b>——读对了，就追上他。'},
+ {c:{id:'k00',kn:'你的任务',
+     b:'跟着课本目录走：第一、二章共 <b>6 节</b>，一节一站。<br>每站做三件事：<b>听小塔的困惑 → 你先猜 → 动手看演示</b>，最后用学到的东西去解读渡鸦的线索。<br>追上就把这一节记进《地球观测手册》。',
+     m:'忘了就点上面的 📖 翻手册——不查资料不算作弊，查资料本来就是玩法的一部分。'}},
+ {w:'蒲公英号',t:'还有两件事：<br>顶部那条是<b>追捕进度</b>，你和他差几站一眼就能看见；追错了他只是跑远一站，<b>不扣分、不结束</b>，想明白再来一次就行。<br>需要查东西随时点 <b>📖 手册</b>。'},
+ {w:'小塔 T-07',t:'那……我该叫你什么？'},
+ {w:'蒲公英号',t:'就叫你<b>地球代表</b>吧。这颗星球上，只有你愿意搭理我们两个。<br>准备好了吗？第一站——1.1 地球的宇宙环境。'}
+];
+
+/* ============================================================
+   对话 / 流程引擎
+   ============================================================ */
+let PH=null; // 当前演示宿主
+
+/* ============================================================
+   角色形象：矢量绘制（对话头像 / 过场立绘共用）
+   ============================================================ */
+let _uid=0;
+function _defs(u){
+  return '<defs>'
+   +'<radialGradient id="'+u+'t" cx="36%" cy="28%"><stop offset="0" stop-color="#d3ffef"/>'
+     +'<stop offset=".55" stop-color="#6fd8b0"/><stop offset="1" stop-color="#2f9c78"/></radialGradient>'
+   +'<radialGradient id="'+u+'p" cx="34%" cy="28%"><stop offset="0" stop-color="#eafdff"/>'
+     +'<stop offset=".55" stop-color="#79c9ee"/><stop offset="1" stop-color="#2f7fb5"/></radialGradient>'
+   +'<radialGradient id="'+u+'r" cx="34%" cy="22%"><stop offset="0" stop-color="#4a5678"/>'
+     +'<stop offset="1" stop-color="#101625"/></radialGradient>'
+   +'<radialGradient id="'+u+'e" cx="34%" cy="28%"><stop offset="0" stop-color="#a9e4ff"/>'
+     +'<stop offset="1" stop-color="#26689f"/></radialGradient>'
+   +'<radialGradient id="'+u+'g" cx="40%" cy="30%"><stop offset="0" stop-color="#fff0c9"/>'
+     +'<stop offset="1" stop-color="#e0a24c"/></radialGradient>'
+   +'<radialGradient id="'+u+'s" cx="36%" cy="28%"><stop offset="0" stop-color="#ffe0cf"/>'
+     +'<stop offset="1" stop-color="#dba175"/></radialGradient>'
+   +'<clipPath id="'+u+'c"><circle cx="50" cy="50" r="26"/></clipPath>'
+   +'</defs>';
+}
+/* 小塔 T-07：塔拉星实习生，薄荷绿大头外星人 */
+function _svTower(u,mood){
+  let s='';
+  s+='<ellipse cx="50" cy="93" rx="26" ry="5" fill="#000" opacity=".28"/>';
+  s+='<line x1="37" y1="26" x2="28" y2="10" stroke="#7fe3c0" stroke-width="3" stroke-linecap="round"/>';
+  s+='<circle cx="27" cy="8" r="5" fill="#ffd479"/>';
+  s+='<line x1="63" y1="26" x2="72" y2="10" stroke="#7fe3c0" stroke-width="3" stroke-linecap="round"/>';
+  s+='<circle cx="73" cy="8" r="5" fill="#ffd479"/>';
+  s+='<path d="M30 64 q20 -10 40 0 l5 27 q-25 7 -50 0z" fill="#22375c" stroke="#4a6ea8" stroke-width="1.5"/>';
+  s+='<circle cx="50" cy="82" r="4.5" fill="#8be3c8"/>';
+  s+='<ellipse cx="50" cy="43" rx="27" ry="25" fill="url(#'+u+'t)"/>';
+  s+='<ellipse cx="50" cy="43" rx="27" ry="25" fill="none" stroke="#ffffff" stroke-opacity=".18"/>';
+  s+='<ellipse cx="39" cy="44" rx="7.4" ry="10" fill="#0b1a26"/>';
+  s+='<ellipse cx="61" cy="44" rx="7.4" ry="10" fill="#0b1a26"/>';
+  s+='<circle cx="36.4" cy="40.4" r="2.7" fill="#f2fffa"/>';
+  s+='<circle cx="58.4" cy="40.4" r="2.7" fill="#f2fffa"/>';
+  if(mood==='wonder'){
+    s+='<path d="M31 32 q7 -5 13 -1" stroke="#0b1a26" stroke-width="2" fill="none" stroke-linecap="round"/>';
+    s+='<path d="M57 31 q7 -4 13 1" stroke="#0b1a26" stroke-width="2" fill="none" stroke-linecap="round"/>';
+    s+='<ellipse cx="50" cy="57" rx="3.6" ry="4.6" fill="#0b1a26"/>';
+  } else if(mood==='happy'){
+    s+='<path d="M41 55 q9 9 18 0" stroke="#0b1a26" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+  } else {
+    s+='<path d="M43 56 q7 5 14 0" stroke="#0b1a26" stroke-width="2.4" fill="none" stroke-linecap="round"/>';
+  }
+  return s;
+}
+/* 蒲公英号：飞船 AI，一颗会说话的蒲公英 */
+function _svDande(u,mood){
+  let s='<ellipse cx="50" cy="94" rx="24" ry="4" fill="#000" opacity=".25"/>';
+  s+='<circle cx="50" cy="50" r="40" fill="none" stroke="#3a5f8a" stroke-width="1" stroke-dasharray="3 6" opacity=".8"/>';
+  for(let i=0;i<16;i++){
+    const a=i*Math.PI/8, cs=Math.cos(a), sn=Math.sin(a);
+    const x1=(50+cs*18).toFixed(1), y1=(50+sn*18).toFixed(1);
+    const x2=(50+cs*34).toFixed(1), y2=(50+sn*34).toFixed(1);
+    s+='<line x1="'+x1+'" y1="'+y1+'" x2="'+x2+'" y2="'+y2+'" stroke="#9fe8ff" stroke-width="1.7"'
+      +' stroke-linecap="round" opacity=".8"/>';
+    s+='<circle cx="'+x2+'" cy="'+y2+'" r="2.7" fill="#e8fdff"/>';
+  }
+  s+='<circle cx="50" cy="50" r="18" fill="url(#'+u+'p)"/>';
+  s+='<circle cx="50" cy="50" r="18" fill="none" stroke="#dffaff" stroke-opacity=".45"/>';
+  if(mood==='happy'){
+    s+='<path d="M41 47 q5 -6 9 0" stroke="#06202e" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    s+='<path d="M50 47 q5 -6 9 0" stroke="#06202e" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+  } else {
+    s+='<circle cx="43.5" cy="48" r="3.2" fill="#06202e"/>';
+    s+='<circle cx="56.5" cy="48" r="3.2" fill="#06202e"/>';
+    s+='<circle cx="44.6" cy="46.9" r="1.1" fill="#eafdff"/>';
+    s+='<circle cx="57.6" cy="46.9" r="1.1" fill="#eafdff"/>';
+  }
+  s+='<path d="M44 57 q6 4.5 12 0" stroke="#06202e" stroke-width="2.2" fill="none" stroke-linecap="round"/>';
+  return s;
+}
+/* 渡鸦：偷走星图核心的家伙 */
+function _svRaven(u,mood){
+  let s='<ellipse cx="50" cy="92" rx="30" ry="5" fill="#000" opacity=".35"/>';
+  s+='<path d="M50 9 C27 9 19 33 22 54 C24 71 33 81 50 81 C67 81 76 71 78 54 C81 33 73 9 50 9Z" fill="url(#'+u+'r)"/>';
+  s+='<path d="M50 14 C33 14 26 33 28 50 C30 63 37 71 50 71 C63 71 70 63 72 50 C74 33 67 14 50 14Z" fill="#070b15"/>';
+  s+='<path d="M23 55 q-11 9 -6 24 q8 -7 10 -17z" fill="#161f36"/>';
+  s+='<path d="M77 55 q11 9 6 24 q-8 -7 -10 -17z" fill="#161f36"/>';
+  s+='<path d="M50 51 L63 57 L50 63 Z" fill="url(#'+u+'g)"/>';
+  s+='<path d="M50 51 L63 57 L50 57 Z" fill="#fff" opacity=".25"/>';
+  if(mood==='smug'){
+    s+='<path d="M32 42 q6 -5 11 1" stroke="#ff5f7a" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+    s+='<path d="M57 43 q6 -5 11 -1" stroke="#ff5f7a" stroke-width="2.8" fill="none" stroke-linecap="round"/>';
+  } else {
+    s+='<circle cx="38" cy="45" r="3.6" fill="#ff6b85"/>';
+    s+='<circle cx="62" cy="45" r="3.6" fill="#ff6b85"/>';
+  }
+  s+='<circle cx="38" cy="45" r="7" fill="#ff5f7a" opacity=".18"/>';
+  s+='<circle cx="62" cy="45" r="7" fill="#ff5f7a" opacity=".18"/>';
+  s+='<circle cx="50" cy="86" r="11" fill="#ffd479" opacity=".16"/>';
+  s+='<path d="M50 78 L58 82 L58 90 L50 94 L42 90 L42 82 Z" fill="url(#'+u+'g)" stroke="#fff3d0" stroke-width="1"/>';
+  s+='<path d="M50 82 L54 84 L54 88 L50 90 L46 88 L46 84 Z" fill="#fff8e0" opacity=".8"/>';
+  return s;
+}
+/* 你 / 地球代表 */
+function _svYou(u,mood){
+  let s='<ellipse cx="50" cy="94" rx="25" ry="4" fill="#000" opacity=".28"/>';
+  s+='<path d="M28 64 q22 -10 44 0 l5 28 q-27 7 -54 0z" fill="#2f5aa0"/>';
+  s+='<path d="M50 64 l0 28" stroke="#1e3d70" stroke-width="2"/>';
+  s+='<circle cx="50" cy="79" r="6" fill="#4aa8d8"/>';
+  s+='<path d="M50 79 m-6 0 a6 6 0 0 1 12 0" fill="none" stroke="#fff" stroke-opacity=".5"/>';
+  s+='<path d="M46 72 q4 3 8 -1" stroke="#0d2a44" stroke-width="1.4" fill="none"/>';
+  s+='<ellipse cx="50" cy="40" rx="21" ry="22" fill="url(#'+u+'s)"/>';
+  s+='<path d="M29 38 C30 18 70 18 71 38 C68 28 56 24 50 26 C42 24 32 29 29 38Z" fill="#2b3550"/>';
+  s+='<path d="M29 36 q-3 8 1 13 q3 -8 2 -13z" fill="#2b3550"/>';
+  s+='<path d="M71 36 q3 8 -1 13 q-3 -8 -2 -13z" fill="#2b3550"/>';
+  s+='<circle cx="42" cy="41" r="2.9" fill="#1c2436"/>';
+  s+='<circle cx="58" cy="41" r="2.9" fill="#1c2436"/>';
+  s+='<circle cx="43" cy="40" r="1" fill="#fff"/>';
+  s+='<circle cx="59" cy="40" r="1" fill="#fff"/>';
+  s+='<path d="M45 50 q5 '+(mood==='happy'?5:3)+' 10 0" stroke="#b3703f" stroke-width="2" fill="none" stroke-linecap="round"/>';
+  return s;
+}
+/* 地球的声音 */
+function _svEarth(u){
+  let s='';
+  for(let i=0;i<3;i++){
+    const r=32+i*9, o=(0.30-i*0.09).toFixed(2);
+    s+='<circle cx="50" cy="50" r="'+r+'" fill="none" stroke="#6fd3ff" stroke-width="1.6" opacity="'+o+'"/>';
+  }
+  s+='<circle cx="50" cy="50" r="26" fill="url(#'+u+'e)"/>';
+  s+='<g clip-path="url(#'+u+'c)">';
+  s+='<path d="M32 34 q10 -8 20 -3 q6 4 3 10 q-8 6 -18 3 q-8 -3 -5 -10z" fill="#5ec98a"/>';
+  s+='<path d="M56 54 q12 -4 18 6 q4 10 -6 14 q-12 4 -16 -6 q-2 -10 4 -14z" fill="#5ec98a"/>';
+  s+='<path d="M28 62 q6 -6 12 0 q4 6 -4 8 q-8 2 -8 -8z" fill="#5ec98a"/>';
+  s+='</g>';
+  s+='<circle cx="50" cy="50" r="26" fill="none" stroke="#bfeaff" stroke-opacity=".4"/>';
+  s+='<ellipse cx="38" cy="34" rx="9" ry="5" fill="#fff" opacity=".18"/>';
+  return s;
+}
+function avSVG(who,mood){
+  const u='v'+(++_uid), w=who||'';
+  let body;
+  if(w.indexOf('小塔')>=0) body=_svTower(u,mood);
+  else if(w.indexOf('蒲公英')>=0) body=_svDande(u,mood);
+  else if(w.indexOf('渡鸦')>=0) body=_svRaven(u,mood);
+  else if(w.indexOf('声音')>=0) body=_svEarth(u);
+  else body=_svYou(u,mood);
+  return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'+_defs(u)+body+'</svg>';
+}
+function setAv(who){
+  const av=$('dAv'); if(!av)return;
+  const w=who||'';
+  av.innerHTML=avSVG(w);
+  av.className=(w.indexOf('渡鸦')>=0?'rv':(w.indexOf('蒲公英')>=0?'ai':''));
+  av.classList.remove('talk'); void av.offsetWidth; av.classList.add('talk');
+  dlg.classList.toggle('rv',w.indexOf('渡鸦')>=0);
+}
+
+/* ============================================================
+   过场动画：渡鸦抢跑一步 → 站牌 → 同伴追上来
+   ============================================================ */
+const STOP={
+ '1.1':{icon:'planets',sub:'八颗行星里只有一颗能住人。他躲在那儿。'},
+ '1.2':{icon:'grid',sub:'他寄回来一张明信片，上面只写了一串数字。'},
+ '1.3':{icon:'spin',sub:'他留下一张正午拍的照片。影子会说话。'},
+ '2.1':{icon:'map',sub:'一张被撕掉了比例尺的地图，落在营地。'},
+ '2.2':{icon:'mtn',sub:'他要在山里建水电站。水往哪儿流？'},
+ '2.3':{icon:'maps',sub:'最后一步：选对那张图，才堵得住他。'},
+ '序章':{icon:'stars',sub:'三分钟前，星图核心离线。'}
+};
+const _SEED=[];
+for(let i=0;i<80;i++)_SEED.push([(i*97%1001)/1001,(i*61%997)/997,((i*37)%7)/7]);
+function drawTR(g,w,h,kind,p){
+  const bg=g.createLinearGradient(0,0,0,h);
+  bg.addColorStop(0,'#0b1428'); bg.addColorStop(.55,'#0a1020'); bg.addColorStop(1,'#04070f');
+  g.fillStyle=bg; g.fillRect(0,0,w,h);
+  /* 星 */
+  const off=p*w*0.55;
+  for(let i=0;i<_SEED.length;i++){
+    const s=_SEED[i];
+    let x=s[0]*w-off; x=((x%w)+w)%w;
+    const y=s[1]*h*0.70;
+    g.globalAlpha=0.20+0.55*s[2]*(0.55+0.45*Math.sin(p*7+i));
+    g.fillStyle=(i%9===0)?'#ffd479':'#dbe7ff';
+    g.beginPath(); g.arc(x,y,0.7+s[2]*1.4,0,7); g.fill();
+  }
+  g.globalAlpha=1;
+  /* 渡鸦的飞船：抢跑一步 */
+  const fp=Math.min(1,p/0.55);
+  const sx=w*1.15-(w*1.45)*fp, sy=h*0.115+Math.sin(p*5)*6;
+  const tg=g.createLinearGradient(sx+20,sy,sx+150,sy);
+  tg.addColorStop(0,'rgba(255,143,163,.55)'); tg.addColorStop(1,'rgba(255,143,163,0)');
+  g.strokeStyle=tg; g.lineWidth=3.4; g.lineCap='round';
+  g.beginPath(); g.moveTo(sx+22,sy+1); g.lineTo(sx+150,sy+7); g.stroke();
+  g.fillStyle='#2b3458';
+  g.beginPath(); g.ellipse(sx,sy,20,6.5,0,0,7); g.fill();
+  g.fillStyle='#3d4a75';
+  g.beginPath(); g.ellipse(sx,sy-3.5,11,6,0,Math.PI,0); g.fill();
+  g.fillStyle='#ff8fa3';
+  g.beginPath(); g.arc(sx,sy+1,2.6,0,7); g.fill();
+  g.globalAlpha=.35; g.fillStyle='#ffd479';
+  g.beginPath(); g.arc(sx,sy-7,2.4,0,7); g.fill(); g.globalAlpha=1;
+  /* 地平线剪影（先画，图标浮在其上） */
+  g.globalAlpha=1; g.fillStyle='#070c17';
+  g.beginPath(); g.moveTo(0,h);
+  const base=h*0.90;
+  if(kind==='mtn'){
+    g.lineTo(0,base+10);
+    for(let i=0;i<=8;i++){
+      const x=w*i/8, y=base-((i%2)?14:34)-((i*13)%9);
+      g.lineTo(x,y);
+    }
+  } else {
+    g.lineTo(0,base+6);
+    for(let i=0;i<=8;i++){
+      const x=w*i/8, y=base-((i*17)%11)-2;
+      g.lineTo(x,y);
+    }
+  }
+  g.lineTo(w,h); g.closePath(); g.fill();
+  /* 地标图标：落在地平线上方，避开站牌与同伴 */
+  const cx=w/2, cy=h*0.80, R=Math.min(w,h)*0.145;
+  g.save();
+  const pop=Math.min(1,p/0.35);
+  g.globalAlpha=pop; g.translate(cx,cy); g.scale(0.7+0.3*pop,0.7+0.3*pop);
+  const ICON={
+    planets:function(){ iconPlanets(g,R,p); },
+    grid:function(){ iconGrid(g,R,p); },
+    spin:function(){ iconSpin(g,R,p); },
+    map:function(){ iconMap(g,R,p); },
+    mtn:function(){ iconMtn(g,R,p); },
+    maps:function(){ iconMaps(g,R,p); },
+    stars:function(){ iconStars(g,R,p); }
+  };
+  (ICON[kind]||ICON.stars)();
+  g.restore();
+  /* 底部光晕 */
+  const fg=g.createLinearGradient(0,h*0.72,0,h);
+  fg.addColorStop(0,'rgba(60,110,190,0)'); fg.addColorStop(1,'rgba(60,110,190,.16)');
+  g.fillStyle=fg; g.fillRect(0,h*0.72,w,h*0.28);
+}
+function _glow(g,r,col,a){const q=g.createRadialGradient(0,0,r*0.3,0,0,r*1.5);
+  q.addColorStop(0,col); q.addColorStop(1,'rgba(0,0,0,0)'); g.globalAlpha=a; g.fillStyle=q;
+  g.beginPath(); g.arc(0,0,r*1.5,0,7); g.fill(); g.globalAlpha=1;}
+function iconPlanets(g,R,p){
+  _glow(g,R,'rgba(90,160,255,.35)',.9);
+  g.strokeStyle='rgba(120,170,240,.45)'; g.lineWidth=1.2; g.setLineDash([3,4]);
+  [[1,.34],[.72,.5],[.5,.72]].forEach(function(o,i){
+    g.beginPath(); g.ellipse(0,0,R*o[0],R*o[1],-0.28,0,7); g.stroke();
+    const a=p*2.2+i*2.1, x=Math.cos(a)*R*o[0], y=Math.sin(a)*R*o[1];
+    const rx=x*Math.cos(-0.28)-y*Math.sin(-0.28), ry=x*Math.sin(-0.28)+y*Math.cos(-0.28);
+    const c=['#c9b39a','#e6c489','#8fd0ff'][i], rr=[3.2,4.4,3.6][i];
+    g.setLineDash([]); g.fillStyle=c; g.beginPath(); g.arc(rx,ry,rr,0,7); g.fill();
+    g.setLineDash([3,4]);
+  });
+  g.setLineDash([]);
+  const b=g.createRadialGradient(-R*0.12,-R*0.14,R*0.05,0,0,R*0.42);
+  b.addColorStop(0,'#7fc7ff'); b.addColorStop(1,'#1d5c96');
+  g.fillStyle=b; g.beginPath(); g.arc(0,0,R*0.42,0,7); g.fill();
+  g.fillStyle='#5ec98a';
+  g.beginPath(); g.ellipse(-R*0.1,-R*0.08,R*0.16,R*0.1,.4,0,7); g.fill();
+  g.beginPath(); g.ellipse(R*0.16,R*0.14,R*0.12,R*0.09,-.3,0,7); g.fill();
+}
+function iconGrid(g,R,p){
+  _glow(g,R,'rgba(80,150,240,.32)',.9);
+  const b=g.createRadialGradient(-R*0.3,-R*0.3,R*0.05,0,0,R);
+  b.addColorStop(0,'#2f6ea8'); b.addColorStop(1,'#143253');
+  g.fillStyle=b; g.beginPath(); g.arc(0,0,R,0,7); g.fill();
+  g.strokeStyle='rgba(190,225,255,.55)'; g.lineWidth=1;
+  for(let i=1;i<5;i++){const a=i*Math.PI/5;
+    g.beginPath(); g.ellipse(0,0,Math.abs(Math.cos(a+p*0.9))*R,R,0,0,7); g.stroke();}
+  for(let i=-2;i<=2;i++){const y=i*R*0.36, w2=Math.sqrt(Math.max(0,1-(i*0.36)*(i*0.36)))*R;
+    g.beginPath(); g.ellipse(0,y,w2,R*0.11,0,0,7); g.stroke();}
+  g.strokeStyle='#ffd479'; g.lineWidth=1.8;
+  g.beginPath(); g.ellipse(0,0,R,R*0.11,0,0,7); g.stroke();
+  g.strokeStyle='rgba(255,212,121,.7)'; g.lineWidth=1.2; g.setLineDash([4,3]);
+  [-0.42,0.42].forEach(function(k){
+    const y=k*R, w2=Math.sqrt(Math.max(0,1-k*k))*R;
+    g.beginPath(); g.ellipse(0,y,w2,R*0.1,0,0,7); g.stroke();});
+  g.setLineDash([]);
+  g.strokeStyle='#8be3c8'; g.lineWidth=1.4;
+  g.beginPath(); g.moveTo(-R*1.05,0); g.lineTo(R*1.05,0); g.stroke();
+}
+function iconSpin(g,R,p){
+  _glow(g,R,'rgba(255,200,120,.28)',.9);
+  const b=g.createRadialGradient(0,0,R*0.1,0,0,R);
+  b.addColorStop(0,'#3a7cb8'); b.addColorStop(1,'#16304f');
+  g.fillStyle=b; g.beginPath(); g.arc(0,0,R,0,7); g.fill();
+  g.save(); g.beginPath(); g.arc(0,0,R,0,7); g.clip();
+  g.fillStyle='rgba(3,7,16,.72)';
+  const ang=0.38;                       /* 晨昏线倾角：与地轴不平行（地轴竖直） */
+  const nx=Math.cos(ang+Math.PI/2), ny=Math.sin(ang+Math.PI/2);
+  g.beginPath(); g.arc(0,0,R,ang,ang+Math.PI); g.closePath(); g.fill();
+  g.restore();
+  g.strokeStyle='#ffd479'; g.lineWidth=1.3; g.setLineDash([3,3]);
+  g.beginPath(); g.moveTo(nx*R,ny*R); g.lineTo(-nx*R,-ny*R); g.stroke();
+  g.setLineDash([]);
+  g.strokeStyle='#ffd479'; g.lineWidth=1.6;
+  g.beginPath(); g.moveTo(0,-R*1.16); g.lineTo(0,R*1.16); g.stroke();
+  g.strokeStyle='#8be3c8'; g.lineWidth=2;
+  const aa=p*4.4;
+  g.beginPath(); g.arc(0,0,R*1.28,aa,aa+1.5); g.stroke();
+  const ex=Math.cos(aa+1.5)*R*1.28, ey=Math.sin(aa+1.5)*R*1.28;
+  g.fillStyle='#8be3c8';
+  g.beginPath(); g.moveTo(ex,ey); g.lineTo(ex-Math.cos(aa+1.1)*7,ey-Math.sin(aa+1.1)*7);
+  g.lineTo(ex-Math.cos(aa+1.9)*7,ey-Math.sin(aa+1.9)*7); g.closePath(); g.fill();
+}
+function iconMap(g,R,p){
+  const w2=R*1.5,h2=R*1.15;
+  g.fillStyle='#101c33'; g.strokeStyle='#3d5c92'; g.lineWidth=1.4;
+  g.beginPath(); g.rect(-w2/2,-h2/2,w2,h2); g.fill(); g.stroke();
+  g.strokeStyle='rgba(120,170,235,.4)'; g.lineWidth=1;
+  for(let i=1;i<5;i++){g.beginPath(); g.moveTo(-w2/2+w2*i/5,-h2/2); g.lineTo(-w2/2+w2*i/5,h2/2); g.stroke();}
+  for(let i=1;i<4;i++){g.beginPath(); g.moveTo(-w2/2,-h2/2+h2*i/4); g.lineTo(w2/2,-h2/2+h2*i/4); g.stroke();}
+  g.strokeStyle='#5ec98a'; g.lineWidth=2;
+  g.beginPath(); g.moveTo(-w2*0.36,h2*0.28); g.quadraticCurveTo(-w2*0.1,-h2*0.16,w2*0.1,h2*0.06);
+  g.quadraticCurveTo(w2*0.26,h2*0.2,w2*0.38,-h2*0.1); g.stroke();
+  const sw=w2*0.42*(0.55+0.45*Math.abs(Math.sin(p*2.2)));
+  g.strokeStyle='#ffd479'; g.lineWidth=2.4;
+  g.beginPath(); g.moveTo(-sw/2,h2*0.44); g.lineTo(sw/2,h2*0.44); g.stroke();
+  g.fillStyle='#ff8fa3';
+  const px=w2*0.3, py=-h2*0.28;
+  g.beginPath(); g.arc(px,py,4.4+Math.sin(p*6)*0.8,0,7); g.fill();
+  g.strokeStyle='rgba(255,143,163,.5)'; g.lineWidth=1.2;
+  g.beginPath(); g.arc(px,py,9+Math.sin(p*6)*2.5,0,7); g.stroke();
+}
+function iconMtn(g,R,p){
+  g.fillStyle='#1b2a44'; g.strokeStyle='#5f88c4'; g.lineWidth=1.6;
+  g.beginPath(); g.moveTo(-R*0.95,R*0.6); g.lineTo(-R*0.2,-R*0.62); g.lineTo(R*0.45,R*0.6); g.closePath();
+  g.fill(); g.stroke();
+  g.fillStyle='#e9f2ff';
+  g.beginPath(); g.moveTo(-R*0.2,-R*0.62); g.lineTo(-R*0.05,-R*0.32); g.lineTo(-R*0.34,-R*0.3); g.closePath(); g.fill();
+  for(let i=0;i<3;i++){
+    const rr=R*(0.34+i*0.24), o=(0.85-i*0.22).toFixed(2);
+    g.strokeStyle='rgba(255,212,121,'+o+')'; g.lineWidth=1.3;
+    g.beginPath();
+    g.ellipse(0,R*0.5+Math.sin(p*2+i)*1.5,rr,rr*0.34,0,0,7);
+    g.stroke();
+  }
+  g.strokeStyle='#6fd3ff'; g.lineWidth=2;
+  const yy=R*0.5+Math.sin(p*3)*2;
+  g.beginPath(); g.moveTo(-R*0.1,yy-R*0.24); g.lineTo(0,yy); g.lineTo(R*0.1,yy-R*0.24); g.stroke();
+}
+function iconMaps(g,R,p){
+  const s=R*0.62, gap=R*0.12;
+  for(let i=0;i<4;i++){
+    const cx2=(i%2?1:-1)*(s/2+gap/2), cy2=(i<2?-1:1)*(s/2+gap/2);
+    const on=(Math.floor(p*4)%4)===i;
+    g.fillStyle=on?'#1d3c66':'#111c31';
+    g.strokeStyle=on?'#ffd479':'#33496f'; g.lineWidth=on?2:1.2;
+    g.beginPath(); g.rect(cx2-s/2,cy2-s/2,s,s); g.fill(); g.stroke();
+    if(on){
+      g.globalAlpha=.9; g.strokeStyle='#8be3c8'; g.lineWidth=1.2;
+      g.beginPath(); g.moveTo(cx2-s*0.3,cy2+s*0.16); g.lineTo(cx2+s*0.3,cy2-s*0.16); g.stroke();
+      g.globalAlpha=1;
+    }
+  }
+}
+function iconStars(g,R,p){
+  _glow(g,R,'rgba(255,212,121,.3)',.9);
+  g.save(); g.rotate(p*0.9);
+  g.fillStyle='#ffd479';
+  g.beginPath();
+  for(let i=0;i<10;i++){
+    const a=-Math.PI/2+i*Math.PI/5, r=(i%2?R*0.34:R*0.78);
+    const x=Math.cos(a)*r, y=Math.sin(a)*r;
+    if(i===0)g.moveTo(x,y); else g.lineTo(x,y);
+  }
+  g.closePath(); g.fill(); g.restore();
+  g.strokeStyle='rgba(255,143,163,.55)'; g.lineWidth=1.4; g.setLineDash([4,5]);
+  g.beginPath(); g.ellipse(0,0,R*1.2,R*0.5,-0.3,0,7); g.stroke(); g.setLineDash([]);
+}
+let _trRaf=0,_trTmo=null;
+function transition(cfg,done){
+  const tr=$('tr');
+  if(!tr||!window.requestAnimationFrame){ done&&done(); return; }
+  $('trFig').innerHTML=avSVG('渡鸦','smug');
+  $('trNo').textContent=cfg.no||'';
+  $('trCode').textContent=cfg.code||'';
+  $('trSub').innerHTML=cfg.sub||'';
+  const figs=$('trCrew').querySelectorAll?$('trCrew').querySelectorAll('.fig'):[];
+  if(figs[0])figs[0].innerHTML=avSVG('小塔 T-07','wonder');
+  if(figs[1])figs[1].innerHTML=avSVG('蒲公英号');
+  if(cfg.chap)$('chap').textContent=cfg.chap;
+  tr.classList.remove('on'); void tr.offsetWidth; tr.classList.add('on');
+  SFX.whoosh(); setTimeout(function(){ SFX.ding(); },450);   /* 飞船掠过 → 站牌亮起 */
+  const cvs=$('trC'), g=cvs.getContext?cvs.getContext('2d'):null;
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const w=window.innerWidth||360, h=window.innerHeight||640;
+  if(g){ cvs.width=Math.round(w*dpr); cvs.height=Math.round(h*dpr); g.setTransform(dpr,0,0,dpr,0,0); }
+  const t0=Date.now(), DUR=cfg.dur||2900;
+  let closed=false;
+  function close(){
+    if(closed)return; closed=true;
+    cancelAnimationFrame(_trRaf); if(_trTmo){clearTimeout(_trTmo);_trTmo=null;}
+    tr.onclick=null; tr.classList.remove('on');
+    setTimeout(function(){ done&&done(); },300);
+  }
+  tr.onclick=close;
+  if(!g){ close(); return; }
+  function frame(){
+    const pr=Math.min(1,(Date.now()-t0)/DUR);
+    drawTR(g,w,h,cfg.icon||'stars',pr);
+    if(pr<1)_trRaf=requestAnimationFrame(frame);
+  }
+  drawTR(g,w,h,cfg.icon||'stars',0);
+  _trRaf=requestAnimationFrame(frame);
+  _trTmo=setTimeout(close,DUR);
+}
+function stopCfg(i){
+  const c=CH[i], s=STOP[c.id]||{icon:'stars',sub:''};
+  return {no:'第 '+(i+1)+' 站 / 共 6 站',code:c.id+' '+c.title,chap:c.sec,icon:s.icon,sub:s.sub};
+}
+function goto(i){ transition(stopCfg(i),function(){ startChapter(i); }); }
+
+function say(who,txt,next){
+  dlg.classList.remove('hide'); opts.innerHTML=''; dTap.style.display='';
+  dWho.textContent=who;
+  dWho.className='who'+(who==='渡鸦'?' raven':(who==='蒲公英号'?' ai':(who==='你'?' me':'')));
+  setAv(who);
+  dTxt.innerHTML=txt; dTxt.classList.remove('fade'); void dTxt.offsetWidth; dTxt.classList.add('fade');
+  speakLine(who,txt);
+  dlg.onclick=function(){dlg.onclick=null; next&&next();};
+}
+function ask(q,list,tip,next){
+  dlg.classList.remove('hide'); dTap.style.display='none';
+  dWho.textContent='你来说'; dWho.className='who me'; setAv('地球代表');
+  dTxt.innerHTML='<b>'+q+'</b>'+(tip?'<div style="font-size:11.5px;color:#8fa0c6;margin-top:5px">'+tip+'</div>':'');
+  speakLine('地球代表',q);
+  opts.innerHTML='';
+  list.forEach(function(o){
+    const b=el('button','opt',o.t);
+    b.onclick=function(e){
+      e.stopPropagation();
+      opts.innerHTML=''; dTap.style.display='';
+      dWho.textContent='蒲公英号'; dWho.className='who ai'; setAv('蒲公英号');
+      dTxt.innerHTML=o.s; track('ask',o.t); SFX.tap();
+      speakLine('蒲公英号',o.s);
+      dlg.onclick=function(){dlg.onclick=null; next&&next();};
+    };
+    opts.appendChild(b);
+  });
+  const skip=el('button','opt more','我没什么想法，你直接说吧 ▸');
+  skip.onclick=function(e){e.stopPropagation();
+    opts.innerHTML=''; dTap.style.display='';
+    dWho.textContent='蒲公英号'; dWho.className='who ai'; setAv('蒲公英号');
+    dTxt.innerHTML=list[0].s;
+    speakLine('蒲公英号',list[0].s);
+    dlg.onclick=function(){dlg.onclick=null; next&&next();};
+  };
+  opts.appendChild(skip);
+}
+/* 深一层：可选展开，不打断节奏 */
+function fold(host,title,body,next){
+  const f=el('div','fold','<div class="ft">🔎 '+title+'</div><div>'+body+'</div>');
+  host.appendChild(f); f.scrollIntoView({behavior:'smooth',block:'center'});
+  track('deep',title);
+}
+function deepBeat(host,b,next){
+  const q=el('div',''); host.appendChild(q);
+  dlg.classList.remove('hide'); dlg.onclick=null;   // 避免误触空白区导致流程卡住
+  dWho.textContent='蒲公英号'; dWho.className='who ai'; setAv('蒲公英号');
+  dTxt.innerHTML='这里还有一层，要不要往下挖？';
+  speakLine('蒲公英号','这里还有一层，要不要往下挖？');
+  dTap.style.display='none'; opts.innerHTML='';
+  const y=el('button','opt more','想听 ▸');
+  const n=el('button','opt','先跳过，继续追 ▸');
+  y.onclick=function(e){e.stopPropagation();opts.innerHTML='';dTap.style.display='';
+    SFX.star(); say('蒲公英号',b.t,next); fold(q,b.x,b.t);};
+  n.onclick=function(e){e.stopPropagation();opts.innerHTML='';dTap.style.display='';
+    say('小塔 T-07','（记下了，回头再看）',next);};
+  opts.appendChild(y); opts.appendChild(n);
+}
+/* 演示 beat */
+function demoBeat(host,b,next){
+  const box=el('div',''); host.appendChild(box);
+  const fn=DEMO[b.d];
+  if(fn){
+    fn(box,function(ok,msg){ /* 演示里若自带完成回调 */ });
+    box.scrollIntoView({behavior:'smooth',block:'start'});
+    say(b.w||'蒲公英号',b.t||'操作一下看看。',next);
+    dTap.textContent='操作完，点这里继续 ▸';
+  } else { say('蒲公英号','（演示暂缺）',next); }
+}
+/* 主链 */
+function runBeats(host,beats,done){
+  let i=0;
+  function step(){
+    if(i>=beats.length){dlg.classList.add('hide');done&&done();return;}
+    const b=beats[i++];
+    if(b.d){ demoBeat(host,b,step); }      /* d 需先于 w 判断：演示拍自带引导语，由 demoBeat 一并输出 */
+    else if(b.q){ ask(b.q,b.o,b.tip,step); }
+    else if(b.w){ dTap.textContent='点一下继续 ▸'; say(b.w,b.t,step); }
+    else if(b.c){ cardAdd(b.c.id,b.c.kn,b.c.b,b.c.m); step(); }
+    else if(b.x){ deepBeat(host,b,step); }
+    else step();
+  }
+  step();
+}
+
+/* ---------- 章节流程 ---------- */
+function startChapter(i){
+  S.ci=i; PH=null; bar(); stage.innerHTML='';
+  const c=CH[i];
+  $('chap').textContent=c.sec;
+  stage.appendChild(el('div','chip',c.sec));
+  stage.appendChild(el('h2','',c.title));
+  const host=el('div',''); stage.appendChild(host); PH=host;
+  runBeats(host,c.beats,function(){ doClue(c); });
+}
+function doClue(c){
+  stage.innerHTML='';
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🐦‍⬛ 渡鸦留下的线索'));
+  p.appendChild(el('p','<span class="em">「'+c.clue+'」</span>'));
+  p.appendChild(el('div','mut','这句话是用<b>刚才聊过的东西</b>写的。读不明白，就回头翻手册——看懂了再动手。'));
+  const mb=el('button','btn ghost','📖 翻开手册（'+S.cards.length+' 条情报）');
+  mb.onclick=showManual; p.appendChild(mb);
+  const go=el('button','btn','▶ 开始追查');
+  go.onclick=function(){doAct(c);};
+  p.appendChild(go);
+  stage.appendChild(p); stage.scrollTop=0;
+  say('蒲公英号','先别急着动手。把他这句话拆开：他到底在告诉你什么？',function(){});
+}
+function doAct(c){
+  stage.innerHTML='';
+  const p=el('div','panel');
+  p.appendChild(el('div','t','🎯 '+(c.id==='2.3'?'围捕计划':'在图上锁定渡鸦')));
+  p.appendChild(el('p','<span class="em">「'+c.clue+'」</span>'));
+  stage.appendChild(p);
+  const host=el('div',''); stage.appendChild(host);
+  const mb=el('button','btn ghost','📖 翻手册（'+S.cards.length+' 条）');
+  mb.onclick=showManual; host.appendChild(mb);
+  DEMO[c.act](host,function(ok,msg){
+    if(ok){ finish(c,true,msg); }
+    else { S.wrong++; track('wrong',c.id+':'+(msg||''));
+      const t=el('div','tip bad','❌ '+msg+'<br><span style="color:#93a8cf">'+c.lose+'</span>');
+      host.appendChild(t); t.scrollIntoView({behavior:'smooth',block:'center'});
+      toast('渡鸦跑远了一点（落后 +1 站）',1800); S.gap=Math.min(5,S.gap+1); bar(); SFX.bad();
+      say('渡鸦','（远处传来一声笑）差一点。再想想。',function(){});
+    }
+  });
+  stage.scrollTop=0;
+}
+function finish(c,ok,msg){
+  S.gap=Math.max(0,S.gap-1); bar(); track('pass',c.id); SFX.good();
+  stage.innerHTML='';
+  const p=el('div','panel');
+  p.appendChild(el('div','t','✅ 追上了'));
+  p.appendChild(el('p',msg));
+  p.appendChild(el('div','kc','<b>本关知识点</b><br>'+c.win));
+  stage.appendChild(p);
+  const last=(S.ci>=CH.length-1);
+  if(last){ ending(); return; }
+  const b=el('button','btn','下一站 ▸ '+CH[S.ci+1].title);
+  b.onclick=function(){goto(S.ci+1);};
+  stage.appendChild(b); stage.scrollTop=0;
+  const nb=CH[S.ci+1];
+  say('小塔 T-07','这一页记进手册了，发回母星。',function(){
+    say('蒲公英号','下一站：'+nb.title+'。',function(){});
+  });
+}
+function showManual(){
+  const m=el('div','modal');
+  const box=el('div','box');
+  box.appendChild(el('div','','<span class="x" onclick="this.closest(\'.modal\').remove()">✕</span><h2 style="margin-top:0;font-size:16px">📖 地球观测手册</h2>'));
+  if(!S.cards.length){box.appendChild(el('p','mut','还没有情报。聊着聊着就会存进来。'));}
+  S.cards.forEach(function(c){
+    box.appendChild(el('div','kc','<b>'+c.name+'</b><br>'+c.body+'<div class="mini">'+c.mini+'</div>'));
+  });
+  m.appendChild(box); m.onclick=function(e){if(e.target===m)m.remove();};
+  document.body.appendChild(m);
+}
+function ending(){
+  const caught=S.gap<=0;
+  if(caught)SFX.win(); else SFX.lose();
+  const p=el('div','panel');
+  p.appendChild(el('h2','',caught?'🎉 结案：抓到渡鸦':'🕳️ 结案：他跑了'));
+  p.appendChild(el('p',caught
+    ?'渡鸦被围在一处山谷里，星图核心追回来了。他被押送前留下一句："……你们的地球上，居然有这么多我不知道的东西。"'
+    :'渡鸦带着核心溜进了下一片大陆。临走前他丢下一张纸条："第三章见——那片大陆上的东西，可比地形图难多了。"'));
+  p.appendChild(el('div','tip good','<b>你的追缉数据</b><br>'+statHTML()));
+  const b=el('button','btn','🔄 再追一次');
+  b.onclick=function(){S.gap=3;S.cards=[];S.log=[];S.wrong=0;S.start=Date.now();goto(0);};
+  p.appendChild(b);
+  const b2=el('button','btn ghost','📖 翻一遍完整手册');
+  b2.onclick=showManual; p.appendChild(b2);
+  stage.appendChild(p);
+  say('小塔 T-07','手册第一册写完了。我好像……有点懂"位置"是什么了。',function(){
+    say('地球的声音','（一段陌生信号接入）喂？你那本手册我也有。我正学到第三章——你要不要来看看？',function(){});
+  });
+}
+function statHTML(){
+  const w=S.log.filter(function(l){return l.k==='wrong';}).length;
+  const c=S.log.filter(function(l){return l.k==='card';}).length;
+  const d=S.log.filter(function(l){return l.k==='deep';}).length;
+  const s=Math.round((Date.now()-S.start)/1000);
+  return '用时 <b>'+Math.floor(s/60)+' 分 '+(s%60)+' 秒</b>　追错 <b>'+w+'</b> 次　手册 <b>'+c+'</b> 条　主动深挖 <b>'+d+'</b> 次　最终落后 <b>'+S.gap+'</b> 站';
+}
+
+/* ---------- 声音开关 UI ---------- */
+const ICO={
+  sndOn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h3.5L13 19V5L7.5 9H4z"/><path d="M16.5 8.8a4 4 0 010 6.4"/></svg>',
+  sndOff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9v6h3.5L13 19V5L7.5 9H4z"/><path d="M17 9.5l4 5M21 9.5l-4 5"/></svg>',
+  ttsOn:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M7 10h6M7 14h9"/></svg>',
+  ttsOff:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M7 10h6M7 14h4"/><path d="M4 3.5l16 17"/></svg>'
+};
+function sndUI(){
+  const box=$('snds'); if(!box) return;
+  function mk(init,onIco,offIco,label,tip,toggle){
+    const b=el('button','snd '+(init?'on':'off'),init?onIco:offIco);
+    b.setAttribute('aria-label',label);
+    b.onclick=function(e){
+      e.stopPropagation();
+      const st=!b.classList.contains('on');
+      b.className='snd '+(st?'on':'off'); b.innerHTML=st?onIco:offIco;
+      toggle(st); toast(tip+(st?'：开':'：关'),1300);
+    };
+    box.appendChild(b); return b;
+  }
+  try{ if(localStorage.getItem('xlzjl_snd')==='0') SFX.setOn(false); }catch(e){}
+  mk(SFX.isOn(),ICO.sndOn,ICO.sndOff,'音效','音效',function(v){
+    SFX.setOn(v); try{ localStorage.setItem('xlzjl_snd',v?'1':'0'); }catch(e){}
+  });
+  /* 人声朗读：默认开。若浏览器实际发不出声，TTS 会自己探测到并回调这里把按钮关掉 */
+  if(TTS.ok){
+    const tb=mk(TTS.isOn(),ICO.ttsOn,ICO.ttsOff,'朗读','人声朗读',function(v){
+      TTS.setOn(v); if(v){ SFX.stopVox(); } else { TTS.stop(); }
+    });
+    TTS.onFail=function(){
+      if(!tb) return;
+      tb.className='snd off'; tb.innerHTML=ICO.ttsOff;
+    };
+  }
+}
+
+/* ---------- 开场 ---------- */
+function title(){
+  stage.innerHTML='';
+  const p=el('div','panel');
+  p.appendChild(el('h2','','星旅追缉令'));
+  p.appendChild(el('div','chip','人教版地理 七年级上册 · 第一、二章（2024 新版）'));
+  p.appendChild(el('p','一只叫渡鸦的家伙偷走了<b>星图核心</b>，正沿着<b>课本的目录顺序</b>在地球上乱窜。<br>外星实习生<b>小塔 T-07</b>和飞船 AI<b>蒲公英号</b>在后面追——但他们需要一个地球人带路。'));
+  p.appendChild(el('div','tip','全程 <b>6 站</b>：1.1 地球的宇宙环境 · 1.2 地球与地球仪 · 1.3 地球的运动 · 2.1 地图的阅读 · 2.2 地形图的判读 · 2.3 地图的选择和应用。<br>不用先学过，跟着走就行。'));
+  const b=el('button','btn','▶ 开始故事');
+  b.onclick=function(){
+    SFX.unlock();                      /* 第一次真实点击 = 音频解锁的唯一合法时机 */
+    TTS.warm();                        /* iOS 的合成器也要在这一次点击里唤醒 */
+    transition({no:'序章 / 共 6 站',code:'星图核心失窃',chap:'序章 · 警报',icon:'stars',
+      sub:'三分钟前，核心离线。渡鸦带着它跳进了地球。'},prologue);
+  };
+  p.appendChild(b);
+  const b3=el('button','btn ghost','🎙 角色声音设置');
+  b3.onclick=function(){ SFX.unlock(); TTS.warm(); soundPanel(); };
+  p.appendChild(b3);
+  const b2=el('button','btn ghost','关于这个原型');
+  b2.onclick=about; p.appendChild(b2);
+  stage.appendChild(p);
+}
+/* 序章：交代事件、认识同伴、说清怎么玩 */
+function prologue(){
+  stage.innerHTML='';
+  $('chap').textContent='序章 · 警报';
+  stage.appendChild(el('div','chip','序章 · 星图核心失窃'));
+  stage.appendChild(el('h2','','警报：核心离线'));
+  const host=el('div',''); stage.appendChild(host); PH=host;
+  runBeats(host,PRO,function(){ S.start=Date.now(); goto(0); });
+}
+/* ---------- 角色声音设置：真机上自己调到满意，不用远程盲改 ---------- */
+const VOICE_DEMO={
+  '小塔 T-07' :'哇，原来地球是圆的！那我一直站着的地方，另一边是不是有人在倒着走呀？',
+  '蒲公英号'  :'检测到线索。渡鸦留下的痕迹指向北回归线，我们需要一张经纬网。',
+  '渡鸦'      :'哼，你们追不上我的。星图核心已经是我的了。',
+  '地球的声音':'孩子，我转了四十六亿年。慢慢看，别着急。'
+};
+function soundPanel(){
+  stage.innerHTML='';
+  const p=el('div','panel');
+  p.appendChild(el('h2','','角色声音'));
+  p.appendChild(el('div','chip','拖滑块调音高 / 语速，点「试听」立刻听效果'));
+  const d=TTS.diag();
+  p.appendChild(el('div','tip','当前环境 <b>'+d.env+'</b>　可用音色 <b>'+d.voices+'</b> 个，中文 <b>'+d.zh+'</b> 个'
+    +(d.zh?'（'+d.sample.join('、')+'）':'　<b>没有中文音色，请先安装</b>')
+    +'<br>发声状态 <b>'+({ok:'正常',fail:'发不出声（已切外星语）',unknown:'等待中…'}[d.probe]||d.probe)+'</b>'
+    +'　朗读 <b>'+(d.on?'开':'关')+'</b>'));
+  if(!TTS.ok) p.appendChild(el('div','tip','⚠ 这个浏览器不支持语音合成（安卓微信内置常见）。请点右上角「···」→「在浏览器打开」。'));
+
+  ['小塔 T-07','蒲公英号','渡鸦','地球的声音'].forEach(function(name){
+    const c=TTS.cfg(name);
+    const row=document.createElement('div'); row.className='vrow';
+    row.innerHTML='<div class="vtop"><span class="vname">'+name+'</span>'
+      +'<button class="vplay" type="button">▶ 试听</button></div>'
+      +'<div class="vline"><span class="vlab">音高</span>'
+      +'<input class="vp" type="range" min="30" max="200" step="1" value="'+Math.round(c.pitch*100)+'">'
+      +'<span class="vval">'+c.pitch.toFixed(2)+'</span></div>'
+      +'<div class="vline"><span class="vlab">语速</span>'
+      +'<input class="vr" type="range" min="60" max="160" step="1" value="'+Math.round(c.rate*100)+'">'
+      +'<span class="vval">'+c.rate.toFixed(2)+'</span></div>';
+    const vp=row.querySelector('.vp'), vr=row.querySelector('.vr');
+    const vs=row.querySelectorAll('.vval');
+    vp.oninput=function(){ const x=+vp.value/100; vs[0].textContent=x.toFixed(2); TTS.tune(name,x,null); };
+    vr.oninput=function(){ const x=+vr.value/100; vs[1].textContent=x.toFixed(2); TTS.tune(name,null,x); };
+    /* 松手再试听：拖动过程中不断重念会很吵 */
+    vp.onchange=vr.onchange=function(){ TTS.stop(); speakLine(name,VOICE_DEMO[name]); };
+    row.querySelector('.vplay').onclick=function(){
+      SFX.unlock(); TTS.warm(); TTS.setOn(true);
+      TTS.stop(); speakLine(name,VOICE_DEMO[name]);
+    };
+    p.appendChild(row);
+  });
+  p.appendChild(el('div','tip','<b>四个角色听起来还是差不多？</b>说明这台手机只有 1 个中文音色、且引擎不太理睬音高参数。把差距拉到极限试试：小塔 2.00、渡鸦 0.30。另外每句话前的<b>报幕动机</b>（小塔上行三音、蒲公英号八度跳、渡鸦下行＋低频轰鸣）不依赖引擎，任何时候都能分辨是谁在说话。'));
+  const r=el('button','btn ghost','恢复默认音色');
+  r.onclick=function(){ TTS.reset(); soundPanel(); toast('已恢复出厂音色',1300); };
+  p.appendChild(r);
+  const b=el('button','btn','返回');
+  b.onclick=title; p.appendChild(b);
+  stage.appendChild(p);
+}
+
+function about(){
+  const m=el('div','modal');
+  const box=el('div','box');
+  box.appendChild(el('div','','<span class="x" onclick="this.closest(\'.modal\').remove()">✕</span><h2 style="margin-top:0;font-size:16px">关于这个原型</h2>'));
+  box.appendChild(el('p','mut','玩法：<b>知识由困惑引出</b>——小塔不懂的地方，就是课本要教的地方；你会先猜，再动手演示，最后由角色讲清<b>这是什么、为什么这么定、有什么用、怎么定的</b>。<br>追捕骨架参考 Carmen Sandiego：<b>知识是钥匙，查阅是玩法，追错只是折返</b>。'));
+  box.appendChild(el('p','mut','需要教研员复核的部分：地形数据、光照示意图、经纬度落点、历史与定义表述均为<b>示意构造</b>，正式开发前须对照课本逐条审校。'));
+  box.appendChild(el('p','mut','声音：全部由 Web Audio <b>实时合成</b>，不加载任何音频文件，所以不拖慢加载、不额外耗流量。<b>朗读默认开启</b>，且<b>每个角色一副嗓子</b>（音高 / 语速 / 音色三重区分）：小塔 T-07 是 1.6 倍音高的童声、蒲公英号 1.18 倍偏电子、渡鸦 0.45 倍低沉慢速、地球的声音 0.9 倍温暖；每句话前还先响一段<b>角色报幕动机</b>（小塔上行三音、蒲公英号八度跳、渡鸦下行＋低频轰鸣），所以即使手机只有一个中文音色也能分辨是谁在说话。朗读不可用时自动切回<b>外星语</b>——按字数切成一串短音节，音高在五声音阶里跳，句尾还会上挑。顶栏右侧可随时切换。'));
+  const st=el('div','tip','<b>听不到人声？</b>最常见两个原因：① 安卓微信内置浏览器不支持语音合成——点右上角「···」→「在浏览器打开」；② 手机没装中文语音引擎（安卓：设置→系统→语言和输入法→文字转语音，确认有「中文」）。');
+  const tb=el('button','btn ghost','🔊 朗读自检（点一下，看这里说什么）');
+  tb.onclick=function(){
+    const d=TTS.test();
+    let s='自检结果：系统接口 <b>'+(d.api?'有':'无')+'</b>　当前朗读 <b>'+(d.on?'开':'关')+'</b>　发声状态 <b>'+({ok:'正常',fail:'发不出声（已切外星语）',unknown:'等待中…'}[d.probe]||d.probe)+'</b>（'+(d.last||'-')+'）<br>运行环境 <b>'+d.env+'</b>　可用音色 <b>'+d.voices+'</b> 个，其中中文 <b>'+d.zh+'</b> 个'+(d.sample.length?'（'+d.sample.join('、')+'）':'　<b>没有中文音色，请先安装</b>');
+    s+='<br>角色嗓子：';
+    ['小塔 T-07','蒲公英号','渡鸦','地球的声音'].forEach(function(r){
+      s+='<br>· '+r+' → '+(d.roles&&d.roles[r]?d.roles[r]:'-');
+    });
+    st.innerHTML=s;
+  };
+  box.appendChild(st); box.appendChild(tb);
+  /* 角色试听：真机上一键确认"四个角色声音是否真的不一样" */
+  const row=document.createElement('div');
+  row.style.cssText='display:flex;gap:7px;margin-top:8px;flex-wrap:wrap';
+  const rw=row;
+  [['小塔 T-07','听小塔'],['蒲公英号','听蒲公英号'],['渡鸦','听渡鸦'],['地球的声音','听地球']].forEach(function(p){
+    const b=document.createElement('button');
+    b.className='btn ghost'; b.style.cssText='flex:1;min-width:78px;padding:8px 6px;font-size:12px';
+    b.textContent=p[1];
+    b.onclick=function(){
+      TTS.setOn(true);
+      if(!TTS.isOn()){ toast('当前浏览器朗读已关闭或被判定不可用',2000); return; }
+      speakLine(p[0],({'小塔 T-07':'我是小塔，我什么都不懂，但是我会认真学。',
+                  '蒲公英号':'我是蒲公英号，飞船的人工智能，负责给你线索。',
+                  '渡鸦':'哼，你们追不上我的。',
+                  '地球的声音':'喂？能听见吗？我是这颗星球。'})[p[0]]);
+    };
+    rw.appendChild(b);
+  });
+  box.appendChild(row);
+  const vb=el('button','btn ghost','🎙 打开角色声音设置（可拖滑块调音高 / 语速）');
+  vb.onclick=function(){ m.remove(); soundPanel(); };
+  box.appendChild(vb);
+  box.appendChild(el('p','mut','注：原型内置行为埋点示例。正式验证时会记录「选了哪个直觉答案、有没有点开深一层、演示拖到哪一档、翻没翻手册」，用来判断知识有没有真的被用起来。'));
+  m.appendChild(box); m.onclick=function(e){if(e.target===m)m.remove();};
+  document.body.appendChild(m);
+}
+$('me').innerHTML=avSVG('地球代表'); $('rv').innerHTML=avSVG('渡鸦','smug');
+sndUI();
+title();
+</script>
+</body>
+</html>
